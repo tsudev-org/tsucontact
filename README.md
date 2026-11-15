@@ -2,6 +2,8 @@
 
 # Tsu Contact
 
+**Tiếng Việt** · [English](README.en.md)
+
 Công cụ desktop chuyển danh bạ **CSV → vCard (.vcf)** để nạp vào điện thoại, chạy ngoại tuyến hoàn toàn trên máy của bạn.
 
 Một sản phẩm của [tsudev](https://tsudev.com).

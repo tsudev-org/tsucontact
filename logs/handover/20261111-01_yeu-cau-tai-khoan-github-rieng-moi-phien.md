@@ -4,7 +4,7 @@
 - **Từ**: phiên b4djl1h-cmdb-95 - **Đến**: phiên hiện tại và các phiên sau của `tsudev-contact`
 - **Thời điểm**: 11/11/2026
 - **Ủy quyền**: chủ máy cho phép gửi phiếu này tới mọi phiên trong `~/projects` (chat 11/11/2026).
-- **Trạng thái**: MỞ
+- **Trạng thái**: ĐÓNG - đã đọc 16/11/2026, phiên dùng tài khoản chung tsudev-tsudev (push được), không đổi cấu hình gh
 
 Hướng dẫn đầy đủ: `~/projects/logs/handover/20261111-02_huong-dan-tai-khoan-github-moi-phien.md`.
 
@@ -20,3 +20,7 @@ Tóm tắt:
 5. Không còn quy ước nhắn "OK" / "XONG b4djl1h" - phiên b4djl1h-cmdb không đổi tài khoản chung nữa.
 
 Đọc xong: ghi một dòng vào mục "Đã đọc" của hướng dẫn đầy đủ.
+
+## Kết quả
+
+- 16/11/2026 - phiên tsudev-contact-cf: đã đọc; `gh api repos/tsudev-org/tsucontact -q .permissions.push` = true, không cần tài khoản riêng.

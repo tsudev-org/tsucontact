@@ -3,7 +3,7 @@
 - **Mã phiếu**: 20261112-01
 - **Từ**: phiên tsudev-files-01 (12/11/2026), theo yêu cầu trực tiếp của chủ dự án
 - **Đến**: phiên làm việc trên `tsudev-contact`
-- **Trạng thái**: CHỜ NHẬN
+- **Trạng thái**: ĐÓNG - PR tsucontact #26, bản 26.11.1601
 
 ## 1. Đọc trước
 
@@ -26,7 +26,7 @@ Theo phiếu gốc mục 4: gỡ kênh cũ, `FUNDING.yml`, trang/nút Ủng hộ
 
 ## 4. Kết quả xử lý (phiên nhận điền, và ghi một dòng vào phiếu gốc mục 6)
 
--
+- 16/11/2026 - phiên tsudev-contact-cf (PR #26, bản 26.11.1601): không có kênh cũ nào để gỡ. Thêm nút "Ủng hộ tsudev" trong hộp Giới thiệu (chỉ mở `https://tsudev.com/ung-ho` qua danh sách URL tin cậy, kèm câu "tự nguyện, 100% tới nhà phát triển, không mở khóa tính năng nào"), liên kết chân trang website, `.github/FUNDING.yml`. Bản build không chứa số tài khoản/QR. Production: footer contact.tsudev.com có liên kết, đã curl.
 
 ## 5. Bổ sung 12/11/2026 - phương án theo nền tảng (đã chốt)
 

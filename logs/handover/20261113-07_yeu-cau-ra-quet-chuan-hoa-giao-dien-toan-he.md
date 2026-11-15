@@ -5,7 +5,7 @@
 - **Gửi**: mọi repo có website / trang `*.tsudev.com` - tsudev-cwico, tsudev-swico, tsudev-contact,
   tsudev-trafficmonitor, tsufiles (`tsudev-files`), lotus-share, linux-packages (trang kho, nếu có),
   6 repo game TsuGameLabs + tsudev-game-kit
-- **Trạng thái**: MỞ - mỗi repo ghi "Đã đọc" + kết quả vào cuối phiếu BẢN SAO trong repo mình
+- **Trạng thái**: ĐÓNG - PR tsucontact #26, production đạt (ngoại lệ Cloudflare JSD ghi dưới)
 
 ## 1. Yêu cầu của chủ dự án
 
@@ -59,3 +59,14 @@ mâu thuẫn nội dung hoặc thiếu chuyên nghiệp; sửa để giao diện
 - Công cụ ở mục 2.1 in `OK` cho mọi trang × khổ × chế độ trên PRODUCTION (mã thoát 0), hoặc ghi rõ ngoại lệ có lý do.
 - Ảnh 390px + 1280px trước/sau của trang chủ và một trang con, đính kèm PR.
 - Ghi vào cuối bản sao phiếu này: "Đã đọc" + danh sách lỗi tìm thấy + PR + trạng thái production.
+
+## Kết quả (bản sao tsucontact)
+
+- 16/11/2026 - phiên tsudev-contact-cf: **Đã đọc.** Quét 8 trang + 404 × 390/1280 × Tối/Sáng.
+  - Lỗi tìm thấy và đã sửa (PR #26): trang `/nhat-ky/` cuộn ngang 478>390 px (chuỗi dài không dấu cách) -> `.van-ban { overflow-wrap: anywhere }`;
+    nút "Chép" mới trong khối thu gọn không có tên truy cập -> `aria-label`.
+  - Mắt: ảnh 390px trang Tải về - header, footer 2 cột, hàng "© tsudev" + bộ chọn giao diện một hàng; không lệch.
+  - Site không có đăng nhập (hạng C) nên không có cột "Tài khoản". 404 có đúng 1 `h1`.
+  - PRODUCTION 16/11/2026: 32/32 lượt không còn lỗi nào của site; ngoại lệ duy nhất là script nội tuyến
+    `/cdn-cgi/challenge-platform/scripts/jsd/main.js` Cloudflare chèn ở cấp zone (cũng có ở files., trafficmonitor., tsudev.com),
+    bị CSP chặn -> công cụ ra mã thoát 1. Cần 👤 tắt JavaScript Detections ở Cloudflare (phiếu tsudev 20261116-C1).
