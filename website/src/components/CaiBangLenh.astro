@@ -1,0 +1,41 @@
+---
+// Khối "Cài bằng lệnh": dữ liệu sinh lúc build (src/lib/noi-dung.ts kenhCai), nút Chép dùng public/chep.js (CSP 'self').
+import { kenhCai } from '../lib/noi-dung';
+
+const nhom = await kenhCai();
+let stt = 0;
+---
+{nhom.length > 0 && (
+  <section class="cai-lenh" aria-labelledby="cai-lenh">
+    <h2 id="cai-lenh">Cài bằng lệnh</h2>
+    <p class="cai-lenh__dan">Gói được ký - trình quản lý gói tự kiểm SHA-256 và chữ ký, tự cập nhật khi có bản mới.</p>
+    {nhom.map((n) => (
+      <div class="cai-lenh__nhom">
+        <h3>{n.heDieuHanh}</h3>
+        {n.lenh.map((l) => {
+          const id = `lenh-${++stt}`;
+          return (
+            <div class="cai-lenh__muc">
+              <p class="cai-lenh__kenh">{l.kenh}</p>
+              <div class="cai-lenh__dong">
+                <pre tabindex="0"><code id={id}>{l.lenh}</code></pre>
+                <button type="button" class="nut nut--phu nut--nho" data-chep={id} hidden>Chép<span class="an-di"> lệnh {l.kenh}</span></button>
+              </div>
+              {l.lenhDu !== l.lenh && (
+                <details class="cai-lenh__du">
+                  <summary>Lần đầu dùng kho này</summary>
+                  <div class="cai-lenh__dong">
+                    <pre tabindex="0"><code id={`${id}-du`}>{l.lenhDu}</code></pre>
+                    <button type="button" class="nut nut--phu nut--nho" data-chep={`${id}-du`} hidden>Chép<span class="an-di"> lệnh đầy đủ {l.kenh}</span></button>
+                  </div>
+                </details>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    ))}
+    <p class="an-di" role="status" aria-live="polite" id="chep-trang-thai"></p>
+    <script is:inline src="/chep.js" defer></script>
+  </section>
+)}

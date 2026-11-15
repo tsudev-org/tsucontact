@@ -203,3 +203,18 @@ kbd { border: 1px solid var(--border-strong); border-bottom-width: 2px; border-r
   /* Logo và hai nút cùng hàng; điều hướng xuống hàng dưới */
   .dau-trang nav { order: 3; flex-basis: 100%; margin-left: 0; padding-bottom: 0.5rem; }
 }
+
+/* Khối "Cài bằng lệnh" (phiếu 20261114-02) - nằm trên nút tải tệp */
+.cai-lenh { display: grid; gap: 0.75rem; margin: 0 0 2rem; }
+.cai-lenh h2 { margin-bottom: 0; }
+.cai-lenh__dan { margin: 0; color: var(--text-secondary); }
+.cai-lenh__nhom { display: grid; gap: 0.6rem; }
+.cai-lenh__nhom h3 { margin: 0.5rem 0 0; font-size: 1.1rem; }
+.cai-lenh__muc { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.1rem; display: grid; gap: 0.5rem; min-width: 0; }
+.cai-lenh__kenh { margin: 0; font-weight: 600; }
+.cai-lenh__dong { display: flex; gap: 0.6rem; align-items: center; min-width: 0; }
+.cai-lenh__dong pre { flex: 1 1 auto; min-width: 0; margin: 0; overflow-x: auto; }
+.cai-lenh__dong .nut { flex: none; }
+.cai-lenh__du summary { cursor: pointer; color: var(--text-secondary); font-size: 0.9rem; }
+.cai-lenh__du .cai-lenh__dong { margin-top: 0.5rem; }
+.cai-lenh__du pre code { white-space: pre-wrap; overflow-wrap: anywhere; }

@@ -1,6 +1,7 @@
 # Đẩy tag `v<APP_VERSION>` -> build .exe trên Windows, sinh SBOM, ký chứng thực nguồn gốc bản build
 # (SLSA build provenance, miễn phí với repo public), đính .exe + SBOM + SHA256SUMS vào Release.
 # Người tải kiểm: gh attestation verify <file>.exe --repo tsudev-org/tsucontact
+# SHA256SUMS.txt cũng được ký (Sigstore), bundle đính kèm: SHA256SUMS.txt.sigstore.json
 name: Build & Release (Windows)
 
 on:
@@ -53,10 +54,23 @@ jobs:
         shell: pwsh
         run: .\scripts\build-win.ps1 -SkipDeps -SkipTests
 
-      - name: Chứng thực nguồn gốc bản build
+      # Ký Sigstore (keyless, OIDC của workflow) cho .exe, SBOM VÀ SHA256SUMS.txt: SHA256SUMS có chữ ký, kiểm được bằng
+      # gh attestation verify SHA256SUMS.txt --repo tsudev-org/tsucontact (phiếu 20261115-01 mục 2.1).
+      - name: Chứng thực nguồn gốc bản build + ký SHA256SUMS
+        id: attest
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
-          subject-path: 'release/*.exe'
+          subject-path: |
+            release/*.exe
+            release/*.cdx.json
+            release/SHA256SUMS.txt
+
+      # Bản bundle Sigstore đi kèm Release để kiểm ngoại tuyến: gh attestation verify <tệp> --bundle <bundle> --repo ...
+      - name: Đặt bundle chữ ký cạnh SHA256SUMS
+        shell: pwsh
+        env:
+          BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        run: Copy-Item $env:BUNDLE release\SHA256SUMS.txt.sigstore.json
 
       - name: Lưu sản phẩm build
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

@@ -1,5 +1,6 @@
 ---
 import Trang from '../layouts/Trang.astro';
+import CaiBangLenh from '../components/CaiBangLenh.astro';
 import { banMoiNhat, RELEASES_URL, REPO, REPO_URL } from '../lib/noi-dung';
 
 const ban = await banMoiNhat();
@@ -12,6 +13,7 @@ const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_x64-setup.exe';
     <nav class="tai-lieu__menu" aria-label="Tải về">
       <p>Tải về</p>
       <ul>
+        <li><a href="#cai-lenh">Cài bằng lệnh</a></li>
         <li><a href="#tai">Tải ứng dụng</a></li>
         <li><a href="#kiem-tra">Kiểm tra tệp</a></li>
         <li><a href="#chay">Chạy lần đầu</a></li>
@@ -32,6 +34,8 @@ const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_x64-setup.exe';
           </div>
         </>
       )}
+
+      <CaiBangLenh />
 
       <h2 id="tai">Tải ứng dụng</h2>
       {goi.length > 0 ? (
@@ -72,7 +76,7 @@ const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_x64-setup.exe';
       </ol>
 
       <h2 id="cap-nhat">Cập nhật, gỡ bỏ</h2>
-      <p>Ứng dụng không tự kết nối mạng nên không tự cập nhật. Muốn bản mới, tải lại từ trang này rồi thay tệp cũ. Theo dõi repo trên GitHub (<em>Watch</em>, chọn <em>Releases</em>) để được báo khi có bản mới.</p>
+      <p>Ứng dụng không tự kết nối mạng nên không tự cập nhật. Cài qua Scoop thì <code>scoop update *</code> lấy bản mới; tải tay thì tải lại từ trang này rồi thay tệp cũ. Theo dõi repo trên GitHub (<em>Watch</em>, chọn <em>Releases</em>) để được báo khi có bản mới.</p>
       <p>Gỡ bỏ: xóa tệp <code>.exe</code> và thư mục <code>%LOCALAPPDATA%\tsucontact</code> (chỉ chứa lựa chọn giao diện). Ứng dụng không ghi gì vào Registry.</p>
     </article>
   </div>
