@@ -6,7 +6,7 @@ APP_NAME = "Tsu Contact"
 APP_SLUG = "tsucontact"
 # Quy ước: docs/DESIGN_SYSTEM.md mục 6 - {YY}.{M}.{DD}{NN}
 # (26.8.2002 = bản phát hành thứ 02 ngày 20/08/2026). Bản trước quy ước: "5.2".
-APP_VERSION = "26.11.1001"
+APP_VERSION = "26.11.1601"
 APP_ARCH = "x64"
 # Nhận diện hệ sinh thái: .standards/docs/ECOSYSTEM_IDENTITY.md mục 2.3.
 APP_AUTHOR = "tsudev"

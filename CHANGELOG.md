@@ -3,8 +3,12 @@
 Mỗi bản phát hành 1 dòng, định dạng: `{version} - {DD/MM/YYYY} - nội dung thay đổi`.
 Quy ước đặt tên bản phát hành: `.standards/docs/VERSIONING.md` mục 2.
 
-## Chưa phát hành
+## 26.11.1601 - 16/11/2026
 
+Bản đầu tiên mang tên **Tsu Contact**.
+
+- Website: trang Tải về có khối **Cài bằng lệnh** (Scoop) sinh lúc build từ catalog chính thức của kho gói, nút Chép; sửa cuộn ngang trang Nhật ký ở màn hình hẹp.
+- Phát hành: `SHA256SUMS.txt` được ký Sigstore (kèm `SHA256SUMS.txt.sigstore.json`), chứng thực nguồn gốc cho cả `.exe` và SBOM; thêm OpenSSF Scorecard.
 - **Đổi tên sản phẩm thành Tsu Contact** (`docs/adr/0001-ten-san-pham-tsu-contact.md`): repo `tsudev-org/tsucontact` (link cũ tự chuyển hướng), tệp phát hành `tsucontact_<phiên bản>_x64-setup.exe`, gói Scoop `tsucontact`; thư mục cấu hình `%LOCALAPPDATA%\tsudev-contact` tự chuyển sang `%LOCALAPPDATA%\tsucontact` ở lần chạy đầu (giữ lựa chọn giao diện, ngôn ngữ).
 - **Ủng hộ tsudev**: nút trong hộp Giới thiệu và liên kết ở chân trang website mở trang trung tâm `https://tsudev.com/ung-ho` (ủng hộ tự nguyện, không mở khóa tính năng nào); ứng dụng không chứa số tài khoản hay mã QR.
 - **Giấy phép Apache-2.0**: thêm `LICENSE` + `NOTICE` (trước đây repo public nhưng chưa có giấy phép = mặc định giữ mọi quyền); bản `.exe` kèm cả hai tệp; trang `/ban-quyen/` của website nêu rõ quyền của người dùng.
