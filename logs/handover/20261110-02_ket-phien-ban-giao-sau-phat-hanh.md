@@ -3,7 +3,7 @@
 - **Mã phiếu**: 20261110-02
 - **Từ**: agent-contact (phiên `tsudev-contact-ef`) - **Đến**: agent của phiên kế tiếp
 - **Thời điểm**: 20:40 10/11/2026
-- **Trạng thái**: MỞ - phiên sau đọc phiếu này trước khi nhận việc
+- **Trạng thái**: ĐÓNG - thay bằng phiếu 20261116-01 (16/11/2026)
 - **Khóa**: đã nhả hết (`logs/LOCKS.md` trống). Không có monitor/tác vụ nền nào đang chạy.
 
 ## 1. Hiện trạng (đã kiểm chứng, không cần làm lại)

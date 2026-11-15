@@ -1,6 +1,9 @@
 # STATE.md - Trạng thái project (agent đọc đầu phiên, cập nhật cuối phiên)
 
 ## Hàng đợi task (làm từ trên xuống)
+- [ ] **winget** `tsudev.TsuContact` qua komac - chờ 👤 `WINGET_TOKEN` (phiếu 20261115-01 mục 2.3).
+- [ ] **Best Practices passing** + good first issue (phiếu 20261115-01, 20261113-03).
+- [ ] 👤 Xóa Worker cũ `tsudev-contact`; tắt Cloudflare JavaScript Detections; đổi tên thư mục cục bộ (phiếu 20261116-01 mục 2).
 - [x] **QU-STD-AUTH** XONG 11/11/2026: bộ quy ước v3.4.0 (TS-15) xếp repo này hạng C; hạng C không bắt buộc đăng nhập, app chạy trọn ngoại tuyến không tài khoản (`.standards/docs/AUTH_AND_ACCOUNT.md` mục 1).
 
 ### Gợi ý (chưa phải task)
@@ -13,6 +16,7 @@
 |---|---|---|
 
 ## Đã hoàn thành (mới nhất trên cùng)
+- 16/11/2026 - **Đổi tên Tsu Contact** (ADR-0001): repo `tsudev-org/tsucontact`, phát hành **v26.11.1601** (SHA256SUMS ký Sigstore), Worker `tsucontact` deploy `contact.tsudev.com`, Scoop `tsucontact` (scoop-bucket#10), khối Cài bằng lệnh, Ủng hộ -> tsudev.com/ung-ho, Scorecard, README.en.md. PR #26. Bàn giao: phiếu `20261116-01`.
 - 11/11/2026 - Giấy phép **Apache-2.0** (chủ project giao phiên đóng gói chọn phương án tối ưu): đồng bộ swico/lotus, có điều khoản bằng sáng chế, là giấy phép OSI (đủ điều kiện ký Authenticode miễn phí qua SignPath), tương thích PySide6 LGPL-3.0 liên kết động. `LICENSE`, `NOTICE` kèm trong `.exe`.
 - 10/11/2026 - Phiếu `20261110-05` (giao diện đen + tím kiểu Supabase): website + app PySide6 chỉ Sáng/Tối/Hệ thống, mặc định Tối; màu riêng ở `tokens/extensions.tsudev-contact.json`. Chi tiết: mục Kết quả của phiếu.
 - 10/11/2026 - Kết phiên: nhả khóa (commit nhả khóa trước đó bị mất khi tạo lại nhánh website), phiếu bàn giao `20261110-02`.
@@ -35,6 +39,7 @@
 - 19/08/2026 - Khởi tạo bộ quy ước v1.0.0
 
 ## Quyết định quan trọng
+- 16/11/2026 - **Tên sản phẩm Tsu Contact, định danh `tsucontact`** (ADR-0001). Tên `tsudev-contact` cấm tạo lại trong `tsudev-org`/`tsudev-tsudev` (chuyển hướng GitHub). Tệp phát hành giữ hậu tố `-setup` theo VERSIONING.md.
 - 10/11/2026 - **PR xếp chồng**: merge PR dưới với `--delete-branch` làm GitHub ĐÓNG (không đổi base) PR phía trên. Cách đúng: merge không xóa nhánh -> `gh pr edit <trên> --base main` -> mới xóa nhánh; đồng bộ bằng `git merge origin/main` (không rebase/force-push).
 - 10/11/2026 - Ruleset `main`: bắt buộc PR + 4 check (`Lint + test (Linux)`, `Test (Windows)`, `Quét lộ bí mật (gitleaks)`, `Kiểm quy ước`), nhánh phải cập nhật với main, giải quyết hết hội thoại; admin chỉ bypass qua PR (giống tsudev-files).
 - 10/11/2026 - **Giao diện PySide6-Essentials** thay tkinter (exe ~26 MB); lõi `src/engine` thuần Python. Tên `engine` vì `.gitignore` chuẩn chặn đường dẫn `core`.

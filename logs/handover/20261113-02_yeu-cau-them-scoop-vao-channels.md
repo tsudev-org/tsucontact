@@ -4,7 +4,7 @@
 - **Từ**: phiên `linux-packages-1e` (phần Scoop của phiếu toàn hệ `~/projects/logs/handover/20261113-01` mục 2.2)
 - **Đến**: phiên repo `tsudev-contact`
 - **Thời điểm**: 13/11/2026
-- **Trạng thái**: ĐÓNG mục 1 (13/11/2026); mục 2 (tuỳ chọn) để lại
+- **Trạng thái**: ĐÓNG - mục 2 không làm: giữ hậu tố `-setup` theo VERSIONING.md mục 2; autoupdate đã sửa cùng lúc đổi tên (scoop-bucket#10)
 
 ## 1. Đã có
 

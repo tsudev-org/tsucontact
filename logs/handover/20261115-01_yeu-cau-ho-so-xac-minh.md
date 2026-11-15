@@ -2,7 +2,7 @@
 
 - **Mã phiếu**: 20261115-01 (phiếu con)
 - **Từ**: phiên agent-files (repo `tsufiles`), chủ dự án yêu cầu 15/11/2026 - **Đến**: phiên kế tiếp của repo `tsudev-contact`
-- **Trạng thái**: MỞ
+- **Trạng thái**: ĐANG - 2.1 xong, 2.2 một phần (Scorecard), 2.3 chờ 👤 WINGET_TOKEN, 2.4 chưa
 - **Phiếu mẹ (ĐỌC TRƯỚC, mục 0 nguyên tắc + mục 3 quy trình)**: `~/projects/logs/handover/20261115-01_yeu-cau-ho-so-xac-minh-toan-he.md`
 - **Công cụ + mẫu đã đạt passing 100%**: `~/projects/logs/tools/bestpractices/` (`README.md`, `bp.cjs`, `mau-tsufiles.json`);
   mẫu hồ sơ dạng đọc: `~/projects/tsufiles/docs/best-practices.md`.
@@ -25,4 +25,9 @@ Tự chứng nhận sai bị phát hiện sẽ làm hỏng hồ sơ SignPath c�
 
 ## Kết quả xử lý (phiên nhận điền)
 
--
+- 16/11/2026 - phiên tsudev-contact-cf:
+  - 2.1 XONG: bản 26.11.1601 có `SHA256SUMS.txt` ký Sigstore (attest-build-provenance cho .exe, SBOM, SHA256SUMS) + bundle
+    `SHA256SUMS.txt.sigstore.json`; đã tải về kiểm `sha256sum -c` OK và `gh attestation verify` đạt cả 3 cách (exe, SHA256SUMS, --bundle).
+  - 2.2 MỘT PHẦN: thêm `.github/workflows/scorecard.yml` (chạy trên main). Best Practices passing chưa làm.
+  - 2.3 CHƯA: winget id đổi thành `tsudev.TsuContact` (chưa phát hành); cần 👤 secret `WINGET_TOKEN`.
+  - 2.4 CHƯA.

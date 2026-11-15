@@ -3,7 +3,7 @@
 - **Mã phiếu**: 20261114-02
 - **Từ**: phiên 52 repo `tsudev`, 14/11/2026 - kế hoạch tổng 20261114-01, việc C5
 - **Gửi**: tsudev-cwico, tsudev-swico, tsudev-contact, tsudev-trafficmonitor, tsufiles, lotus-share
-- **Trạng thái**: MỞ - ghi "Đã đọc" + PR + trạng thái production vào cuối bản sao trong repo mình
+- **Trạng thái**: ĐÓNG - PR tsucontact #26, production 16/11/2026
 
 ## Yêu cầu
 
@@ -26,3 +26,10 @@ Scoop, Homebrew, APT, DNF), mỗi lệnh có nút Chép, nhóm theo hệ điều
 - Trang production hiện đúng các kênh như `tsudev.com/apps` cho cùng app (đối chiếu từng lệnh).
 - `node ~/projects/logs/tools/quet-giao-dien.cjs https://<site>.tsudev.com /` ra OK.
 - ⛔ Chạm chân trang / logo / script cài ⇒ PR + chờ chủ dự án duyệt (cổng Bảo vệ bản quyền).
+
+## Kết quả (bản sao tsucontact)
+
+- 16/11/2026 - phiên tsudev-contact-cf: **Đã đọc.** `website/src/lib/noi-dung.ts` `kenhCai()` tải 3 catalog lúc build (pkg, scoop, brew),
+  lọc homepage = `https://contact.tsudev.com`, bỏ `replacedBy`; lỗi tải/sai schema => build thất bại. winget chỉ hiện khi vào `channels`.
+  Khối nằm trên nút tải ở `/tai-ve/`, nút Chép qua `public/chep.js`, dòng "Gói được ký...". Production hiện
+  `scoop install tsudev/tsucontact` (+ lệnh đầy đủ lần đầu), khớp catalog Scoop sau scoop-bucket#10.
