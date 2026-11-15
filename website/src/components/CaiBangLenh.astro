@@ -19,14 +19,14 @@ let stt = 0;
               <p class="cai-lenh__kenh">{l.kenh}</p>
               <div class="cai-lenh__dong">
                 <pre tabindex="0"><code id={id}>{l.lenh}</code></pre>
-                <button type="button" class="nut nut--phu nut--nho" data-chep={id} hidden>Chép<span class="an-di"> lệnh {l.kenh}</span></button>
+                <button type="button" class="nut nut--phu nut--nho" data-chep={id} aria-label={`Chép lệnh ${l.kenh}`} hidden>Chép</button>
               </div>
               {l.lenhDu !== l.lenh && (
                 <details class="cai-lenh__du">
                   <summary>Lần đầu dùng kho này</summary>
                   <div class="cai-lenh__dong">
                     <pre tabindex="0"><code id={`${id}-du`}>{l.lenhDu}</code></pre>
-                    <button type="button" class="nut nut--phu nut--nho" data-chep={`${id}-du`} hidden>Chép<span class="an-di"> lệnh đầy đủ {l.kenh}</span></button>
+                    <button type="button" class="nut nut--phu nut--nho" data-chep={`${id}-du`} aria-label={`Chép lệnh đầy đủ ${l.kenh}`} hidden>Chép</button>
                   </div>
                 </details>
               )}
