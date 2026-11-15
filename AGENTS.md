@@ -1,4 +1,4 @@
-# AGENTS.md - tsudev-contact
+# AGENTS.md - tsucontact (Tsu Contact)
 
 > **ĐỌC FILE NÀY ĐẦU TIÊN trong mọi phiên làm việc mới.**
 

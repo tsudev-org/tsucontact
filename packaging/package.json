@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "name": "tsudev-contact",
-  "winget": "tsudev.Contact",
+  "name": "tsucontact",
+  "winget": "tsudev.TsuContact",
   "homepage": "https://contact.tsudev.com",
   "license": "Apache-2.0",
   "description": {
@@ -9,15 +9,15 @@
     "en": "Convert CSV contact lists to vCard (.vcf) for phones, fully offline"
   },
   "release": {
-    "repo": "tsudev-org/tsudev-contact",
+    "repo": "tsudev-org/tsucontact",
     "tagRegex": "^v(?<version>\\d+\\.\\d+\\.\\d+)$",
     "sums": "SHA256SUMS.txt"
   },
   "assets": {
     "windows-x64": {
-      "file": "tsudev-contact_{version}_x64-setup.exe",
+      "file": "tsucontact_{version}_x64-setup.exe",
       "kind": "portable",
-      "bin": "tsudev-contact_{version}_x64-setup.exe"
+      "bin": "tsucontact_{version}_x64-setup.exe"
     }
   },
   "channels": ["scoop"],

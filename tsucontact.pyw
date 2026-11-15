@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# tsudev-contact - một sản phẩm của tsudev (https://tsudev.com)
+# Tsu Contact - một sản phẩm của tsudev (https://tsudev.com)
 # Điểm khởi chạy mỏng. Toàn bộ mã nguồn nằm trong src/ (xem docs/ARCHITECTURE.md).
 import os
 import sys

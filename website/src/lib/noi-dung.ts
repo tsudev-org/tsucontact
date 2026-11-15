@@ -3,8 +3,8 @@ import { readFileSync } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
 import { Marked } from 'marked';
 
-export const SAN_PHAM = 'tsudev-contact';
-export const REPO = 'tsudev-org/tsudev-contact';
+export const SAN_PHAM = 'Tsu Contact';
+export const REPO = 'tsudev-org/tsucontact';
 export const REPO_URL = `https://github.com/${REPO}`;
 export const RELEASES_URL = `${REPO_URL}/releases/latest`;
 export const SITE = 'https://contact.tsudev.com';
@@ -129,7 +129,7 @@ let boNho: Promise<BanPhatHanh | null> | undefined;
  */
 export function banMoiNhat(): Promise<BanPhatHanh | null> {
   boNho ??= (async () => {
-    const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'User-Agent': 'tsudev-contact-website' };
+    const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'User-Agent': 'tsucontact-website' };
     if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
     const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers });
     if (res.status === 404) return null;
@@ -161,4 +161,68 @@ export function banMoiNhat(): Promise<BanPhatHanh | null> {
     };
   })();
   return boNho;
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Khối "Cài bằng lệnh" (phiếu logs/handover/20261114-02): sinh LÚC BUILD từ catalog chính thức của các kho gói,
+// lọc theo homepage = SITE, bỏ gói chuyển tiếp (replacedBy). Không chép tay tên gói: kho đổi tên thì lần build sau
+// trang tự đúng. Tải catalog lỗi => build THẤT BẠI (không lặng lẽ ra khối rỗng). Trình duyệt không gọi mạng.
+// Mã winget nằm ở packaging/package.json (manifest ở microsoft/winget-pkgs), chỉ hiện khi "winget" đã vào channels.
+export interface LenhCai { kenh: string; lenh: string; lenhDu: string }
+export interface NhomCai { heDieuHanh: string; lenh: LenhCai[] }
+
+export const NGUON_CATALOG = {
+  pkg: 'https://pkg.tsudev.com/catalog.json',
+  scoop: 'https://raw.githubusercontent.com/tsudev-org/scoop-bucket/main/catalog.json',
+  brew: 'https://raw.githubusercontent.com/tsudev-org/homebrew-tap/main/catalog.json',
+} as const;
+
+type GoiCatalog = { name: string; homepage?: string; replacedBy?: string | null; install?: unknown; installFull?: unknown };
+
+async function taiCatalog(ten: keyof typeof NGUON_CATALOG): Promise<GoiCatalog[]> {
+  const url = NGUON_CATALOG[ten];
+  let res: Response;
+  try {
+    res = await fetch(url, { signal: AbortSignal.timeout(20000) });
+  } catch (e) {
+    throw new Error(`Cài bằng lệnh: không tải được catalog ${ten} (${url}): ${(e as Error).message}`);
+  }
+  if (!res.ok) throw new Error(`Cài bằng lệnh: catalog ${ten} (${url}) trả HTTP ${res.status}`);
+  const cat = await res.json() as { schema?: number; packages?: GoiCatalog[] };
+  if (cat.schema !== 1 || !Array.isArray(cat.packages)) throw new Error(`Cài bằng lệnh: catalog ${ten} sai hợp đồng (schema ${cat.schema})`);
+  return cat.packages;
+}
+
+const cuaSite = (g: GoiCatalog) => !g.replacedBy && (g.homepage ?? '').replace(/\/$/, '') === SITE;
+const chuoi = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim() : '');
+
+let boNhoCai: Promise<NhomCai[]> | undefined;
+
+export function kenhCai(): Promise<NhomCai[]> {
+  boNhoCai ??= (async () => {
+    const [pkg, scoop, brew] = await Promise.all([taiCatalog('pkg'), taiCatalog('scoop'), taiCatalog('brew')]);
+    const khai = JSON.parse(docTep('packaging/package.json')) as { winget?: string; channels?: string[] };
+    const win: LenhCai[] = [];
+    if (khai.winget && khai.channels?.includes('winget')) {
+      const lenh = `winget install --id ${khai.winget} -e`;
+      win.push({ kenh: 'winget', lenh, lenhDu: lenh });
+    }
+    for (const g of scoop.filter(cuaSite)) win.push({ kenh: 'Scoop', lenh: chuoi(g.install), lenhDu: chuoi(g.installFull) || chuoi(g.install) });
+    const mac: LenhCai[] = brew.filter(cuaSite).map((g) => ({ kenh: 'Homebrew', lenh: chuoi(g.install), lenhDu: chuoi(g.installFull) || chuoi(g.install) }));
+    const linux: LenhCai[] = [];
+    for (const g of pkg.filter(cuaSite)) {
+      const ngan = (g.install ?? {}) as Record<string, unknown>;
+      const du = (g.installFull ?? {}) as Record<string, unknown>;
+      for (const [k, nhan] of [['apt', 'APT (Debian, Ubuntu)'], ['dnf', 'DNF (Fedora, RHEL)']] as const) {
+        if (chuoi(ngan[k])) linux.push({ kenh: nhan, lenh: chuoi(ngan[k]), lenhDu: chuoi(du[k]) || chuoi(ngan[k]) });
+      }
+    }
+    const nhom: NhomCai[] = [
+      { heDieuHanh: 'Windows', lenh: win },
+      { heDieuHanh: 'macOS', lenh: mac },
+      { heDieuHanh: 'Linux', lenh: linux },
+    ];
+    return nhom.map((n) => ({ ...n, lenh: n.lenh.filter((l) => l.lenh) })).filter((n) => n.lenh.length > 0);
+  })();
+  return boNhoCai;
 }

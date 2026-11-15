@@ -7,7 +7,7 @@
 param(
     [switch]$Visible,
     # Thư mục venv (mặc định trong %TEMP%, không đụng Python hệ thống).
-    [string]$Venv = (Join-Path $env:TEMP 'tsudev-contact-venv')
+    [string]$Venv = (Join-Path $env:TEMP 'tsucontact-venv')
 )
 
 $ErrorActionPreference = 'Stop'

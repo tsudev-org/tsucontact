@@ -10,15 +10,15 @@ def main() -> int:
     from PySide6.QtGui import QGuiApplication
     from PySide6.QtWidgets import QApplication
 
-    from src.app_info import APP_SLUG, APP_VERSION, PUBLISHER
+    from src.app_info import APP_NAME, APP_SLUG, APP_VERSION, PUBLISHER
     from src.i18n import tr
-    from src.services.settings import Settings, removeLegacyData
+    from src.services.settings import Settings, migrateLegacyConfig, removeLegacyData
     from src.ui.main_window import MainWindow
 
     QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     app = QApplication(sys.argv)
     app.setApplicationName(APP_SLUG)
-    app.setApplicationDisplayName(APP_SLUG)
+    app.setApplicationDisplayName(APP_NAME)
     app.setApplicationVersion(APP_VERSION)
     app.setOrganizationName(PUBLISHER)
     app.setStyle('Fusion')  # vẽ đồng nhất trên mọi nền tảng, tôn trọng bảng màu từ token
@@ -30,6 +30,7 @@ def main() -> int:
         except (AttributeError, OSError):
             pass
 
+    migrateLegacyConfig()  # trước khi đọc Settings: giữ lựa chọn của bản tên cũ
     window = MainWindow(Settings())
     window.show()
     if removeLegacyData():

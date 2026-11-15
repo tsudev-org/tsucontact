@@ -87,7 +87,7 @@ def writeVcf(records: Iterable[ContactRecord], path: str,
     """
     revision = utcRevision()
     directory = os.path.dirname(os.path.abspath(path))
-    fd, tempPath = tempfile.mkstemp(prefix='.tsudev-contact-', suffix='.tmp', dir=directory)
+    fd, tempPath = tempfile.mkstemp(prefix='.tsucontact-', suffix='.tmp', dir=directory)
     count = 0
     try:
         with os.fdopen(fd, 'w', encoding='utf-8', newline='') as f:

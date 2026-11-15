@@ -4,7 +4,7 @@
 // public/_headers vẫn áp dụng như trên Pages. Cùng khung với files.tsudev.com, trafficmonitor.tsudev.com.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tsudev-contact",
+  "name": "tsucontact",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",

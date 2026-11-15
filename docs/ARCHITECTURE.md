@@ -1,4 +1,4 @@
-# ARCHITECTURE.md - Kiến trúc tsudev-contact
+# ARCHITECTURE.md - Kiến trúc Tsu Contact
 
 > Ghi một lần, các phiên sau tham chiếu file này thay vì đọc lại mã nguồn.
 > Quy ước chung: `.standards/AGENTS.md`. Lịch sử bản tkinter (<= 26.8.2002): git log trước PR #10.
@@ -33,7 +33,7 @@ src/
 │   └── pipeline.py         # validateRows / exportVcf / exportIssueReport, CancelToken
 ├── i18n/                   # vi.py (mặc định, nguồn chuẩn) + en.py; tr(), formatNumber()
 ├── services/
-│   ├── settings.py         # %LOCALAPPDATA%\tsudev-contact\settings.json, kiểm từng giá trị, ghi nguyên tử
+│   ├── settings.py         # %LOCALAPPDATA%\tsucontact\settings.json, kiểm từng giá trị, ghi nguyên tử
 │   └── tokens.py           # đọc .standards/tokens/design-tokens.json
 ├── ui/                     # PySide6
 │   ├── main_window.py      # 3 bước: tệp -> ghép cột -> xem trước & xuất; Task nền + số thế hệ
@@ -42,7 +42,7 @@ src/
 │   ├── theme.py            # bảng màu + QSS từ token; 'system' theo hệ điều hành
 │   ├── widgets.py          # Card, DropZone, Toast, Task (QRunnable)
 │   ├── icons.py, about.py
-└── main/app.py             # điểm vào; contacts.pyw chỉ gọi main()
+└── main/app.py             # điểm vào; tsucontact.pyw chỉ gọi main()
 ```
 
 Gói lõi tên `engine` (không phải `core`): bộ `.gitignore` chuẩn chặn mọi đường dẫn tên `core` (core dump).

@@ -1,17 +1,19 @@
 ---
 import Trang from '../layouts/Trang.astro';
+import CaiBangLenh from '../components/CaiBangLenh.astro';
 import { banMoiNhat, RELEASES_URL, REPO, REPO_URL } from '../lib/noi-dung';
 
 const ban = await banMoiNhat();
 const mb = (b: number) => `${(b / 1024 / 1024).toFixed(1).replace('.', ',')} MB`;
 const goi = ban?.goi ?? [];
-const vd = goi[0]?.ten ?? 'tsudev-contact_<phiên bản>_x64-setup.exe';
+const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_x64-setup.exe';
 ---
-<Trang tieuDe="Tải về" moTa="Tải tsudev-contact cho Windows 10/11: một tệp .exe chạy ngay không cần cài, kèm mã SHA-256, SBOM và cách kiểm chứng nguồn gốc bản build." duongDan="/tai-ve/">
+<Trang tieuDe="Tải về" moTa="Tải Tsu Contact cho Windows 10/11: một tệp .exe chạy ngay không cần cài, kèm mã SHA-256, SBOM và cách kiểm chứng nguồn gốc bản build." duongDan="/tai-ve/">
   <div class="khung tai-lieu">
     <nav class="tai-lieu__menu" aria-label="Tải về">
       <p>Tải về</p>
       <ul>
+        <li><a href="#cai-lenh">Cài bằng lệnh</a></li>
         <li><a href="#tai">Tải ứng dụng</a></li>
         <li><a href="#kiem-tra">Kiểm tra tệp</a></li>
         <li><a href="#chay">Chạy lần đầu</a></li>
@@ -21,17 +23,19 @@ const vd = goi[0]?.ten ?? 'tsudev-contact_<phiên bản>_x64-setup.exe';
     <article class="van-ban">
       {ban ? (
         <>
-          <h1>Tải tsudev-contact {ban.phienBan}</h1>
+          <h1>Tải Tsu Contact {ban.phienBan}</h1>
           <p>Phát hành ngày {ban.ngay}. Tệp được GitHub Actions build từ mã nguồn công khai; trang này chỉ dẫn tới <a href={ban.url} target="_blank" rel="noopener noreferrer">trang phát hành trên GitHub</a>, không lưu bản sao.</p>
         </>
       ) : (
         <>
-          <h1>Tải tsudev-contact</h1>
+          <h1>Tải Tsu Contact</h1>
           <div class="chu-y">
             <p><strong>Phiên bản mới đang được chuẩn bị.</strong> Khi có, tệp tải kèm mã SHA-256 sẽ hiện ngay tại đây và ở <a href={RELEASES_URL} target="_blank" rel="noopener noreferrer">trang phát hành trên GitHub</a>.</p>
           </div>
         </>
       )}
+
+      <CaiBangLenh />
 
       <h2 id="tai">Tải ứng dụng</h2>
       {goi.length > 0 ? (
@@ -51,7 +55,7 @@ const vd = goi[0]?.ten ?? 'tsudev-contact_<phiên bản>_x64-setup.exe';
           </section>
         </div>
       ) : (
-        <p>Bản dành cho <strong>Windows 10/11 64-bit</strong>: một tệp <code>tsudev-contact_&lt;phiên bản&gt;_x64-setup.exe</code> chạy ngay, không cần cài Python hay thư viện nào.</p>
+        <p>Bản dành cho <strong>Windows 10/11 64-bit</strong>: một tệp <code>tsucontact_&lt;phiên bản&gt;_x64-setup.exe</code> chạy ngay, không cần cài Python hay thư viện nào.</p>
       )}
       <p>Mỗi bản phát hành còn kèm <code>SHA256SUMS.txt</code> (mã băm) và <code>.cdx.json</code> (SBOM: danh sách mọi thành phần đóng gói, chuẩn CycloneDX).</p>
 
@@ -72,8 +76,8 @@ const vd = goi[0]?.ten ?? 'tsudev-contact_<phiên bản>_x64-setup.exe';
       </ol>
 
       <h2 id="cap-nhat">Cập nhật, gỡ bỏ</h2>
-      <p>Ứng dụng không tự kết nối mạng nên không tự cập nhật. Muốn bản mới, tải lại từ trang này rồi thay tệp cũ. Theo dõi repo trên GitHub (<em>Watch</em>, chọn <em>Releases</em>) để được báo khi có bản mới.</p>
-      <p>Gỡ bỏ: xóa tệp <code>.exe</code> và thư mục <code>%LOCALAPPDATA%\tsudev-contact</code> (chỉ chứa lựa chọn giao diện). Ứng dụng không ghi gì vào Registry.</p>
+      <p>Ứng dụng không tự kết nối mạng nên không tự cập nhật. Cài qua Scoop thì <code>scoop update *</code> lấy bản mới; tải tay thì tải lại từ trang này rồi thay tệp cũ. Theo dõi repo trên GitHub (<em>Watch</em>, chọn <em>Releases</em>) để được báo khi có bản mới.</p>
+      <p>Gỡ bỏ: xóa tệp <code>.exe</code> và thư mục <code>%LOCALAPPDATA%\tsucontact</code> (chỉ chứa lựa chọn giao diện). Ứng dụng không ghi gì vào Registry.</p>
     </article>
   </div>
 </Trang>

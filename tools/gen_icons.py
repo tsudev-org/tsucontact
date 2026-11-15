@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Sinh bộ icon desktop của tsudev-contact từ dấu hiệu thu gọn tsudev.
+"""Sinh bộ icon desktop của Tsu Contact từ dấu hiệu thu gọn tsudev.
 
-Nguồn: assets/brand/app/icon-512.png - logo SẢN PHẨM tsudev-contact (chủ dự án giao
+Nguồn: assets/brand/app/icon-512.png - logo SẢN PHẨM Tsu Contact (chủ dự án giao
 13/11/2026), bản vuông bo góc do website/scripts/brand-assets.mjs sinh từ ảnh gốc DUY NHẤT
 assets/brand/source/logo-contact.png. Đổi logo: thay ảnh gốc, chạy brand-assets.mjs, rồi chạy
 script này. (Trước 13/11 nguồn là con cú dùng chung, ghim SHA-256; ghim đó bỏ vì CI đã chạy

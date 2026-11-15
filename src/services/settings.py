@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Tùy chọn người dùng: lưu trong thư mục cấu hình riêng của người dùng, ghi nguyên tử.
 
-- Windows: %LOCALAPPDATA%\\tsudev-contact\\settings.json
-- Linux/macOS: $XDG_CONFIG_HOME/tsudev-contact (mặc định ~/.config/tsudev-contact)
+- Windows: %LOCALAPPDATA%\\tsucontact\\settings.json
+- Linux/macOS: $XDG_CONFIG_HOME/tsucontact (mặc định ~/.config/tsucontact)
+
+Bản <= 26.11.1001 dùng thư mục `tsudev-contact`: lần chạy đầu tự chuyển sang tên mới (`migrateLegacyConfig`).
 
 KHÔNG dùng thư mục temp dùng chung (bản cũ dùng %TEMP% / /tmp: đường dẫn đoán trước được,
 máy nhiều người dùng trên Linux có thể bị cài symlink). File này chỉ chứa tùy chọn hiển
@@ -15,7 +17,8 @@ import os
 import sys
 import tempfile
 
-APP_DIRNAME = 'tsudev-contact'
+APP_DIRNAME = 'tsucontact'
+LEGACY_DIRNAME = 'tsudev-contact'   # tên trước 16/11/2026
 SETTINGS_FILE = 'settings.json'
 MAX_SETTINGS_BYTES = 64 * 1024
 
@@ -39,12 +42,31 @@ _VALIDATORS = {
 }
 
 
-def configDir() -> str:
+def _configBase() -> str:
     if sys.platform == 'win32':
-        base = os.environ.get('LOCALAPPDATA') or os.path.expanduser(r'~\AppData\Local')
-    else:
-        base = os.environ.get('XDG_CONFIG_HOME') or os.path.expanduser('~/.config')
-    return os.path.join(base, APP_DIRNAME)
+        return os.environ.get('LOCALAPPDATA') or os.path.expanduser(r'~\AppData\Local')
+    return os.environ.get('XDG_CONFIG_HOME') or os.path.expanduser('~/.config')
+
+
+def configDir() -> str:
+    return os.path.join(_configBase(), APP_DIRNAME)
+
+
+def migrateLegacyConfig(base: str | None = None) -> bool:
+    """Chuyển thư mục cấu hình tên cũ `tsudev-contact` sang `tsucontact` (một lần).
+
+    Chỉ đổi tên khi thư mục mới chưa có và thư mục cũ là thư mục thật (không theo symlink).
+    Lỗi bất kỳ: bỏ qua, app dùng mặc định - tệp chỉ chứa tùy chọn hiển thị.
+    """
+    base = base or _configBase()
+    old, new = os.path.join(base, LEGACY_DIRNAME), os.path.join(base, APP_DIRNAME)
+    try:
+        if os.path.lexists(new) or not os.path.isdir(old) or os.path.islink(old):
+            return False
+        os.rename(old, new)
+        return True
+    except OSError:
+        return False
 
 
 def settingsPath() -> str:
@@ -108,11 +130,11 @@ def removeLegacyData() -> list[str]:
     """Xóa dữ liệu các bản cũ để lại trong thư mục temp, gồm CSDL chứa danh bạ (PII).
 
     Bản <= 26.8.2002 ghi `contacts_data.db` (toàn bộ danh bạ lần chuyển gần nhất) vào
-    %TEMP%\\tsudev-contact và không bao giờ xóa. Chỉ xóa đúng các tên file app đã tạo,
+    %TEMP%\\tsudev-contact (tên cũ) và không bao giờ xóa. Chỉ xóa đúng các tên file app đã tạo,
     và chỉ khi đó là file thường (không theo symlink).
     """
     removed = []
-    legacyDir = os.path.join(tempfile.gettempdir(), APP_DIRNAME)
+    legacyDir = os.path.join(tempfile.gettempdir(), LEGACY_DIRNAME)
     for name in ('contacts_data.db', 'contacts_data.db-journal', 'settings.json'):
         path = os.path.join(legacyDir, name)
         try:

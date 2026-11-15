@@ -132,3 +132,22 @@ def test_dinh_dang_so_theo_ngon_ngu():
     i18n.setLanguage('en')
     assert i18n.formatNumber(1128) == '1,128'
     i18n.setLanguage('vi')
+
+
+def test_di_tru_thu_muc_cau_hinh_ten_cu(tmp_path):
+    old = tmp_path / 'tsudev-contact'
+    old.mkdir()
+    (old / 'settings.json').write_text('{"theme": "light"}', encoding='utf-8')
+    assert settingsModule.migrateLegacyConfig(str(tmp_path)) is True
+    new = tmp_path / 'tsucontact'
+    assert (new / 'settings.json').exists() and not old.exists()
+    assert settingsModule.Settings(str(new / 'settings.json')).get('theme') == 'light'
+    # Chạy lại: không làm gì, không ghi đè thư mục mới
+    assert settingsModule.migrateLegacyConfig(str(tmp_path)) is False
+
+
+def test_di_tru_khong_ghi_de_thu_muc_moi(tmp_path):
+    (tmp_path / 'tsudev-contact').mkdir()
+    (tmp_path / 'tsucontact').mkdir()
+    assert settingsModule.migrateLegacyConfig(str(tmp_path)) is False
+    assert (tmp_path / 'tsudev-contact').exists()

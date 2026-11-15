@@ -1,5 +1,5 @@
 // Kiểm tra bản build (ECOSYSTEM_IDENTITY mục 2.2 và 4): mọi trang có title đúng khuôn, og:site_name = tsudev, canonical
-// không www, description 120-160 ký tự, không CSS nội tuyến (CSP), script duy nhất là /theme.js nạp chặn trong <head>
+// không www, description 120-160 ký tự, không CSS nội tuyến (CSP), script duy nhất là /theme.js nạp chặn trong <head> (+ /chep.js defer ở trang có khối Cài bằng lệnh)
 // trước stylesheet và được CSP cho phép, liên kết mở tab mới có rel đủ,
 // chỉ dùng gạch ngang ngắn trong chữ hiển thị (AGENTS.md mục 7), liên kết nội bộ không gãy.
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -19,7 +19,7 @@ function duyet(thuMuc) {
 function kiemTra(tep, html) {
   const ten = tep.slice(dist.length);
   const title = html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '';
-  if (!/^(.+ - )?tsudev-contact \| tsudev$/.test(title)) loi.push(`${ten}: title sai khuôn: ${title}`);
+  if (!/^(.+ - )?Tsu Contact \| tsudev$/.test(title)) loi.push(`${ten}: title sai khuôn: ${title}`);
   if (!html.includes('<meta property="og:site_name" content="tsudev">')) loi.push(`${ten}: thiếu og:site_name tsudev`);
   if (!/<link rel="canonical" href="https:\/\/contact\.tsudev\.com\//.test(html)) loi.push(`${ten}: thiếu canonical`);
   const mota = html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '';
@@ -28,7 +28,10 @@ function kiemTra(tep, html) {
   // Script: đúng một thẻ <script src="/theme.js"></script> (không defer/async/module: phải chặn để không nháy màu),
   // nằm trong <head> và trước stylesheet đầu tiên. Script nội tuyến bị CSP chặn im lặng ở production.
   const theScript = [...html.matchAll(/<script(?![^>]*type="application\/ld\+json")[^>]*>/g)].map((m) => m[0]);
-  if (theScript.length !== 1 || theScript[0] !== '<script src="/theme.js">') loi.push(`${ten}: script phải đúng một <script src="/theme.js">: ${theScript.join(' ')}`);
+  // Ngoại lệ duy nhất: /chep.js (nút Chép của khối Cài bằng lệnh) nạp defer, đúng một lần, chỉ ở trang có khối đó.
+  const phu = theScript.filter((t) => t !== '<script src="/theme.js">');
+  const chiChep = phu.length === 0 || (phu.length === 1 && phu[0] === '<script src="/chep.js" defer>' && html.includes('data-chep='));
+  if (theScript.filter((t) => t === '<script src="/theme.js">').length !== 1 || !chiChep) loi.push(`${ten}: script phải đúng một <script src="/theme.js"> (+ /chep.js ở trang Cài bằng lệnh): ${theScript.join(' ')}`);
   const viTriScript = html.indexOf('<script src="/theme.js">');
   const viTriCss = html.search(/<link[^>]*rel="stylesheet"/);
   if (viTriScript < 0 || viTriScript > html.indexOf('</head>') || (viTriCss >= 0 && viTriScript > viTriCss)) loi.push(`${ten}: theme.js phải nằm trong <head>, trước stylesheet`);
