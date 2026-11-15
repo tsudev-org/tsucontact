@@ -3,7 +3,7 @@
 
 STRINGS = {
     'app.tagline': 'Convert CSV contacts to vCard',
-    'app.windowTitle': 'tsudev-contact - Convert CSV contacts to vCard',
+    'app.windowTitle': 'Tsu Contact - Convert CSV contacts to vCard',
     'common.cancel': 'Cancel',
     'common.close': 'Close',
     'common.ok': 'OK',
@@ -138,4 +138,6 @@ STRINGS = {
     'about.product': 'Product page',
     'about.ecosystem': 'A tsudev product',
     'about.source': 'Source code',
+    'about.donate': 'Support tsudev',
+    'about.donateNote': 'Support is voluntary, goes 100% to the developer and unlocks no features. The button opens tsudev.com/ung-ho in your browser.',
 }

@@ -135,7 +135,7 @@ def exportIssueReport(records: list[ContactRecord], path: str,
     """Ghi báo cáo các dòng có cảnh báo/lỗi ra CSV UTF-8 có BOM (Excel mở đúng tiếng Việt)."""
     rows = [r for r in records if r.issues]
     directory = os.path.dirname(os.path.abspath(path))
-    fd, tempPath = tempfile.mkstemp(prefix='.tsudev-contact-', suffix='.tmp', dir=directory)
+    fd, tempPath = tempfile.mkstemp(prefix='.tsucontact-', suffix='.tmp', dir=directory)
     try:
         with os.fdopen(fd, 'w', encoding='utf-8-sig', newline='') as f:
             writer = csv.writer(f)

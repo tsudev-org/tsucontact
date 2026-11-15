@@ -3,8 +3,8 @@ import { readFileSync } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
 import { Marked } from 'marked';
 
-export const SAN_PHAM = 'tsudev-contact';
-export const REPO = 'tsudev-org/tsudev-contact';
+export const SAN_PHAM = 'Tsu Contact';
+export const REPO = 'tsudev-org/tsucontact';
 export const REPO_URL = `https://github.com/${REPO}`;
 export const RELEASES_URL = `${REPO_URL}/releases/latest`;
 export const SITE = 'https://contact.tsudev.com';
@@ -129,7 +129,7 @@ let boNho: Promise<BanPhatHanh | null> | undefined;
  */
 export function banMoiNhat(): Promise<BanPhatHanh | null> {
   boNho ??= (async () => {
-    const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'User-Agent': 'tsudev-contact-website' };
+    const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'User-Agent': 'tsucontact-website' };
     if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
     const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers });
     if (res.status === 404) return null;

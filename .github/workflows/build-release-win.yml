@@ -1,6 +1,6 @@
 # Đẩy tag `v<APP_VERSION>` -> build .exe trên Windows, sinh SBOM, ký chứng thực nguồn gốc bản build
 # (SLSA build provenance, miễn phí với repo public), đính .exe + SBOM + SHA256SUMS vào Release.
-# Người tải kiểm: gh attestation verify <file>.exe --repo tsudev-org/tsudev-contact
+# Người tải kiểm: gh attestation verify <file>.exe --repo tsudev-org/tsucontact
 name: Build & Release (Windows)
 
 on:
@@ -61,7 +61,7 @@ jobs:
       - name: Lưu sản phẩm build
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: tsudev-contact-windows
+          name: tsucontact-windows
           path: release/*
 
       - name: Đính vào Release

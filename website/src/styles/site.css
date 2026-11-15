@@ -124,7 +124,7 @@ pre {
   background: color-mix(in srgb, var(--primary) 10%, var(--bg-surface));
   border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent); color: var(--text-link);
 }
-/* tsudev-contact: ảnh minh họa rộng hết khung, đặt dưới lưới thẻ */
+/* Tsu Contact: ảnh minh họa rộng hết khung, đặt dưới lưới thẻ */
 .minh-hoa--rong { margin-top: 2rem; max-width: 64rem; margin-left: auto; margin-right: auto; }
 .nhom-dinh-dang { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr)); gap: 0.6rem 1rem; list-style: none; padding: 0; margin: 0; }
 .nhom-dinh-dang li { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 1rem; color: var(--text-secondary); }

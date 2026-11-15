@@ -28,7 +28,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from src.app_info import APP_SLUG
+from src.app_info import APP_NAME
 from src.engine.csv_source import CsvData, CsvError, readCsv
 from src.engine.fields import FIELDS
 from src.engine.pipeline import Cancelled, MappingError, ValidationSummary, exportIssueReport, exportVcf, validateRows
@@ -114,10 +114,10 @@ class MainWindow(QMainWindow):
         pm = QPixmap(resourcePath('assets/icons/app-64.png'))
         pm.setDevicePixelRatio(2.0)
         logo.setPixmap(pm)
-        logo.setAccessibleName('tsudev')
+        logo.setAccessibleName(APP_NAME)
         names = QVBoxLayout()
         names.setSpacing(0)
-        brand = label(APP_SLUG)
+        brand = label(APP_NAME)
         brand.setObjectName('brandName')
         self.taglineLabel = label()
         self.taglineLabel.setObjectName('brandTagline')

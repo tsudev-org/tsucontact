@@ -1,25 +1,34 @@
-<img src="website/public/brand/logo-contact.png" alt="Logo tsudev-contact" height="96">
+<img src="website/public/brand/logo-contact.png" alt="Logo Tsu Contact" height="96">
 
-# tsudev-contact
+# Tsu Contact
 
 Công cụ desktop chuyển danh bạ **CSV → vCard (.vcf)** để nạp vào điện thoại, chạy ngoại tuyến hoàn toàn trên máy của bạn.
 
 Một sản phẩm của [tsudev](https://tsudev.com).
 
 - Trang sản phẩm: <https://contact.tsudev.com>
+- Tên cũ: `tsudev-contact` (đổi 16/11/2026, [ADR-0001](docs/adr/0001-ten-san-pham-tsu-contact.md)); link repo cũ tự chuyển hướng.
 - **Hạng sản phẩm: C** - công cụ cục bộ, không có tài khoản, không gửi dữ liệu đi đâu
   (`.standards/docs/AUTH_AND_ACCOUNT.md` mục 1).
 
 ## Tải bản cài đặt (người dùng cuối)
 
-[**Trang phát hành → Releases**](https://github.com/tsudev-org/tsudev-contact/releases/latest)
-→ tải `tsudev-contact_{version}_x64-setup.exe` trong mục *Assets*, bấm đúp để chạy.
+Cài bằng [Scoop](https://scoop.sh) (tự kiểm SHA-256, tự cập nhật):
+
+```powershell
+scoop bucket add tsudev https://github.com/tsudev-org/scoop-bucket
+scoop install tsudev/tsucontact
+```
+
+Hoặc tải tay:
+[**Trang phát hành → Releases**](https://github.com/tsudev-org/tsucontact/releases/latest)
+→ tải `tsucontact_{version}_x64-setup.exe` trong mục *Assets*, bấm đúp để chạy.
 File chạy độc lập, **không cần cài Python**. Lần đầu SmartScreen có thể cảnh báo (chưa có chứng
 thư của CA - xem mục *Ký số bản .exe*): *More info → Run anyway*. Muốn chắc file không bị sửa,
 đối chiếu với `SHA256SUMS.txt` đính kèm cùng bản phát hành:
 
 ```powershell
-Get-FileHash tsudev-contact_26.8.2002_x64-setup.exe -Algorithm SHA256
+Get-FileHash tsucontact_26.8.2002_x64-setup.exe -Algorithm SHA256
 ```
 
 
@@ -42,7 +51,7 @@ Yêu cầu **Python 3.11+**.
 ```bash
 python -m venv .venv && . .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install --require-hashes --no-deps -r requirements.txt -r requirements-dev.txt
-python contacts.pyw
+python tsucontact.pyw
 ```
 
 ## Chạy test
@@ -70,7 +79,7 @@ powershell -ExecutionPolicy Bypass -File scripts\build-win.ps1
 ```
 
 Script cài phụ thuộc theo hash, chạy test, gọi PyInstaller, sinh SBOM CycloneDX và đặt sản phẩm vào `release/` với tên
-theo `.standards/docs/VERSIONING.md` mục 2 (ví dụ `tsudev-contact_26.8.2002_x64-setup.exe`).
+theo `.standards/docs/VERSIONING.md` mục 2 (ví dụ `tsucontact_26.8.2002_x64-setup.exe`).
 Tên file lấy từ `RELEASE_BASENAME` trong `src/app_info.py` - mỗi bản mới tăng 2 số cuối.
 
 ## Phát hành một bản mới
@@ -82,7 +91,7 @@ Tên file lấy từ `RELEASE_BASENAME` trong `src/app_info.py` - mỗi bản m�
 Workflow `.github/workflows/build-release-win.yml` sẽ chạy trên `windows-latest`: cài phụ thuộc theo hash,
 chạy test, đối chiếu tag với `APP_VERSION`, gọi `scripts/build-win.ps1`, ký **chứng thực nguồn gốc bản build**
 và đính `.exe` + SBOM (`.cdx.json`) + `SHA256SUMS.txt` vào Release của tag đó. Người tải kiểm chứng:
-`gh attestation verify <file>.exe --repo tsudev-org/tsudev-contact`.
+`gh attestation verify <file>.exe --repo tsudev-org/tsucontact`.
 Chỉ chạy khi có tag (không chạy mỗi lần push) - giữ thói quen tiết kiệm phút Actions.
 
 > Repo để **public** nên Actions chạy miễn phí không giới hạn. Nếu vì lý do nào đó Actions không
@@ -90,7 +99,7 @@ Chỉ chạy khi có tag (không chạy mỗi lần push) - giữ thói quen ti�
 >
 > ```powershell
 > powershell -ExecutionPolicy Bypass -File scripts\build-win.ps1
-> gh release create v26.8.2003 release\*.exe --title "tsudev-contact 26.8.2003 - Windows x64" --notes-file notes.md
+> gh release create v26.8.2003 release\*.exe --title "Tsu Contact 26.8.2003 - Windows x64" --notes-file notes.md
 > ```
 
 ## Ký số bản .exe (tùy chọn)

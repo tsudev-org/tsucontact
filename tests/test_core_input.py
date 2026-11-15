@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from hypothesis import given
+from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from src.engine import csv_source
@@ -93,6 +93,7 @@ def test_cot_trung_ten_hoac_rong_van_phan_biet(tmp_path):
     assert data.headers == ['Tên', 'Cột 2', 'Tên (2)']
 
 
+@settings(deadline=None)  # thuộc tính "không sập", không đo tốc độ - máy CI/WSL chậm làm lỗi giả
 @given(st.binary(max_size=2000))
 def test_tinh_chat_byte_bat_ky_khong_lam_sap(tmp_path_factory, blob):
     path = tmp_path_factory.mktemp('fuzz') / 'x.csv'

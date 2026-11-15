@@ -1,5 +1,5 @@
 {
-  "$note": "Ghi đè màu riêng của tsudev-contact lên .standards/tokens/design-tokens.json (bản sao chỉ-đọc, không sửa ở đó). Bảng đen tuyền + tím của hệ tsudev - phiếu logs/handover/20261110-05 mục 2, quyết định chủ dự án 10/11/2026, khớp tsudev.com. Chỉ hai chế độ: light, dark. Vai trò không khai ở đây giữ giá trị chuẩn.",
+  "$note": "Ghi đè màu riêng của Tsu Contact lên .standards/tokens/design-tokens.json (bản sao chỉ-đọc, không sửa ở đó). Bảng đen tuyền + tím của hệ tsudev - phiếu logs/handover/20261110-05 mục 2, quyết định chủ dự án 10/11/2026, khớp tsudev.com. Chỉ hai chế độ: light, dark. Vai trò không khai ở đây giữ giá trị chuẩn.",
   "color": {
     "light": {
       "bg-base": "#FAFAFA",

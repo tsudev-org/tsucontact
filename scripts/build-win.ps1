@@ -1,4 +1,4 @@
-﻿# build-win.ps1 - Gói bản phát hành Windows x64 cho tsudev-contact.
+﻿# build-win.ps1 - Gói bản phát hành Windows x64 cho Tsu Contact.
 # LƯU Ý: file này PHẢI lưu ở UTF-8 CÓ BOM - Windows PowerShell 5.1 đọc .ps1 không BOM
 # theo bảng mã ANSI, làm hỏng chữ tiếng Việt và gây lỗi cú pháp khi chạy.
 # Chạy từ thư mục gốc repo:  powershell -ExecutionPolicy Bypass -File scripts\build-win.ps1
@@ -60,7 +60,7 @@ if (-not $SkipTests) {
 
 # --- 5. Đóng gói ---
 Write-Step 'PyInstaller'
-& $Python -m PyInstaller --noconfirm --clean Contacts.spec
+& $Python -m PyInstaller --noconfirm --clean tsucontact.spec
 Invoke-Checked 'PyInstaller'
 
 # --- 6. Chuyển sản phẩm sang release/ ---

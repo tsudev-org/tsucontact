@@ -23,21 +23,21 @@ const baoMat = [
   { t: 'Bản build kiểm chứng được', d: 'Build trên GitHub Actions từ mã nguồn công khai, kèm SHA-256, SBOM và chứng thực nguồn gốc. Phụ thuộc khóa bằng mã băm.' },
 ];
 ---
-<Trang moTa="tsudev-contact: chuyển danh bạ CSV sang vCard để nạp vào điện thoại, kiểm tra từng dòng, chuẩn hóa số Việt Nam, chạy ngoại tuyến, giao diện tiếng Việt." duongDan="/">
+<Trang moTa="Tsu Contact: chuyển danh bạ CSV sang vCard để nạp vào điện thoại, kiểm tra từng dòng, chuẩn hóa số Việt Nam, chạy ngoại tuyến, giao diện tiếng Việt." duongDan="/">
   <section class="mo-dau">
     <div class="khung mo-dau__luoi">
       <div>
         <span class="nhan">{ban ? `Phiên bản ${ban.phienBan} · ${ban.ngay}` : 'Bản mới đang được chuẩn bị'}</span>
         <h1>Danh bạ từ Excel vào điện thoại, <span class="chu-tim">đúng và đủ</span></h1>
-        <p class="mo-dau__phu">tsudev-contact chuyển tệp CSV thành vCard (.vcf), kiểm tra từng số điện thoại trước khi xuất và chỉ cho bạn dòng nào cần sửa. Chạy hoàn toàn trên máy của bạn, không cần mạng, không cần tài khoản.</p>
+        <p class="mo-dau__phu">Tsu Contact chuyển tệp CSV thành vCard (.vcf), kiểm tra từng số điện thoại trước khi xuất và chỉ cho bạn dòng nào cần sửa. Chạy hoàn toàn trên máy của bạn, không cần mạng, không cần tài khoản.</p>
         <div class="mo-dau__nut">
-          <a class="nut nut--chinh" href="/tai-ve/">Tải tsudev-contact</a>
+          <a class="nut nut--chinh" href="/tai-ve/">Tải Tsu Contact</a>
           <a class="nut nut--phu" href="/huong-dan/">Xem hướng dẫn</a>
         </div>
         <p class="mo-dau__ghi-chu">Windows 10/11 x64 · một tệp .exe, không cần cài · miễn phí</p>
       </div>
       <figure class="minh-hoa">
-        <img src="/anh/ung-dung-sang.png" alt="Cửa sổ tsudev-contact: bên trái chọn tệp CSV và ghép cột, bên phải bảng xem trước danh bạ có cột trạng thái Hợp lệ, Cảnh báo, Lỗi" width="1280" height="820">
+        <img src="/anh/ung-dung-sang.png" alt="Cửa sổ Tsu Contact: bên trái chọn tệp CSV và ghép cột, bên phải bảng xem trước danh bạ có cột trạng thái Hợp lệ, Cảnh báo, Lỗi" width="1280" height="820">
         <figcaption>Ba bước trên một màn hình, dữ liệu mẫu</figcaption>
       </figure>
     </div>
@@ -55,7 +55,7 @@ const baoMat = [
   <section class="muc" aria-labelledby="tinh-nang">
     <div class="khung">
       <h2 id="tinh-nang">Làm kỹ phần khó nhất: dữ liệu thật</h2>
-      <p class="muc__dan">Danh bạ gõ tay trong Excel hiếm khi sạch. tsudev-contact được làm để bắt đúng những lỗi hay gặp nhất.</p>
+      <p class="muc__dan">Danh bạ gõ tay trong Excel hiếm khi sạch. Tsu Contact được làm để bắt đúng những lỗi hay gặp nhất.</p>
       <ul class="the-luoi">
         {tinhNang.map((x) => <li class="the"><h3>{x.t}</h3><p>{x.d}</p></li>)}
       </ul>

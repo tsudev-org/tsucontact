@@ -1,5 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-# Đóng gói tsudev-contact (PySide6) thành MỘT file .exe.
+# Đóng gói Tsu Contact (PySide6) thành MỘT file .exe.
 # Tên file theo .standards/docs/VERSIONING.md mục 2 - lấy từ src/app_info.py (nguồn duy nhất).
 import sys
 
@@ -17,7 +17,7 @@ VERSION_INFO = VSVersionInfo(
     kids=[
         StringFileInfo([StringTable('042a04b0', [
             StringStruct('CompanyName', PUBLISHER),
-            StringStruct('FileDescription', 'tsudev-contact - Chuyển danh bạ CSV sang vCard'),
+            StringStruct('FileDescription', 'Tsu Contact - Chuyển danh bạ CSV sang vCard'),
             StringStruct('FileVersion', APP_VERSION),
             StringStruct('InternalName', APP_SLUG),
             StringStruct('LegalCopyright', COPYRIGHT),
@@ -44,7 +44,7 @@ EXCLUDES = [
 ]
 
 a = Analysis(
-    ['contacts.pyw'],
+    ['tsucontact.pyw'],
     pathex=['.'],
     binaries=[],
     datas=[
@@ -60,7 +60,7 @@ a = Analysis(
         ('LICENSE', '.'),
         ('NOTICE', '.'),
         ('.standards/tokens/design-tokens.json', '.standards/tokens'),
-        ('tokens/extensions.tsudev-contact.json', 'tokens'),
+        ('tokens/extensions.tsucontact.json', 'tokens'),
     ],
     hiddenimports=[],
     hookspath=[],

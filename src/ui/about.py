@@ -6,14 +6,14 @@ from PySide6.QtCore import Qt, QUrl
 from PySide6.QtGui import QDesktopServices, QPixmap
 from PySide6.QtWidgets import QDialog, QHBoxLayout, QLabel, QVBoxLayout
 
-from src.app_info import APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, REPO_URL, SUPPORT_URL
+from src.app_info import APP_NAME, APP_VERSION, COPYRIGHT, DONATE_URL, ECOSYSTEM_URL, REPO_URL, SUPPORT_URL
 from src.i18n import tr
 from src.services.tokens import Tokens
 from src.ui.widgets import button, label
 from src.utils.resource_path import resourcePath
 
 # Chỉ mở đúng các địa chỉ cố định này - không bao giờ mở URL lấy từ dữ liệu người dùng.
-_ALLOWED_URLS = (SUPPORT_URL, ECOSYSTEM_URL, REPO_URL)
+_ALLOWED_URLS = (SUPPORT_URL, ECOSYSTEM_URL, REPO_URL, DONATE_URL)
 
 
 def openTrustedUrl(url: str) -> bool:
@@ -38,10 +38,10 @@ class AboutDialog(QDialog):
         pm = QPixmap(resourcePath('assets/icons/app-128.png'))
         pm.setDevicePixelRatio(2.0)
         logo.setPixmap(pm)
-        logo.setAccessibleName('tsudev')
+        logo.setAccessibleName(APP_NAME)
         titles = QVBoxLayout()
         titles.setSpacing(t.space(1))
-        name = label(APP_SLUG)
+        name = label(APP_NAME)
         name.setObjectName('brandName')
         titles.addWidget(name)
         titles.addWidget(label(tr('about.version', version=APP_VERSION), 'secondary'))
@@ -63,8 +63,14 @@ class AboutDialog(QDialog):
             row.addWidget(link)
             root.addLayout(row)
 
+        # Ủng hộ: chỉ mở trang web (quyết định 20261112-02 mục 2), kèm câu tự nguyện.
+        root.addWidget(label(tr('about.donateNote'), 'muted', wrap=True))
         root.addWidget(label(COPYRIGHT, 'muted'))
         footer = QHBoxLayout()
+        donate = button(tr('about.donate'))
+        donate.setToolTip(DONATE_URL)
+        donate.clicked.connect(lambda _=False: openTrustedUrl(DONATE_URL))
+        footer.addWidget(donate)
         footer.addStretch(1)
         close = button(tr('common.close'), 'primary')
         close.setDefault(True)

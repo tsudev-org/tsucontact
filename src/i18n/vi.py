@@ -4,7 +4,7 @@
 STRINGS = {
     # --- Chung ---
     'app.tagline': 'Chuyển danh bạ CSV sang vCard',
-    'app.windowTitle': 'tsudev-contact - Chuyển danh bạ CSV sang vCard',
+    'app.windowTitle': 'Tsu Contact - Chuyển danh bạ CSV sang vCard',
     'common.cancel': 'Hủy',
     'common.close': 'Đóng',
     'common.ok': 'Đồng ý',
@@ -150,4 +150,6 @@ STRINGS = {
     'about.product': 'Trang sản phẩm',
     'about.ecosystem': 'Một sản phẩm của tsudev',
     'about.source': 'Mã nguồn',
+    'about.donate': 'Ủng hộ tsudev',
+    'about.donateNote': 'Ủng hộ là tự nguyện, 100% tới nhà phát triển và không mở khóa tính năng nào. Nút mở trang tsudev.com/ung-ho trên trình duyệt.',
 }

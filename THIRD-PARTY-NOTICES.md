@@ -1,6 +1,6 @@
 # Thành phần bên thứ ba
 
-tsudev-contact đóng gói các thành phần sau. Toàn văn giấy phép đi kèm bản phát hành hoặc tại liên kết.
+Tsu Contact đóng gói các thành phần sau. Toàn văn giấy phép đi kèm bản phát hành hoặc tại liên kết.
 
 | Thành phần | Phiên bản | Giấy phép | Dùng cho |
 | --- | --- | --- | --- |
