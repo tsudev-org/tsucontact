@@ -1,7 +1,7 @@
 # STATE.md - Trạng thái project (agent đọc đầu phiên, cập nhật cuối phiên)
 
 ## Hàng đợi task (làm từ trên xuống)
-- [ ] **winget** `tsudev.TsuContact` qua komac - secret `WINGET_TOKEN` ĐÃ CÓ (16/11/2026). Việc: workflow komac, `winget validate` + cài thử, PR bản đầu lên `microsoft/winget-pkgs`, thêm `"winget"` vào `channels` (phiếu 20261115-01 mục 2.3).
+- [ ] **winget** `tsudev.TsuContact` ⏳ CHỜ MODERATOR: 16/11/2026 (phiên tsudev-27) PR winget-pkgs #477388 (trước là `tsudev.Contact` 26.11.1001, đã qua kiểm tự động) được SỬA TẠI CHỖ sang `tsudev.TsuContact` 26.11.1601 (portable, lệnh `tsucontact`, sha256 khớp SHA256SUMS) - manifest lưu ở `packaging/winget/manifests/`. Khi merge: thêm `"winget"` vào `channels` + khai `winget: 'tsudev.TsuContact'` ở tsudev `packages/ui/src/lib/ecosystem.ts`. Bản sau: tự động hoá bằng komac trong workflow phát hành (`WINGET_TOKEN` đã có).
 - [ ] **Best Practices passing** + good first issue (phiếu 20261115-01, 20261113-03).
 - [x] **QU-STD-AUTH** XONG 11/11/2026: bộ quy ước v3.4.0 (TS-15) xếp repo này hạng C; hạng C không bắt buộc đăng nhập, app chạy trọn ngoại tuyến không tài khoản (`.standards/docs/AUTH_AND_ACCOUNT.md` mục 1).
 
