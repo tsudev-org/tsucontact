@@ -1,9 +1,8 @@
 # STATE.md - Trạng thái project (agent đọc đầu phiên, cập nhật cuối phiên)
 
 ## Hàng đợi task (làm từ trên xuống)
-- [ ] **winget** `tsudev.TsuContact` qua komac - chờ 👤 `WINGET_TOKEN` (phiếu 20261115-01 mục 2.3).
+- [ ] **winget** `tsudev.TsuContact` qua komac - secret `WINGET_TOKEN` ĐÃ CÓ (16/11/2026). Việc: workflow komac, `winget validate` + cài thử, PR bản đầu lên `microsoft/winget-pkgs`, thêm `"winget"` vào `channels` (phiếu 20261115-01 mục 2.3).
 - [ ] **Best Practices passing** + good first issue (phiếu 20261115-01, 20261113-03).
-- [ ] 👤 Xóa Worker cũ `tsudev-contact`; tắt Cloudflare JavaScript Detections; đổi tên thư mục cục bộ (phiếu 20261116-01 mục 2).
 - [x] **QU-STD-AUTH** XONG 11/11/2026: bộ quy ước v3.4.0 (TS-15) xếp repo này hạng C; hạng C không bắt buộc đăng nhập, app chạy trọn ngoại tuyến không tài khoản (`.standards/docs/AUTH_AND_ACCOUNT.md` mục 1).
 
 ### Gợi ý (chưa phải task)
@@ -16,6 +15,7 @@
 |---|---|---|
 
 ## Đã hoàn thành (mới nhất trên cùng)
+- 16/11/2026 - Việc 👤 sau đổi tên, đều đã đo lại: chủ dự án xóa Worker cũ `tsudev-contact` (`contact.tsudev.com` vẫn 200 trên Worker `tsucontact`); JavaScript Detections đã tắt (phiên tsudev-swico-34, tsudev#280; HTML không còn `challenge-platform`); tsudev#276 (TRADEMARKS) chủ dự án duyệt + merge; nội dung hệ sinh thái áp lên Neon (`/docs/gioi-thieu-he-sinh-thai-tsudev` hiện Tsu Contact, `/docs/cai-ung-dung-bang-winget` hiện `tsucontact`); secret `WINGET_TOKEN` đã đặt; thư mục cục bộ là `~/projects/tsucontact`, liên kết tạm `~/projects/tsudev-contact` đã xóa.
 - 16/11/2026 - **Đổi tên Tsu Contact** (ADR-0001): repo `tsudev-org/tsucontact`, phát hành **v26.11.1601** (SHA256SUMS ký Sigstore), Worker `tsucontact` deploy `contact.tsudev.com`, Scoop `tsucontact` (scoop-bucket#10), khối Cài bằng lệnh, Ủng hộ -> tsudev.com/ung-ho, Scorecard, README.en.md. PR #26. Bàn giao: phiếu `20261116-01`.
 - 11/11/2026 - Giấy phép **Apache-2.0** (chủ project giao phiên đóng gói chọn phương án tối ưu): đồng bộ swico/lotus, có điều khoản bằng sáng chế, là giấy phép OSI (đủ điều kiện ký Authenticode miễn phí qua SignPath), tương thích PySide6 LGPL-3.0 liên kết động. `LICENSE`, `NOTICE` kèm trong `.exe`.
 - 10/11/2026 - Phiếu `20261110-05` (giao diện đen + tím kiểu Supabase): website + app PySide6 chỉ Sáng/Tối/Hệ thống, mặc định Tối; màu riêng ở `tokens/extensions.tsudev-contact.json`. Chi tiết: mục Kết quả của phiếu.
