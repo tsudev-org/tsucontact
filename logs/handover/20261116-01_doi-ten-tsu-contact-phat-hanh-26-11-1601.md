@@ -17,11 +17,10 @@
 
 ## 2. Còn lại
 
-1. 👤 Xóa Worker cũ `tsudev-contact` trên Cloudflare (không còn route/tên miền; phiên bị chặn quyền xóa):
-   `cd website && npx wrangler delete --name tsudev-contact`.
-2. 👤 Tắt Cloudflare JavaScript Detections (script nội tuyến bị CSP chặn trên mọi `*.tsudev.com`) - phiếu tsudev 20261116-C1.
-3. 👤 Đổi tên thư mục cục bộ `~/projects/tsudev-contact` -> `~/projects/tsucontact` khi không còn phiên nào mở trong đó
-   (`mv` + `git remote` đã trỏ URL mới). Nếu phiên này đã đổi thì bỏ qua.
-4. winget qua komac (`tsudev.TsuContact`) - chờ 👤 secret `WINGET_TOKEN`; sau đó `"winget"` vào `channels` (khối Cài bằng lệnh tự hiện).
-5. Best Practices passing (phiếu 20261115-01 mục 2.2, 2.4); good first issue (20261113-03 P1.5); SignPath khi D5 duyệt.
-6. Phiên tsudev nhận phiếu 20261116-C1 (catalog, ecosystem.ts, TRADEMARKS ⛔).
+Việc 👤 cũ (Worker cũ, JavaScript Detections, thư mục cục bộ, tsudev#276, Neon, `WINGET_TOKEN`) đã XONG 16/11/2026 -
+xem `logs/STATE.md` mục Đã hoàn thành. Thư mục cục bộ: `~/projects/tsucontact` (liên kết tạm đã xóa).
+
+1. winget qua komac (`tsudev.TsuContact`): secret `WINGET_TOKEN` đã có. Thêm workflow komac (ghim SHA), `winget validate`
+   + cài thử trên Windows, gửi PR bản đầu lên `microsoft/winget-pkgs` (bản 26.11.1601), rồi `"winget"` vào `channels`
+   của `packaging/package.json` (khối Cài bằng lệnh tự hiện) và báo phiên tsudev khai winget trong catalog.
+2. Best Practices passing (phiếu 20261115-01 mục 2.2, 2.4); good first issue (20261113-03 P1.5); SignPath khi D5 duyệt.
