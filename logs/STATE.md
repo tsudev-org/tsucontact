@@ -1,5 +1,9 @@
 # STATE.md - Trạng thái project (agent đọc đầu phiên, cập nhật cuối phiên)
 
+> **Phiên kế tiếp (phiếu toàn hệ 20261117-P2):** đọc `~/projects/logs/handover/20261117-P2_ke-hoach-phan-phoi-tin-cay-da-nen-tang.md` hàng 1 (`tsucontact`) ở mục 3
+> + `.standards/docs/DISTRIBUTION_TRUST.md` (chuẩn v3.7.0) + `.standards/docs/VERSIONING.md` mục 2. Khuôn thẻ/tên tệp mới chỉ áp
+> cho bản phát hành KẾ TIẾP, đọc mục 2.4 (updater đã cài) trước khi đổi.
+
 ## Hàng đợi task (làm từ trên xuống)
 - [ ] **winget** `tsudev.TsuContact` ⏳ CHỜ MODERATOR: 16/11/2026 (phiên tsudev-27) PR winget-pkgs #477388 (trước là `tsudev.Contact` 26.11.1001, đã qua kiểm tự động) được SỬA TẠI CHỖ sang `tsudev.TsuContact` 26.11.1601 (portable, lệnh `tsucontact`, sha256 khớp SHA256SUMS) - manifest lưu ở `packaging/winget/manifests/`. Khi merge: thêm `"winget"` vào `channels` + khai `winget: 'tsudev.TsuContact'` ở tsudev `packages/ui/src/lib/ecosystem.ts`. Bản sau: tự động hoá bằng komac trong workflow phát hành (`WINGET_TOKEN` đã có).
 - [x] **Best Practices passing** ✅ 17/11/2026 (phiên tsudev-27): hồ sơ [16836](https://www.bestpractices.dev/projects/16836) passing 100% - câu trả lời `docs/best-practices.json` (mỗi Met có bằng chứng), thêm CONTRIBUTING.md + mẫu issue (#30); huy hiệu ở README. Còn: good first issue (phiếu 20261113-03).
