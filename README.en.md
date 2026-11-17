@@ -4,6 +4,8 @@
 
 [Tiếng Việt](README.md) · **English**
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16836/badge)](https://www.bestpractices.dev/projects/16836)
+
 A desktop tool that converts **CSV contact lists to vCard (.vcf)** for importing into phones. It runs fully offline on
 your computer: no account, no telemetry, no network access at all.
 
