@@ -4,6 +4,8 @@
 
 **Tiếng Việt** · [English](README.en.md)
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16836/badge)](https://www.bestpractices.dev/projects/16836)
+
 Công cụ desktop chuyển danh bạ **CSV → vCard (.vcf)** để nạp vào điện thoại, chạy ngoại tuyến hoàn toàn trên máy của bạn.
 
 Một sản phẩm của [tsudev](https://tsudev.com).
