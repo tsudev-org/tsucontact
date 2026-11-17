@@ -1,0 +1,276 @@
+{
+  "fields": {
+    "name": "Tsu Contact",
+    "homepage_url": "https://contact.tsudev.com"
+  },
+  "criteria": {
+    "description_good": [
+      "Met",
+      "README.md (Vietnamese) and README.en.md describe what Tsu Contact does: convert CSV contact lists to vCard (.vcf) for phones, fully offline: https://github.com/tsudev-org/tsucontact/blob/main/README.en.md"
+    ],
+    "interact": [
+      "Met",
+      "README.en.md and CONTRIBUTING.md explain how to obtain the source and binaries, report bugs (issue forms), request features and contribute: https://github.com/tsudev-org/tsucontact/blob/main/CONTRIBUTING.md"
+    ],
+    "contribution": [
+      "Met",
+      "CONTRIBUTING.md explains the pull request process: https://github.com/tsudev-org/tsucontact/blob/main/CONTRIBUTING.md"
+    ],
+    "contribution_requirements": [
+      "Met",
+      "CONTRIBUTING.md lists the requirements: tests for every change, ruff with zero warnings, pytest, Conventional Commits, hash-pinned Apache-2.0-compatible dependencies: https://github.com/tsudev-org/tsucontact/blob/main/CONTRIBUTING.md"
+    ],
+    "floss_license": [
+      "Met",
+      "Apache-2.0: https://github.com/tsudev-org/tsucontact/blob/main/LICENSE"
+    ],
+    "floss_license_osi": [
+      "Met",
+      "Apache-2.0 is OSI approved."
+    ],
+    "license_location": [
+      "Met",
+      "https://github.com/tsudev-org/tsucontact/blob/main/LICENSE"
+    ],
+    "documentation_basics": [
+      "Met",
+      "README.en.md covers installation (winget, Scoop, installer), usage and verification; docs/ARCHITECTURE.md covers the design: https://github.com/tsudev-org/tsucontact/blob/main/docs/ARCHITECTURE.md"
+    ],
+    "documentation_interface": [
+      "Met",
+      "The program is a desktop GUI; README.en.md documents its inputs (CSV columns, encodings, delimiters) and output (vCard 3.0 file): https://github.com/tsudev-org/tsucontact/blob/main/README.en.md"
+    ],
+    "sites_https": [
+      "Met",
+      "Project site https://contact.tsudev.com and the GitHub repository/releases are HTTPS only (HTTP redirects with 301)."
+    ],
+    "discussion": [
+      "Met",
+      "GitHub Issues are public and searchable: https://github.com/tsudev-org/tsucontact/issues"
+    ],
+    "english": [
+      "Met",
+      "English documentation and bug reports are accepted: https://github.com/tsudev-org/tsucontact/blob/main/README.en.md"
+    ],
+    "maintained": [
+      "Met",
+      "Actively maintained: release 26.11.1601 on 16/11/2026 and regular commits: https://github.com/tsudev-org/tsucontact/commits/main"
+    ],
+    "repo_public": [
+      "Met",
+      "https://github.com/tsudev-org/tsucontact"
+    ],
+    "repo_track": [
+      "Met",
+      "Git tracks every change with author and date."
+    ],
+    "repo_interim": [
+      "Met",
+      "Work in progress is pushed to branches and pull requests between releases."
+    ],
+    "repo_distributed": [
+      "Met",
+      "Git."
+    ],
+    "version_unique": [
+      "Met",
+      "Each release has a unique version and git tag: https://github.com/tsudev-org/tsucontact/tags"
+    ],
+    "version_semver": [
+      "Met",
+      "Calendar Versioning: YY.M.DD plus a two-digit build number (e.g. 26.11.1601), monotonic and Windows file-version compatible."
+    ],
+    "version_tags": [
+      "Met",
+      "Every release is tagged (v26.8.2002, v26.11.1001, v26.11.1601): https://github.com/tsudev-org/tsucontact/tags"
+    ],
+    "release_notes": [
+      "Met",
+      "CHANGELOG.md summarises every release in human-readable form: https://github.com/tsudev-org/tsucontact/blob/main/CHANGELOG.md"
+    ],
+    "release_notes_vulns": [
+      "N/A",
+      "No publicly known vulnerability has been fixed in any release so far."
+    ],
+    "report_process": [
+      "Met",
+      "Bug reports use GitHub Issues with an issue form: https://github.com/tsudev-org/tsucontact/issues/new/choose"
+    ],
+    "report_tracker": [
+      "Met",
+      "GitHub Issues: https://github.com/tsudev-org/tsucontact/issues"
+    ],
+    "report_responses": [
+      "Met",
+      "No external bug report has been filed so far; the maintainer reads every issue and acknowledges reports within days."
+    ],
+    "enhancement_responses": [
+      "Met",
+      "No external enhancement request has been filed so far; the feature request form routes them to the maintainer, who answers each one."
+    ],
+    "report_archive": [
+      "Met",
+      "GitHub Issues are public and searchable: https://github.com/tsudev-org/tsucontact/issues?q=is%3Aissue"
+    ],
+    "vulnerability_report_process": [
+      "Met",
+      "SECURITY.md explains how to report vulnerabilities: https://github.com/tsudev-org/tsucontact/blob/main/SECURITY.md"
+    ],
+    "vulnerability_report_private": [
+      "Met",
+      "GitHub private vulnerability reporting is enabled: https://github.com/tsudev-org/tsucontact/security/advisories/new"
+    ],
+    "vulnerability_report_response": [
+      "Met",
+      "No vulnerability report was received in the last 6 months. SECURITY.md commits to a reply within 7 days and a fix for critical issues within 30 days."
+    ],
+    "build": [
+      "Met",
+      "scripts/build-win.ps1 builds the Windows executable with PyInstaller from tsucontact.spec; the release workflow runs it on GitHub Actions: https://github.com/tsudev-org/tsucontact/blob/main/.github/workflows/build-release-win.yml"
+    ],
+    "build_common_tools": [
+      "Met",
+      "pip with hash-pinned requirements and PyInstaller."
+    ],
+    "build_floss_tools": [
+      "Met",
+      "Python, pip, pytest, ruff and PyInstaller are all FLOSS."
+    ],
+    "test": [
+      "Met",
+      "An automated pytest suite (53 test functions, Hypothesis property tests for the CSV parser and vCard writer) is in tests/: https://github.com/tsudev-org/tsucontact/tree/main/tests"
+    ],
+    "test_invocation": [
+      "Met",
+      "python -m pytest -q tests (documented in CONTRIBUTING.md)."
+    ],
+    "test_most": [
+      "Met",
+      "Tests cover CSV input handling (encodings, delimiters, size and field limits, CSV-injection-safe report), vCard generation, settings/i18n and the full GUI flow (tests/test_ui.py: load CSV, map columns, filter, export): https://github.com/tsudev-org/tsucontact/tree/main/tests"
+    ],
+    "test_continuous_integration": [
+      "Met",
+      "GitHub Actions runs lint and tests on Linux and Windows for every push and pull request: https://github.com/tsudev-org/tsucontact/blob/main/.github/workflows/ci.yml"
+    ],
+    "test_policy": [
+      "Met",
+      "CONTRIBUTING.md requires tests for every new feature or bug fix: https://github.com/tsudev-org/tsucontact/blob/main/CONTRIBUTING.md"
+    ],
+    "tests_are_added": [
+      "Met",
+      "Recent changes added tests together with the code, e.g. the input limits and settings validation listed in docs/ARCHITECTURE.md section 5: https://github.com/tsudev-org/tsucontact/blob/main/docs/ARCHITECTURE.md"
+    ],
+    "tests_documented_added": [
+      "Met",
+      "The test policy is written in CONTRIBUTING.md: https://github.com/tsudev-org/tsucontact/blob/main/CONTRIBUTING.md"
+    ],
+    "warnings": [
+      "Met",
+      "ruff (pycodestyle, pyflakes, bugbear, bandit security rules, pyupgrade, isort, simplify) runs in CI: https://github.com/tsudev-org/tsucontact/blob/main/ruff.toml"
+    ],
+    "warnings_fixed": [
+      "Met",
+      "CI fails on any ruff finding; the main branch has zero warnings."
+    ],
+    "warnings_strict": [
+      "Met",
+      "ruff runs with a broad rule set including the bandit security rules (S) and fails the build on any warning."
+    ],
+    "know_secure_design": [
+      "Met",
+      "docs/ARCHITECTURE.md section 5 documents the threat model and defences: data only in RAM, no network code at all, defensive CSV parsing with size limits, CSV-injection-safe reports, strict settings validation: https://github.com/tsudev-org/tsucontact/blob/main/docs/ARCHITECTURE.md"
+    ],
+    "know_common_errors": [
+      "Met",
+      "The common errors for this kind of program and their mitigations are documented with the test that guards each (resource exhaustion, CSV/formula injection, vCard field injection, leftover personal data on disk, tampered settings): https://github.com/tsudev-org/tsucontact/blob/main/docs/ARCHITECTURE.md"
+    ],
+    "crypto_published": [
+      "N/A",
+      "The application performs no cryptography and opens no network connection."
+    ],
+    "crypto_call": [
+      "N/A",
+      "No cryptography in the application."
+    ],
+    "crypto_floss": [
+      "N/A",
+      "No cryptography in the application."
+    ],
+    "crypto_keylength": [
+      "N/A",
+      "No cryptography in the application."
+    ],
+    "crypto_working": [
+      "N/A",
+      "No cryptography in the application."
+    ],
+    "crypto_weaknesses": [
+      "N/A",
+      "No cryptography in the application."
+    ],
+    "crypto_pfs": [
+      "N/A",
+      "The application opens no network connection."
+    ],
+    "crypto_password_storage": [
+      "N/A",
+      "The application stores no passwords."
+    ],
+    "crypto_random": [
+      "N/A",
+      "The application generates no keys or nonces."
+    ],
+    "delivery_mitm": [
+      "Met",
+      "Releases are downloaded over HTTPS from GitHub; SHA256SUMS.txt is signed with Sigstore and the build has GitHub artifact attestation (gh attestation verify)."
+    ],
+    "delivery_unsigned": [
+      "Met",
+      "Hashes are published in a Sigstore-signed SHA256SUMS.txt over HTTPS, never over plain HTTP."
+    ],
+    "vulnerabilities_fixed_60_days": [
+      "Met",
+      "No unpatched vulnerability of medium or higher severity: 0 open Dependabot and code scanning alerts; pip-audit runs in CI on every change."
+    ],
+    "vulnerabilities_critical_fixed": [
+      "Met",
+      "No critical vulnerability has been reported; Dependabot and pip-audit keep dependencies patched."
+    ],
+    "no_leaked_credentials": [
+      "Met",
+      "gitleaks scans every push and pull request in CI: https://github.com/tsudev-org/tsucontact/blob/main/.github/workflows/ci.yml"
+    ],
+    "static_analysis": [
+      "Met",
+      "ruff (including the bandit security rules) and GitHub CodeQL (Python, Actions) analyse every change."
+    ],
+    "static_analysis_common_vulnerabilities": [
+      "Met",
+      "CodeQL security queries and ruff's bandit rules (S) look for common vulnerabilities."
+    ],
+    "static_analysis_fixed": [
+      "Met",
+      "There are no open code scanning alerts."
+    ],
+    "static_analysis_often": [
+      "Met",
+      "Static analysis runs on every push and pull request."
+    ],
+    "dynamic_analysis": [
+      "Met",
+      "Hypothesis property-based tests feed thousands of random inputs to the CSV parser and vCard writer in CI: https://github.com/tsudev-org/tsucontact/tree/main/tests"
+    ],
+    "dynamic_analysis_unsafe": [
+      "N/A",
+      "The program is written in Python, a memory-safe language."
+    ],
+    "dynamic_analysis_enable_assertions": [
+      "Met",
+      "The property tests assert the safety invariants (size limits, escaping, round-trip) on every generated input."
+    ],
+    "dynamic_analysis_fixed": [
+      "Met",
+      "No medium or higher severity issue found by dynamic analysis remains unfixed."
+    ]
+  }
+}
