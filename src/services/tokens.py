@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Đọc token giao diện từ `.standards/tokens/design-tokens.json` - nguồn chân lý duy nhất -
-cộng phần ghi đè màu riêng của repo ở `tokens/extensions.tsucontact.json` (bảng đen + tím của
+cộng phần ghi đè màu riêng của repo ở `tokens/extensions.tsucontact.json` (bảng đen tuyền + xanh logo của
 hệ tsudev, phiếu logs/handover/20261110-05). Chỉ hai chế độ: light, dark (chế độ Ấm đã bỏ).
 
 CẤM hard-code màu, cỡ chữ, bo góc, spacing trong `src/` (.standards/AGENTS.md).
