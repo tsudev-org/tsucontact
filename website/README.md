@@ -1,7 +1,7 @@
 # Website contact.tsudev.com
 
 Trang sản phẩm của Tsu Contact. Khung dùng chung với `files.tsudev.com`: [Astro](https://astro.build) dựng trang
-tĩnh; JavaScript phía trình duyệt chỉ có `public/theme.js` (nút đổi giao diện Sáng/Tối/Hệ thống ở chân trang, mặc định Tối, khóa
+tĩnh; JavaScript phía trình duyệt chỉ có `public/theme.js` (nút đổi giao diện Sáng/Tối/Hệ thống ở chân trang, mặc định Hệ thống, khóa
 `tsudev-theme` như tsudev.com); host trên Cloudflare Workers Static Assets (Worker `tsucontact`, không có mã
 chạy; tên miền con `contact.tsudev.com`, cấu hình ở `wrangler.jsonc`).
 
