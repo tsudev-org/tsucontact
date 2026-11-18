@@ -9,7 +9,7 @@
 A desktop tool that converts **CSV contact lists to vCard (.vcf)** for importing into phones. It runs fully offline on
 your computer: no account, no telemetry, no network access at all.
 
-A [tsudev](https://tsudev.com) product. Website: <https://contact.tsudev.com>. Formerly named `tsudev-contact`
+A [TsuDEV](https://tsudev.com) product. Website: <https://contact.tsudev.com>. Formerly named `tsudev-contact`
 (renamed 16/11/2026, [ADR-0001](docs/adr/0001-ten-san-pham-tsu-contact.md)); old repository links redirect here.
 
 ## Install (Windows 10/11 x64)
@@ -56,5 +56,5 @@ Architecture and threat model: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Rep
 
 ## License
 
-[Apache-2.0](LICENSE), see [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). The tsudev name and
+[Apache-2.0](LICENSE), see [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). The TsuDEV name and
 logo are trademarks and are not covered by the license.

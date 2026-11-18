@@ -14,7 +14,7 @@ const tinhNang = [
   { t: 'Báo cáo lỗi để sửa', d: 'Xuất các dòng có vấn đề ra tệp CSV mở bằng Excel, sửa xong nạp lại. Tệp báo cáo được chống chèn công thức.' },
   { t: 'vCard chuẩn RFC', d: 'Chạy với Android, iPhone, Google Contacts, Outlook. Họ tên tiếng Việt hiển thị nguyên vẹn, không bị đảo thứ tự.' },
   { t: 'Bảng xem trước nhanh', d: 'Lọc Hợp lệ, Cảnh báo, Lỗi; tìm không dấu; phân trang 10 tới 200 dòng. Chạy mượt với 100.000 liên hệ.' },
-  { t: 'Sáng, Tối, Hệ thống', d: 'Mặc định Tối, hoặc theo hệ điều hành; giao diện tiếng Việt mặc định, có tiếng Anh. Thiết kế đồng bộ hệ sinh thái tsudev.' },
+  { t: 'Sáng, Tối, Hệ thống', d: 'Mặc định Tối, hoặc theo hệ điều hành; giao diện tiếng Việt mặc định, có tiếng Anh. Thiết kế đồng bộ hệ sinh thái TsuDEV.' },
 ];
 const baoMat = [
   { t: 'Danh bạ không rời khỏi máy', d: 'Ứng dụng không có mã kết nối mạng, không tài khoản, không thu thập gì. Dữ liệu chỉ nằm trong bộ nhớ khi đang mở.' },
@@ -69,7 +69,7 @@ const baoMat = [
   <section class="muc" aria-labelledby="bao-mat">
     <div class="khung">
       <h2 id="bao-mat">Riêng tư và an toàn</h2>
-      <p class="muc__dan">Hạng sản phẩm C theo quy ước tsudev: chạy ngoại tuyến, không tài khoản. Chi tiết ở trang <a href="/bao-mat/">Bảo mật</a> và <a href="/bao-mat/kien-truc/">Kiến trúc bảo mật</a>.</p>
+      <p class="muc__dan">Hạng sản phẩm C theo quy ước TsuDEV: chạy ngoại tuyến, không tài khoản. Chi tiết ở trang <a href="/bao-mat/">Bảo mật</a> và <a href="/bao-mat/kien-truc/">Kiến trúc bảo mật</a>.</p>
       <ul class="the-luoi">
         {baoMat.map((x) => <li class="the"><h3>{x.t}</h3><p>{x.d}</p></li>)}
       </ul>

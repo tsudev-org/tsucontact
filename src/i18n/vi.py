@@ -148,8 +148,8 @@ STRINGS = {
     'about.version': 'Phiên bản {version}',
     'about.description': 'Chuyển danh bạ từ tệp CSV sang vCard (.vcf) để nạp vào điện thoại. Mọi xử lý diễn ra trên máy của bạn, ứng dụng không kết nối Internet.',
     'about.product': 'Trang sản phẩm',
-    'about.ecosystem': 'Một sản phẩm của tsudev',
+    'about.ecosystem': 'Một sản phẩm của TsuDEV',
     'about.source': 'Mã nguồn',
-    'about.donate': 'Ủng hộ tsudev',
+    'about.donate': 'Ủng hộ TsuDEV',
     'about.donateNote': 'Ủng hộ là tự nguyện, 100% tới nhà phát triển và không mở khóa tính năng nào. Nút mở trang tsudev.com/ung-ho trên trình duyệt.',
 }

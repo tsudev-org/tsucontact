@@ -138,6 +138,6 @@ STRINGS = {
     'about.product': 'Product page',
     'about.ecosystem': 'A tsudev product',
     'about.source': 'Source code',
-    'about.donate': 'Support tsudev',
+    'about.donate': 'Support TsuDEV',
     'about.donateNote': 'Support is voluntary, goes 100% to the developer and unlocks no features. The button opens tsudev.com/ung-ho in your browser.',
 }

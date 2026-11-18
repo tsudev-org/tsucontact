@@ -7,7 +7,7 @@ sys.path.insert(0, SPECPATH)
 from PyInstaller.utils.win32.versioninfo import (FixedFileInfo, StringFileInfo, StringStruct,
                                                  StringTable, VarFileInfo, VarStruct, VSVersionInfo)
 
-from src.app_info import (APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, PUBLISHER,
+from src.app_info import (APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, PUBLISHER_DISPLAY,
                           RELEASE_BASENAME)
 
 # Siêu dữ liệu bản cài - .standards/docs/ECOSYSTEM_IDENTITY.md mục 2.3.
@@ -16,7 +16,7 @@ VERSION_INFO = VSVersionInfo(
     ffi=FixedFileInfo(filevers=_parts, prodvers=_parts),
     kids=[
         StringFileInfo([StringTable('042a04b0', [
-            StringStruct('CompanyName', PUBLISHER),
+            StringStruct('CompanyName', PUBLISHER_DISPLAY),
             StringStruct('FileDescription', 'Tsu Contact - Chuyển danh bạ CSV sang vCard'),
             StringStruct('FileVersion', APP_VERSION),
             StringStruct('InternalName', APP_SLUG),

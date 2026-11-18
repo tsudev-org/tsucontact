@@ -74,8 +74,8 @@ def test_bang_mau_den_tim_dat_tuong_phan():
 
     assert THEMES == ('light', 'dark')
     assert loadTokens('dark').color('bg-base') == '#0A0A0A'
-    assert loadTokens('dark').color('primary') == '#A970FF'
-    assert loadTokens('light').color('primary') == '#7C3AED'
+    assert loadTokens('dark').color('primary') == '#38BDF8'
+    assert loadTokens('light').color('primary') == '#0868C4'
     for theme in THEMES:
         t = loadTokens(theme)
         for bg in ('bg-base', 'bg-surface', 'bg-subtle', 'bg-hover'):

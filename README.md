@@ -8,7 +8,7 @@
 
 Công cụ desktop chuyển danh bạ **CSV → vCard (.vcf)** để nạp vào điện thoại, chạy ngoại tuyến hoàn toàn trên máy của bạn.
 
-Một sản phẩm của [tsudev](https://tsudev.com).
+Một sản phẩm của [TsuDEV](https://tsudev.com).
 
 - Trang sản phẩm: <https://contact.tsudev.com>
 - Tên cũ: `tsudev-contact` (đổi 16/11/2026, [ADR-0001](docs/adr/0001-ten-san-pham-tsu-contact.md)); link repo cũ tự chuyển hướng.
@@ -44,7 +44,7 @@ Get-FileHash tsucontact_26.8.2002_x64-setup.exe -Algorithm SHA256
   trong một ô), email, ngày sinh; phát hiện **trùng số**; liên hệ lỗi không được xuất.
 - **Xem trước** có lọc Hợp lệ / Cảnh báo / Lỗi, tìm không dấu, phân trang 10/20/50/100/200.
 - **Xuất vCard 3.0** chuẩn RFC (Android, iPhone, Google Contacts) và **báo cáo lỗi** CSV để sửa dữ liệu.
-- Giao diện Sáng / Tối / Hệ thống (mặc định Tối, tông đen + tím của hệ tsudev); tiếng Việt (mặc định) và tiếng Anh.
+- Giao diện Sáng / Tối / Hệ thống (mặc định Tối, tông đen tuyền + xanh logo của hệ TsuDEV); tiếng Việt (mặc định) và tiếng Anh.
 - **Bảo mật**: chạy ngoại tuyến, không lưu danh bạ xuống đĩa, chống chèn vCard và chèn công thức.
   Chi tiết: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) mục 5, báo lỗ hổng: [`SECURITY.md`](SECURITY.md).
 
@@ -131,7 +131,7 @@ File danh bạ thật (`*.csv`, `*.vcf`, `*.db`) chứa **thông tin cá nhân**
 
 Mã nguồn phát hành theo **[Apache License 2.0](LICENSE)** - xem thêm [`NOTICE`](NOTICE). Được dùng, sửa,
 phân phối lại (kể cả thương mại) khi giữ thông báo bản quyền và ghi rõ thay đổi; giấy phép **không** cho phép
-dùng tên "tsudev" để gọi bản phái sinh. Thành phần bên thứ ba đi kèm bản `.exe` giữ giấy phép riêng:
+dùng tên "TsuDEV" để gọi bản phái sinh. Thành phần bên thứ ba đi kèm bản `.exe` giữ giấy phép riêng:
 [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
 
 ## Tài liệu
@@ -142,6 +142,6 @@ dùng tên "tsudev" để gọi bản phái sinh. Thành phần bên thứ ba đ
 | `docs/ARCHITECTURE.md` | Kiến trúc, luồng dữ liệu, nợ kỹ thuật của repo này |
 | `.standards/` | Bộ quy ước chung (chỉ đọc), gồm cả token giao diện `.standards/tokens/` |
 | `website/` | Trang sản phẩm `contact.tsudev.com` (Astro tĩnh, Cloudflare) - xem `website/README.md` |
-| `assets/` | Dấu hiệu tsudev và bộ icon sinh bằng `tools/gen_icons.py` |
+| `assets/` | Dấu hiệu TsuDEV và bộ icon sinh bằng `tools/gen_icons.py` |
 | `logs/` | `STATE.md` hàng đợi task · `LOCKS.md` khóa file · `handover/` phiếu bàn giao |
 | `CHANGELOG.md` | Mỗi bản phát hành 1 dòng |

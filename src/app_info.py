@@ -9,8 +9,11 @@ APP_SLUG = "tsucontact"
 APP_VERSION = "26.11.1601"
 APP_ARCH = "x64"
 # Nhận diện hệ sinh thái: .standards/docs/ECOSYSTEM_IDENTITY.md mục 2.3.
-APP_AUTHOR = "tsudev"
+APP_AUTHOR = "TsuDEV"
+# PUBLISHER là ĐỊNH DANH máy đọc (QSettings organizationName -> nơi lưu cài đặt, AppUserModelID): giữ chữ thường,
+# đổi là máy đã cài mất cài đặt. Tên hiển thị (CompanyName, bản quyền) dùng PUBLISHER_DISPLAY - tsudev-standards v3.8.0.
 PUBLISHER = "tsudev"
+PUBLISHER_DISPLAY = "TsuDEV"
 ECOSYSTEM_URL = "https://tsudev.com"
 # Trang sản phẩm - thay cho liên kết Facebook cũ (chủ project không còn dùng, 10/11/2026).
 SUPPORT_URL = "https://contact.tsudev.com"
@@ -18,7 +21,7 @@ REPO_URL = "https://github.com/tsudev-org/tsucontact"
 # Ủng hộ tự nguyện: app chỉ mở trang trung tâm, không nhúng số tài khoản/QR
 # (phiếu 20261112-01 + quyết định 20261112-02 mục 2).
 DONATE_URL = "https://tsudev.com/ung-ho"
-COPYRIGHT = "Copyright (c) 2026 tsudev"
+COPYRIGHT = "Copyright (c) 2026 TsuDEV"
 
 # Tên file phát hành (không phần mở rộng) - dùng cho PyInstaller và scripts/build-win.ps1.
 RELEASE_BASENAME = f"{APP_SLUG}_{APP_VERSION}_{APP_ARCH}-setup"
