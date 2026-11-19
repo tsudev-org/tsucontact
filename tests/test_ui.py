@@ -16,6 +16,7 @@ pytest.importorskip('PySide6')
 from PySide6.QtWidgets import QApplication, QFileDialog  # noqa: E402
 
 from src.services.settings import THEMES, Settings  # noqa: E402
+from src.services.tokens import loadTokens  # noqa: E402
 from src.ui.preview import pageWindow  # noqa: E402
 from tests.fixtures.make_samples import main as makeSamples  # noqa: E402
 from tests.vcard_reader import parseVcards  # noqa: E402
@@ -37,7 +38,9 @@ def samples(tmp_path):
 @pytest.fixture
 def window(app, tmp_path):
     from src.ui.main_window import MainWindow
-    w = MainWindow(Settings(str(tmp_path / 'settings.json')))
+    settings = Settings(str(tmp_path / 'settings.json'))
+    settings.set('language', 'vi')   # câu chữ trong test viết bằng tiếng Việt, không phụ thuộc locale máy CI
+    w = MainWindow(settings)
     w.show()
     yield w
     w.close()
@@ -182,3 +185,21 @@ def test_doi_chu_de_va_ngon_ngu(app, window, samples):
     assert 'semicolon' in window.fileMetaLabel.text()
     window.setLanguageCode('vi')
     assert window.exportButton.text() == 'Xuất vCard'
+
+
+@pytest.mark.parametrize(('scheme', 'expected'), [('Light', 'light'), ('Dark', 'dark')])
+def test_giao_dien_he_thong_dung_bang_mau_muc_1_4(app, tmp_path, monkeypatch, scheme, expected):
+    # PRODUCT_POLICY mục 1.4: máy mới (chưa có settings.json) + hệ thống sáng/tối => đúng bảng màu.
+    # Nền offscreen của CI không có sắc độ hệ thống => giả lập giá trị hệ điều hành trả về.
+    from PySide6.QtCore import Qt
+
+    from src.ui import theme
+    from src.ui.main_window import MainWindow
+    monkeypatch.setattr(theme, 'systemColorScheme', lambda: getattr(Qt.ColorScheme, scheme))
+    w = MainWindow(Settings(str(tmp_path / 'moi.json')))
+    assert w.settings.get('theme') == 'system'
+    assert w.themeName == expected
+    assert w.tokens.color('bg-base') == loadTokens(expected).color('bg-base')
+    w.close()
+    w.deleteLater()
+    app.processEvents()

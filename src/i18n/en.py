@@ -13,6 +13,7 @@ STRINGS = {
     'header.about': 'About',
     'theme.light': 'Light',
     'theme.dark': 'Dark',
+    'language.system': 'System default',
     'theme.system': 'System',
 
     'step1.title': '1. Choose a CSV file',

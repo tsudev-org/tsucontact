@@ -39,13 +39,16 @@ def loadFonts() -> None:
     _fontsLoaded = True
 
 
+def systemColorScheme() -> Qt.ColorScheme:
+    hints = QGuiApplication.styleHints()
+    return hints.colorScheme() if hasattr(hints, 'colorScheme') else Qt.ColorScheme.Unknown
+
+
 def resolveTheme(choice: str) -> str:
     """'system' -> 'dark' hoặc 'light' theo hệ điều hành (DESIGN_SYSTEM mục 1)."""
     if choice != 'system':
         return choice
-    hints = QGuiApplication.styleHints()
-    scheme = hints.colorScheme() if hasattr(hints, 'colorScheme') else Qt.ColorScheme.Unknown
-    return 'dark' if scheme == Qt.ColorScheme.Dark else 'light'
+    return 'dark' if systemColorScheme() == Qt.ColorScheme.Dark else 'light'
 
 
 def appFont(t: Tokens) -> QFont:
