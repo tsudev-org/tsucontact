@@ -23,16 +23,20 @@ SETTINGS_FILE = 'settings.json'
 MAX_SETTINGS_BYTES = 64 * 1024
 
 THEMES = ('light', 'dark', 'system')   # chế độ Ấm đã bỏ (phiếu 20261110-05); 'warm' cũ đọc thành 'light'
-LANGUAGES = ('vi', 'en')
+LANGUAGES = ('system', 'vi', 'en')    # 'system' = theo ngôn ngữ hệ điều hành (PRODUCT_POLICY mục 1)
 PAGE_SIZES = (10, 20, 50, 100, 200)       # .standards/docs/DATA_TABLE.md mục 2
 
+# Lần chạy đầu theo hệ thống (tsudev-standards PRODUCT_POLICY mục 1, phiếu 20261119-T3).
 DEFAULTS = {
-    'theme': 'dark',
-    'language': 'vi',
+    'theme': 'system',
+    'language': 'system',
     'pagesize.preview': 10,
     'fixLeadingZero': True,
     'dropDuplicatePhones': False,
 }
+# Mặc định ngầm của bản <= 26.11.x: máy đã cài (có settings.json) mà chưa từng lưu khoá này
+# thì giữ nguyên trải nghiệm cũ, không đổi đột ngột (PRODUCT_POLICY mục 1.2).
+LEGACY_IMPLICIT = {'theme': 'dark', 'language': 'vi'}
 _VALIDATORS = {
     'theme': lambda v: v in THEMES,
     'language': lambda v: v in LANGUAGES,
@@ -69,6 +73,26 @@ def migrateLegacyConfig(base: str | None = None) -> bool:
         return False
 
 
+def resolveLanguage(choice: str, systemLanguages: list[str] | tuple[str, ...]) -> str:
+    """'system' -> 'vi' nếu ngôn ngữ ưu tiên đầu tiên của hệ điều hành là tiếng Việt, ngược lại 'en'.
+
+    `systemLanguages` là danh sách BCP 47 theo thứ tự ưu tiên (QLocale.system().uiLanguages()).
+    Ngôn ngữ chưa hỗ trợ (ja, fr...) rơi về tiếng Anh theo PRODUCT_POLICY mục 1.1.
+    """
+    if choice != 'system':
+        return choice if choice in LANGUAGES else 'en'
+    first = next((code for code in systemLanguages if code), '')
+    return 'vi' if first.replace('_', '-').lower().split('-')[0] == 'vi' else 'en'
+
+
+def systemLanguages() -> list[str]:
+    try:
+        from PySide6.QtCore import QLocale
+        return list(QLocale.system().uiLanguages())
+    except Exception:   # noqa: BLE001 - thiếu Qt (test thuần) thì coi như không biết
+        return []
+
+
 def settingsPath() -> str:
     return os.path.join(configDir(), SETTINGS_FILE)
 
@@ -90,6 +114,9 @@ class Settings:
         except (OSError, ValueError):
             return
         if isinstance(stored, dict):
+            for key, value in LEGACY_IMPLICIT.items():
+                if key not in stored:
+                    stored[key] = value
             if stored.get('theme') == 'warm':   # người từng chọn Ấm muốn nền sáng
                 stored['theme'] = 'light'
             for key, value in stored.items():

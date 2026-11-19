@@ -14,7 +14,8 @@ from src.services.settings import DEFAULTS, Settings
 def test_mac_dinh_khi_chua_co_file(tmp_path):
     s = Settings(str(tmp_path / 'settings.json'))
     assert {k: s.get(k) for k in DEFAULTS} == DEFAULTS
-    assert s.get('language') == 'vi'
+    assert s.get('language') == 'system'
+    assert s.get('theme') == 'system'
 
 
 def test_ghi_nguyen_tu_va_doc_lai(tmp_path):
@@ -26,7 +27,7 @@ def test_ghi_nguyen_tu_va_doc_lai(tmp_path):
 
 @pytest.mark.parametrize('stored', [
     '{"pagesize.preview": 999, "theme": "hong", "language": "fr", "fixLeadingZero": "yes"}',
-    '{"pagesize.preview": true}', 'không phải json', '[1, 2]',
+    '{"pagesize.preview": true, "theme": 1, "language": null}', 'không phải json', '[1, 2]',
 ])
 def test_gia_tri_hong_hoac_la_quay_ve_mac_dinh(tmp_path, stored):
     path = tmp_path / 'settings.json'
@@ -46,17 +47,39 @@ def test_tu_choi_khoa_va_gia_tri_la(tmp_path):
 def test_file_qua_lon_bi_bo_qua(tmp_path):
     path = tmp_path / 'settings.json'
     path.write_text(json.dumps({'theme': 'light', 'pad': 'x' * 70_000}), encoding='utf-8')
-    assert Settings(str(path)).get('theme') == 'dark'
+    assert Settings(str(path)).get('theme') == 'system'
 
 
-def test_mac_dinh_toi_va_am_cu_thanh_sang(tmp_path):
-    # Phiếu 20261110-05: chỉ Sáng / Tối / Hệ thống, mặc định Tối; 'warm' cũ đọc thành Sáng
+def test_mac_dinh_he_thong_va_am_cu_thanh_sang(tmp_path):
+    # Chỉ Sáng / Tối / Hệ thống; máy mới mặc định Hệ thống (PRODUCT_POLICY mục 1); 'warm' cũ đọc thành Sáng
     from src.services.settings import THEMES
     assert THEMES == ('light', 'dark', 'system')
-    assert Settings(str(tmp_path / 'chua-co.json')).get('theme') == 'dark'
+    assert Settings(str(tmp_path / 'chua-co.json')).get('theme') == 'system'
     path = tmp_path / 'settings.json'
     path.write_text(json.dumps({'theme': 'warm'}), encoding='utf-8')
     assert Settings(str(path)).get('theme') == 'light'
+
+
+def test_may_da_cai_khong_doi_dot_ngot(tmp_path):
+    # PRODUCT_POLICY mục 1.2: settings.json của bản cũ thiếu khoá theme/language => giữ mặc định ngầm cũ (Tối + vi)
+    path = tmp_path / 'settings.json'
+    path.write_text(json.dumps({'pagesize.preview': 50}), encoding='utf-8')
+    s = Settings(str(path))
+    assert (s.get('theme'), s.get('language'), s.get('pagesize.preview')) == ('dark', 'vi', 50)
+    path.write_text(json.dumps({'theme': 'light', 'language': 'en'}), encoding='utf-8')
+    s = Settings(str(path))
+    assert (s.get('theme'), s.get('language')) == ('light', 'en')   # lựa chọn đã lưu luôn thắng
+
+
+@pytest.mark.parametrize(('system', 'expected'), [
+    (['vi-VN', 'en-US'], 'vi'), (['vi'], 'vi'), (['en-US', 'vi-VN'], 'en'), (['ja-JP'], 'en'), ([], 'en'),
+])
+def test_ngon_ngu_theo_he_thong_muc_1_4(system, expected):
+    # PRODUCT_POLICY mục 1.4: hệ thống vi / en / ja => vi / en / en; lựa chọn đã lưu thắng hệ thống
+    from src.services.settings import resolveLanguage
+    assert resolveLanguage('system', system) == expected
+    assert resolveLanguage('vi', ['ja-JP']) == 'vi'
+    assert resolveLanguage('en', ['vi-VN']) == 'en'
 
 
 def test_bang_mau_den_tim_dat_tuong_phan():

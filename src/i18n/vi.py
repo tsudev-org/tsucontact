@@ -15,6 +15,7 @@ STRINGS = {
     'header.about': 'Giới thiệu',
     'theme.light': 'Sáng',
     'theme.dark': 'Tối',
+    'language.system': 'Theo hệ thống',
     'theme.system': 'Hệ thống',
 
     # --- Bước 1 ---

@@ -34,7 +34,7 @@ from src.engine.fields import FIELDS
 from src.engine.pipeline import Cancelled, MappingError, ValidationSummary, exportIssueReport, exportVcf, validateRows
 from src.engine.validate import STATUS_ERROR, ValidationOptions
 from src.i18n import LANGUAGE_NAMES, describeIssues, formatNumber, setLanguage, tr
-from src.services.settings import LANGUAGES, THEMES, Settings
+from src.services.settings import LANGUAGES, THEMES, Settings, resolveLanguage, systemLanguages
 from src.services.tokens import loadTokens
 from src.ui import icons
 from src.ui.about import AboutDialog
@@ -52,7 +52,7 @@ class MainWindow(QMainWindow):
     def __init__(self, settings: Settings):
         super().__init__()
         self.settings = settings
-        setLanguage(settings.get('language'))
+        setLanguage(resolveLanguage(settings.get('language'), systemLanguages()))
         self.themeName = applyTheme(QApplication.instance(), settings.get('theme'))
         self.tokens = t = loadTokens(self.themeName)
         self.data: CsvData | None = None
@@ -145,12 +145,14 @@ class MainWindow(QMainWindow):
         self.languageButton = self._menuButton()
         self.languageMenu = QMenu(self)
         self.languageGroup = QActionGroup(self)
+        self.languageActions: dict[str, QAction] = {}
         for code in LANGUAGES:
-            action = QAction(LANGUAGE_NAMES[code], self, checkable=True)
+            action = QAction(LANGUAGE_NAMES.get(code, ''), self, checkable=True)
             action.setChecked(self.settings.get('language') == code)
             action.triggered.connect(lambda _=False, c=code: self.setLanguageCode(c))
             self.languageGroup.addAction(action)
             self.languageMenu.addAction(action)
+            self.languageActions[code] = action
         self.languageButton.setMenu(self.languageMenu)
 
         self.aboutButton = button('', 'ghost')
@@ -283,6 +285,7 @@ class MainWindow(QMainWindow):
             action.setText(tr(f'theme.{name}'))
         self.languageButton.setText(tr('header.language'))
         self.languageButton.setAccessibleName(tr('header.language'))
+        self.languageActions['system'].setText(tr('language.system'))
         self.aboutButton.setText(tr('header.about'))
         self.fileCard.setTitle(tr('step1.title'))
         self.dropZone.retranslate()
@@ -324,7 +327,7 @@ class MainWindow(QMainWindow):
 
     def setLanguageCode(self, code: str) -> None:
         self.settings.set('language', code)
-        setLanguage(code)
+        setLanguage(resolveLanguage(code, systemLanguages()))
         self.retranslate()
 
     def showAbout(self) -> None:
