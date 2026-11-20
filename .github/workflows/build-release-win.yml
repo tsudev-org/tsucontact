@@ -85,3 +85,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: gh release upload $env:TAG (Get-ChildItem release\* | ForEach-Object FullName) --clobber
+
+  # DISTRIBUTION_TRUST.md mục 3: mọi tệp .exe của Release được gửi lên VirusTotal, link báo cáo ghi vào Release
+  # notes; có engine gắn cờ ⇒ Release về nháp + job đỏ (mở phiếu báo nhầm, hạn 48 giờ). Chưa có VT_API_KEY của tổ
+  # chức ⇒ job xanh, bỏ qua. Phiếu 20261120-TR1, TR1-b.
+  virustotal:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    # tsudev-org/.github @ 8a393eb (feat(ci): workflow dung chung quet VirusTotal, #4)
+    uses: tsudev-org/.github/.github/workflows/virustotal.yml@8a393ebd89349300637c8c57e89c12492b174e4d
+    with:
+      tag: ${{ github.ref_name }}
+      patterns: "tsucontact_*.exe"
+    secrets:
+      VT_API_KEY: ${{ secrets.VT_API_KEY }}
