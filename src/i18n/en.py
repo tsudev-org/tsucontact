@@ -16,6 +16,12 @@ STRINGS = {
     'language.system': 'System default',
     'theme.system': 'System',
 
+    'start.title': 'Convert CSV contacts to vCard',
+    'start.lead': 'Drop a CSV file exported from Excel, Google Contacts or Outlook here. Everything runs on this computer.',
+    'start.flow1': 'CSV file',
+    'start.flow2': 'Map columns',
+    'start.flow3': 'Check every row',
+    'start.flow4': 'vCard (.vcf)',
     'step1.title': '1. Choose a CSV file',
     'step1.drop': 'Drop a CSV file here',
     'step1.or': 'or',

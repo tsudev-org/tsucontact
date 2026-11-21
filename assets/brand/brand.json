@@ -6,11 +6,11 @@
   "mode": "tile",
   "tileRadius": 0.22,
   "solidBg": "#1F313F",
-  "ogGlow": "#163a3f",
-  "ogAccent": "#5eead4",
+  "ogGlow": "#3a1428",
   "domain": "contact.tsudev.com",
   "ogLines": [
     "Chuyển danh bạ CSV sang vCard (.vcf)",
     "để nạp vào điện thoại"
-  ]
+  ],
+  "_ghi_chu_og": "og-image: nền tối là hằng thương hiệu; màu chữ tên miền + hoạ tiết lấy từ .standards/tokens/products/<id>.json (chế độ Tối). ogGlow là quầng nền, ngả theo màu nhấn hồng san hô."
 }

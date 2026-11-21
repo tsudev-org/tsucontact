@@ -23,6 +23,7 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QScrollArea,
     QSizePolicy,
+    QStackedWidget,
     QToolButton,
     QVBoxLayout,
     QWidget,
@@ -46,6 +47,7 @@ from src.utils.resource_path import resourcePath
 
 REVALIDATE_DELAY_MS = 250
 LEFT_PANEL_WIDTH = 440
+START_WIDTH = 640   # bề rộng cột thao tác của màn đầu (bố cục cong-cu)
 
 
 class MainWindow(QMainWindow):
@@ -73,12 +75,18 @@ class MainWindow(QMainWindow):
         root.setSpacing(0)
         root.addWidget(self._buildHeader())
 
-        body = QHBoxLayout()
+        # Bố cục chữ ký `cong-cu` (tsudev-standards v5.0.0 DESIGN_SYSTEM 1.2.2): chưa có tệp thì màn đầu CHỈ là vùng
+        # thao tác chính (kéo thả / chọn tệp) căn giữa; nạp tệp xong mới sang bố cục làm việc 3 bước.
+        work = QWidget()
+        body = QHBoxLayout(work)
         body.setContentsMargins(t.space(5), t.space(5), t.space(5), t.space(5))
         body.setSpacing(t.space(5))
         body.addWidget(self._buildLeftPanel())
         body.addWidget(self._buildRightPanel(), 1)
-        root.addLayout(body, 1)
+        self.stack = QStackedWidget()
+        self.stack.addWidget(self._buildStartPage())
+        self.stack.addWidget(work)
+        root.addWidget(self.stack, 1)
         root.addWidget(self._buildStatusBar())
 
         self.toast = Toast(page, t)
@@ -99,7 +107,7 @@ class MainWindow(QMainWindow):
         self.retranslate()
         self.restyle()
         self._updateActions()
-        QTimer.singleShot(0, self.dropZone.browseButton.setFocus)
+        QTimer.singleShot(0, self.startZone.browseButton.setFocus)
 
     # ================================================================ dựng giao diện
     def _buildHeader(self) -> QWidget:
@@ -169,6 +177,62 @@ class MainWindow(QMainWindow):
         b.setCursor(Qt.CursorShape.PointingHandCursor)
         b.setIconSize(QSize(16, 16))
         return b
+
+    def _buildStartPage(self) -> QWidget:
+        t = self.tokens
+        page = QWidget()
+        page.setObjectName('startPage')
+        outer = QVBoxLayout(page)
+        outer.setContentsMargins(t.space(6), t.space(6), t.space(6), t.space(6))
+        outer.addStretch(1)
+        column = QVBoxLayout()
+        column.setSpacing(t.space(4))
+        self.startTitle = label('', 'startTitle', wrap=True)
+        self.startTitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.startLead = label('', 'secondary', wrap=True)
+        self.startLead.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        flow = QHBoxLayout()
+        flow.setSpacing(t.space(2))
+        flow.addStretch(1)
+        self.flowLabels = []
+        for i in range(4):
+            if i:
+                arrow = label('→', 'flowArrow')
+                flow.addWidget(arrow)
+            chip = label('', 'flowChip')
+            chip.setProperty('last', i == 3)
+            self.flowLabels.append(chip)
+            flow.addWidget(chip)
+        flow.addStretch(1)
+        self.startZone = DropZone(t, large=True)
+        self.startZone.fileDropped.connect(self.loadCsv)
+        self.startZone.browseRequested.connect(self.browseCsv)
+        privacyRow = QHBoxLayout()
+        privacyRow.setSpacing(t.space(2))
+        privacyRow.addStretch(1)
+        self.startPrivacyIcon = QLabel()
+        self.startPrivacyLabel = label('', 'muted')
+        privacyRow.addWidget(self.startPrivacyIcon)
+        privacyRow.addWidget(self.startPrivacyLabel)
+        privacyRow.addStretch(1)
+        column.addWidget(self.startTitle)
+        column.addWidget(self.startLead)
+        column.addSpacing(t.space(2))
+        column.addLayout(flow)
+        column.addSpacing(t.space(2))
+        column.addWidget(self.startZone)
+        column.addLayout(privacyRow)
+        row = QHBoxLayout()
+        row.addStretch(1)
+        holder = QWidget()
+        holder.setMaximumWidth(START_WIDTH)
+        holder.setMinimumWidth(START_WIDTH)
+        holder.setLayout(column)
+        row.addWidget(holder)
+        row.addStretch(1)
+        outer.addLayout(row)
+        outer.addStretch(2)
+        return page
 
     def _buildLeftPanel(self) -> QWidget:
         t = self.tokens
@@ -287,6 +351,12 @@ class MainWindow(QMainWindow):
         self.languageButton.setAccessibleName(tr('header.language'))
         self.languageActions['system'].setText(tr('language.system'))
         self.aboutButton.setText(tr('header.about'))
+        self.startTitle.setText(tr('start.title'))
+        self.startLead.setText(tr('start.lead'))
+        for i, chip in enumerate(self.flowLabels):
+            chip.setText(tr(f'start.flow{i + 1}'))
+        self.startZone.retranslate()
+        self.startPrivacyLabel.setText(tr('step1.privacy'))
         self.fileCard.setTitle(tr('step1.title'))
         self.dropZone.retranslate()
         self.changeFileButton.setText(tr('step1.change'))
@@ -316,6 +386,8 @@ class MainWindow(QMainWindow):
         self.exportButton.setIcon(icons.icon('download', t.color('on-primary')))
         self.reportButton.setIcon(icons.icon('report', t.color('text-primary')))
         self.dropZone.restyle(t)
+        self.startZone.restyle(t)
+        self.startPrivacyIcon.setPixmap(icons.pixmap('shield', t.color('success'), 16))
         self.preview.restyle(t)
         self.toast.restyle(t)
 
@@ -430,6 +502,7 @@ class MainWindow(QMainWindow):
 
     def _updateFileInfo(self) -> None:
         data = self.data
+        self.stack.setCurrentIndex(0 if data is None else 1)
         self.dropZone.setVisible(data is None)
         self.fileInfo.setVisible(data is not None)
         if data:
@@ -478,6 +551,7 @@ class MainWindow(QMainWindow):
         self.reportButton.setEnabled(not busy and bool(s and (s.warning or s.error)))
         self.changeFileButton.setEnabled(not busy)
         self.dropZone.setEnabled(not busy)
+        self.startZone.setEnabled(not busy)
 
     # ================================================================ xuất
     def _defaultPath(self, suffix: str, ext: str) -> str:

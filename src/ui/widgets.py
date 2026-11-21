@@ -60,22 +60,25 @@ class DropZone(QFrame):
     fileDropped = Signal(str)
     browseRequested = Signal()
 
-    def __init__(self, t: Tokens, parent=None):
+    def __init__(self, t: Tokens, parent=None, large: bool = False):
         super().__init__(parent)
         self.setObjectName('dropZone')
+        self.large = large   # vùng thao tác chính của màn đầu (bố cục cong-cu): to hơn, nút chọn tệp là nút chính
+        self.setProperty('large', large)
         self.setAcceptDrops(True)
         self.setProperty('dragActive', False)
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(t.space(4), t.space(4), t.space(4), t.space(4))
-        layout.setSpacing(t.space(2))
+        pad = t.space(10 if large else 4)
+        layout.setContentsMargins(pad, pad, pad, pad)
+        layout.setSpacing(t.space(3 if large else 2))
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.iconLabel = QLabel()
         self.iconLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.titleLabel = label('', 'fieldLabel')
+        self.titleLabel = label('', 'dropTitle' if large else 'fieldLabel')
         self.titleLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.orLabel = label('', 'muted')
         self.orLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.browseButton = button('')
+        self.browseButton = button('', 'primary' if large else None)
         self.browseButton.clicked.connect(self.browseRequested)
         for widget in (self.iconLabel, self.titleLabel, self.orLabel):
             layout.addWidget(widget)
@@ -89,8 +92,8 @@ class DropZone(QFrame):
         self.browseButton.setAccessibleName(tr('step1.dialogTitle'))
 
     def restyle(self, t: Tokens) -> None:
-        self.iconLabel.setPixmap(icons.pixmap('upload', t.color('primary'), 32, 1.5))
-        self.browseButton.setIcon(icons.icon('file', t.color('text-primary')))
+        self.iconLabel.setPixmap(icons.pixmap('upload', t.color('primary'), 48 if self.large else 32, 1.5))
+        self.browseButton.setIcon(icons.icon('file', t.color('on-primary' if self.large else 'text-primary')))
 
     @staticmethod
     def _localFile(event) -> str | None:

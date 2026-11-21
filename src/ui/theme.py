@@ -118,6 +118,13 @@ QLabel[role="emptyTitle"] {{ color: {c('text-secondary')}; font-size: {fs('body-
 #card {{ background: {c('bg-surface')}; border: 1px solid {c('border')}; border-radius: {r('lg')}px; }}
 
 #dropZone {{ background: {c('bg-subtle')}; border: 1px solid {c('border-control')}; border-radius: {r('lg')}px; }}
+#dropZone[large="true"] {{ background: {c('bg-surface')}; border: 1px solid {c('border-strong')}; border-radius: {r('lg')}px; }}
+QLabel[role="startTitle"] {{ {heading} font-size: {fs('h1')}px; font-weight: {w('bold')}; }}
+QLabel[role="dropTitle"] {{ font-size: {fs('h4')}px; font-weight: {w('semibold')}; }}
+QLabel[role="flowChip"] {{ background: {c('bg-subtle')}; border: 1px solid {c('border')}; border-radius: {t.pill(24)}px;
+                           color: {c('text-secondary')}; padding: {sp(1)}px {sp(3)}px; font-weight: {w('medium')}; }}
+QLabel[role="flowChip"][last="true"] {{ color: {c('text-link')}; border-color: {c('primary')}; }}
+QLabel[role="flowArrow"] {{ color: {c('text-link')}; }}
 #dropZone[dragActive="true"] {{ border: 2px solid {c('primary')}; background: {c('bg-hover')}; }}
 
 QPushButton, QToolButton {{

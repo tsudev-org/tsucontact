@@ -19,6 +19,12 @@ STRINGS = {
     'theme.system': 'Hệ thống',
 
     # --- Bước 1 ---
+    'start.title': 'Chuyển danh bạ CSV sang vCard',
+    'start.lead': 'Kéo tệp CSV xuất từ Excel, Google Contacts hay Outlook vào đây. Mọi thứ chạy trên máy này.',
+    'start.flow1': 'Tệp CSV',
+    'start.flow2': 'Ghép cột',
+    'start.flow3': 'Kiểm tra từng dòng',
+    'start.flow4': 'vCard (.vcf)',
     'step1.title': '1. Chọn tệp CSV',
     'step1.drop': 'Kéo thả tệp CSV vào đây',
     'step1.or': 'hoặc',

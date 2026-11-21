@@ -76,6 +76,16 @@ def test_toi_da_bay_o_phan_trang(current, last, expected):
     assert pageWindow(current, last) == expected
 
 
+def test_man_dau_cong_cu_roi_sang_bo_cuc_lam_viec(app, window, samples):
+    # Bố cục cong-cu (tsudev-standards v5.0.0): chưa có tệp thì chỉ có vùng kéo thả căn giữa; nạp xong sang 3 bước
+    assert window.stack.currentIndex() == 0
+    assert window.startZone.isVisible() and window.startZone.browseButton.property('variant') == 'primary'
+    assert not window.previewCard.isVisible()
+    loadSample(app, window, samples)
+    assert window.stack.currentIndex() == 1
+    assert window.previewCard.isVisible()
+
+
 def test_nap_csv_tu_ghep_cot_va_kiem_tra(app, window, samples):
     loadSample(app, window, samples)
     mapping = window.mappingPanel.mapping()
