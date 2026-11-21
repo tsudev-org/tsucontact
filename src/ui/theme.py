@@ -12,7 +12,8 @@ from PySide6.QtGui import QColor, QFont, QFontDatabase, QGuiApplication, QPalett
 from src.services.tokens import Tokens, loadTokens
 from src.utils.resource_path import resourcePath
 
-FONT_FILES = ('Inter-Regular.ttf', 'Inter-Medium.ttf', 'Inter-SemiBold.ttf', 'Inter-Bold.ttf')
+FONT_FILES = ('Inter-Regular.ttf', 'Inter-Medium.ttf', 'Inter-SemiBold.ttf', 'Inter-Bold.ttf',
+              'Nunito-SemiBold.ttf', 'Nunito-Bold.ttf')   # Nunito: fontDisplay của products/contact.json
 _fontsLoaded = False
 _assetDir: QTemporaryDir | None = None
 
@@ -30,7 +31,7 @@ def _arrowPath(t: Tokens) -> str:
 
 
 def loadFonts() -> None:
-    """Nạp font Inter đi kèm app (token: font-family), không phụ thuộc máy đã cài hay chưa."""
+    """Nạp font đi kèm app (Inter: font-family; Nunito: font tiêu đề), không phụ thuộc máy đã cài hay chưa."""
     global _fontsLoaded
     if _fontsLoaded:
         return
@@ -49,6 +50,16 @@ def resolveTheme(choice: str) -> str:
     if choice != 'system':
         return choice
     return 'dark' if systemColorScheme() == Qt.ColorScheme.Dark else 'light'
+
+
+def displayFamily(t: Tokens) -> str:
+    """Font tiêu đề có thật trên máy: Nunito (tên kiểu chữ hoặc tên GDI cũ "Nunito SemiBold"), không có thì font thân bài."""
+    families = set(QFontDatabase.families())
+    head, *rest = t.displayFamilies()
+    for name in (head, f'{head} SemiBold', *rest):
+        if name in families:
+            return name
+    return ''
 
 
 def appFont(t: Tokens) -> QFont:
@@ -86,6 +97,8 @@ def buildStyleSheet(t: Tokens) -> str:
     w = t.weight
     controlH = 36
     arrow = _arrowPath(t)
+    display = displayFamily(t)
+    heading = f'font-family: "{display}";' if display else ''
     return f"""
 * {{ outline: none; }}
 QWidget {{ color: {c('text-primary')}; font-size: {fs('body-desktop')}px; }}
@@ -94,11 +107,11 @@ QToolTip {{ background: {c('bg-surface')}; color: {c('text-primary')}; border: 1
            padding: {sp(1)}px {sp(2)}px; border-radius: {r('sm')}px; }}
 
 #header {{ background: {c('bg-surface')}; border-bottom: 1px solid {c('border')}; }}
-#brandName {{ font-size: {fs('h4')}px; font-weight: {w('semibold')}; }}
+#brandName {{ {heading} font-size: {fs('h4')}px; font-weight: {w('bold')}; }}
 #brandTagline, .muted, QLabel[role="muted"] {{ color: {c('text-muted')}; font-size: {fs('sm')}px; }}
 QLabel[role="secondary"] {{ color: {c('text-secondary')}; font-size: {fs('sm')}px; }}
 QLabel[role="danger"] {{ color: {c('danger')}; font-weight: {w('semibold')}; }}
-QLabel[role="cardTitle"] {{ font-size: {fs('body-desktop-lg')}px; font-weight: {w('semibold')}; }}
+QLabel[role="cardTitle"] {{ {heading} font-size: {fs('body-desktop-lg')}px; font-weight: {w('bold')}; }}
 QLabel[role="fieldLabel"] {{ font-weight: {w('medium')}; }}
 QLabel[role="emptyTitle"] {{ color: {c('text-secondary')}; font-size: {fs('body-desktop-lg')}px; }}
 
@@ -108,7 +121,7 @@ QLabel[role="emptyTitle"] {{ color: {c('text-secondary')}; font-size: {fs('body-
 #dropZone[dragActive="true"] {{ border: 2px solid {c('primary')}; background: {c('bg-hover')}; }}
 
 QPushButton, QToolButton {{
-    min-height: {controlH}px; padding: 0 {sp(4)}px; border-radius: {r('md')}px;
+    min-height: {controlH}px; padding: 0 {sp(4)}px; border-radius: {t.pill(controlH)}px;
     font-weight: {w('semibold')}; background: {c('bg-surface')}; color: {c('text-primary')};
     border: 1px solid {c('border-control')};
 }}
@@ -129,7 +142,7 @@ QPushButton[variant="link"] {{ background: transparent; border: none; color: {c(
                                padding: 0; min-height: 0; font-weight: {w('medium')}; text-decoration: underline; }}
 
 QPushButton[role="filter"] {{ min-height: 32px; padding: 0 {sp(3)}px; font-weight: {w('medium')};
-                              border-radius: {r('md')}px; }}
+                              border-radius: {t.pill(32)}px; }}
 QPushButton[role="filter"]:checked {{ background: {c('bg-subtle')}; border: 1px solid {c('primary')}; color: {c('text-primary')}; }}
 
 QToolButton[role="page"] {{ min-height: 32px; min-width: 32px; padding: 0 {sp(2)}px; font-weight: {w('medium')};
@@ -171,7 +184,7 @@ QHeaderView::section {{ background: {c('bg-subtle')}; color: {c('text-primary')}
 
 QScrollBar:vertical {{ background: transparent; width: 10px; margin: 2px; }}
 QScrollBar:horizontal {{ background: transparent; height: 10px; margin: 2px; }}
-QScrollBar::handle {{ background: {c('border-strong')}; border-radius: 4px; min-height: 24px; min-width: 24px; }}
+QScrollBar::handle {{ background: {c('border-strong')}; border-radius: {r('sm')}px; min-height: 24px; min-width: 24px; }}
 QScrollBar::handle:hover {{ background: {c('border-control')}; }}
 QScrollBar::add-line, QScrollBar::sub-line {{ width: 0; height: 0; }}
 QScrollBar::add-page, QScrollBar::sub-page {{ background: transparent; }}

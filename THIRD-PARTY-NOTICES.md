@@ -6,6 +6,7 @@ Tsu Contact đóng gói các thành phần sau. Toàn văn giấy phép đi kèm
 | --- | --- | --- | --- |
 | [Qt for Python (PySide6-Essentials)](https://doc.qt.io/qtforpython-6/) | 6.12.0 | LGPL-3.0 | Giao diện. Liên kết động: thư viện Qt nằm nguyên dạng trong gói, có thể thay bằng bản build khác. Mã nguồn Qt: <https://download.qt.io/official_releases/> |
 | [Inter](https://github.com/rsms/inter) | 4.1 | SIL Open Font License 1.1 (`assets/fonts/Inter-LICENSE.txt`) | Font giao diện theo token thiết kế |
+| [Nunito](https://github.com/googlefonts/nunito) | 3.602 (bản tĩnh 600/700 tách từ font biến thiên) | SIL Open Font License 1.1 (`assets/fonts/Nunito-OFL.txt`, `website/public/fonts/OFL-Nunito.txt`) | Font tiêu đề của Tsu Contact (tsudev-standards v5.0.0 `products/contact.json`) |
 | [Lucide](https://lucide.dev) | - | ISC | Icon nét mảnh (`src/ui/icons.py`) |
 | [Python](https://www.python.org) | 3.11 | PSF License | Trình thông dịch đi kèm bản `.exe` |
 
