@@ -7,6 +7,8 @@ Quy ước đặt tên bản phát hành: `.standards/docs/VERSIONING.md` mục 
 
 - **Bản sắc riêng của Tsu Contact** (tsudev-standards v5.0.0, phiếu `logs/handover/20261121-STD50`): màu nhấn hồng san hô
   (`#F182BA` Tối / `#AD447C` Sáng) thay xanh dùng chung, bộ bo góc `tron` (nút viên thuốc), font tiêu đề Nunito tự host.
+  Màn đầu app và trang chủ website theo bố cục chữ ký `cong-cu`: chưa có tệp thì app chỉ hiện một vùng kéo thả lớn căn
+  giữa; trang chủ đặt nút tải `.exe` + lệnh cài Scoop ngay màn đầu, hoạ tiết thẻ xếp `the-xep` ở hero và `og-image`.
   Website nạp thẳng `.standards/tokens/tokens.css` + `products.css` với `data-product="contact"`; app gộp
   `.standards/tokens/products/contact.json` lúc chạy. Bỏ bảng màu tự khai (`palette.css`, `tokens/extensions.tsucontact.json`).
 

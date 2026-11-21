@@ -1,8 +1,14 @@
 ---
 import Trang from '../layouts/Trang.astro';
-import { banMoiNhat, REPO_URL } from '../lib/noi-dung';
+import { banMoiNhat, kenhCai, REPO_URL } from '../lib/noi-dung';
 
+// Bố cục chữ ký `cong-cu` (tsudev-standards v5.0.0 DESIGN_SYSTEM mục 1.2.2): vùng thao tác chính - tải tệp .exe hoặc
+// chép lệnh cài - nằm ngay màn đầu, căn giữa; ảnh, các bước và giới thiệu xếp phía dưới.
 const ban = await banMoiNhat();
+const tep = ban?.goi[0];
+const mb = (b: number) => `${(b / 1024 / 1024).toFixed(1).replace('.', ',')} MB`;
+const lenhCai = (await kenhCai()).find((n) => n.heDieuHanh === 'Windows')?.lenh[0];
+const luong = ['Tệp CSV', 'Ghép cột', 'Kiểm tra từng dòng', 'vCard (.vcf)'];
 const buoc = [
   { t: 'Kéo tệp CSV vào', d: 'Tệp xuất từ Excel, Google Contacts hay Outlook. Bảng mã và dấu phân cách được tự nhận, kể cả tệp Excel tiếng Việt cũ.' },
   { t: 'Kiểm tra ghép cột', d: 'Cột Họ tên, Số điện thoại, Email, Cơ quan, Chức vụ... được tự ghép, kèm giá trị mẫu để bạn nhìn là nhận ra.' },
@@ -24,20 +30,61 @@ const baoMat = [
 ];
 ---
 <Trang moTa="Tsu Contact: chuyển danh bạ CSV sang vCard để nạp vào điện thoại, kiểm tra từng dòng, chuẩn hóa số Việt Nam, chạy ngoại tuyến, giao diện tiếng Việt." duongDan="/">
-  <section class="mo-dau">
+  <section class="mo-dau mo-dau--cong-cu">
+    <!-- Hoạ tiết chữ ký `the-xep`: thẻ danh bạ xếp chồng lệch, TĨNH, vẽ bằng --accent/--glow, phủ <= 15% (mục 1.2.4) -->
+    <svg class="hoa-tiet" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMin meet" aria-hidden="true" focusable="false">
+      <g>
+        <rect x="40" y="250" width="190" height="116" rx="18" transform="rotate(-10 135 308)" />
+        <rect x="62" y="272" width="190" height="116" rx="18" transform="rotate(-2 157 330)" />
+        <circle cx="108" cy="328" r="18" /><path d="M140 320h80M140 340h52" />
+      </g>
+      <g>
+        <rect x="970" y="330" width="190" height="116" rx="18" transform="rotate(9 1065 388)" />
+        <rect x="948" y="352" width="190" height="116" rx="18" transform="rotate(1 1043 410)" />
+        <circle cx="994" cy="408" r="18" /><path d="M1026 400h80M1026 420h52" />
+      </g>
+    </svg>
     <div class="khung mo-dau__luoi">
       <div>
         <span class="nhan">{ban ? `Phiên bản ${ban.phienBan} · ${ban.ngay}` : 'Bản mới đang được chuẩn bị'}</span>
         <h1>Danh bạ từ Excel vào điện thoại, <span class="chu-tim">đúng và đủ</span></h1>
         <p class="mo-dau__phu">Tsu Contact chuyển tệp CSV thành vCard (.vcf), kiểm tra từng số điện thoại trước khi xuất và chỉ cho bạn dòng nào cần sửa. Chạy hoàn toàn trên máy của bạn, không cần mạng, không cần tài khoản.</p>
-        <div class="mo-dau__nut">
-          <a class="nut nut--chinh" href="/tai-ve/">Tải Tsu Contact</a>
-          <a class="nut nut--phu" href="/huong-dan/">Xem hướng dẫn</a>
-        </div>
-        <p class="mo-dau__ghi-chu">Windows 10/11 x64 · một tệp .exe, không cần cài · miễn phí</p>
       </div>
+
+      <div class="thao-tac" aria-labelledby="thao-tac-tieu-de">
+        <h2 id="thao-tac-tieu-de" class="an-di">Tải và cài Tsu Contact</h2>
+        <ol class="thao-tac__luong" aria-label="Tsu Contact làm gì">
+          {luong.map((b) => <li>{b}</li>)}
+        </ol>
+        {tep ? (
+          <a class="nut nut--chinh nut--lon" href={tep.url}>Tải cho Windows <span class="nut__phu">.exe · {mb(tep.kichThuoc)}</span></a>
+        ) : (
+          <a class="nut nut--chinh nut--lon" href="/tai-ve/">Tải Tsu Contact</a>
+        )}
+        {lenhCai && (
+          <div class="thao-tac__lenh">
+            <p>hoặc cài bằng {lenhCai.kenh}</p>
+            <div class="cai-lenh__dong">
+              <pre tabindex="0"><code id="lenh-nhanh">{lenhCai.lenh}</code></pre>
+              <button type="button" class="nut nut--phu nut--nho" data-chep="lenh-nhanh" aria-label={`Chép lệnh ${lenhCai.kenh}`} hidden>Chép</button>
+            </div>
+          </div>
+        )}
+        <p class="thao-tac__ghi-chu">
+          Windows 10/11 x64 · một tệp, không cần cài · miễn phí ·
+          <a href="/tai-ve/">kiểm tra SHA-256 và cách cài khác</a>
+        </p>
+        <p class="an-di" role="status" aria-live="polite" id="chep-trang-thai"></p>
+      </div>
+      <a class="nut nut--phu" href="/huong-dan/">Xem hướng dẫn từng bước</a>
+    </div>
+    {lenhCai && <script is:inline src="/chep.js" defer></script>}
+  </section>
+
+  <section class="muc muc--anh" aria-label="Ảnh ứng dụng">
+    <div class="khung">
       <figure class="minh-hoa">
-        <img src="/anh/ung-dung-sang.png" alt="Cửa sổ Tsu Contact: bên trái chọn tệp CSV và ghép cột, bên phải bảng xem trước danh bạ có cột trạng thái Hợp lệ, Cảnh báo, Lỗi" width="1280" height="820">
+        <img src="/anh/ung-dung-sang.png" alt="Cửa sổ Tsu Contact: bên trái chọn tệp CSV và ghép cột, bên phải bảng xem trước danh bạ có cột trạng thái Hợp lệ, Cảnh báo, Lỗi" width="1280" height="820" loading="lazy">
         <figcaption>Ba bước trên một màn hình, dữ liệu mẫu</figcaption>
       </figure>
     </div>
