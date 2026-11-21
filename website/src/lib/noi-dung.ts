@@ -113,7 +113,7 @@ export interface BanPhatHanh { tag: string; phienBan: string; ngay: string; url:
 
 /** Nền tảng theo hậu tố tên tệp (build/build-installer.ps1, build/build-portable.ps1). Thứ tự = thứ tự hiển thị. */
 export const NEN_TANG: { ma: string; ten: string; mau: RegExp }[] = [
-  { ma: 'win-x64', ten: 'Windows 10/11 (x64)', mau: /_x64-setup\.exe$/ },
+  { ma: 'win-x64', ten: 'Windows 10/11 (x64)', mau: /_(windows-)?x64-setup\.exe$/ },
 ];
 
 function loaiGoi(ten: string): string {

@@ -3,7 +3,7 @@
 - **Mã phiếu**: 20261117-V1 (phiếu toàn hệ; bản sao đặt ở `logs/handover/` của từng repo)
 - **Từ**: phiên tsudev-27 (repo tsudev), 17/11/2026, theo yêu cầu trực tiếp của chủ dự án
 - **Đến**: phiên kế tiếp của MỌI repo trên máy (thứ tự ở mục 4)
-- **Trạng thái**: MỞ - mỗi repo ghi "Đã đọc" + PR + thẻ đầu tiên theo khuôn mới vào mục 6 của BẢN SAO trong repo mình
+- **Trạng thái**: MỞ (toàn hệ) - tsucontact ĐÃ XONG 21/11/2026, xem mục 6 - mỗi repo ghi "Đã đọc" + PR + thẻ đầu tiên theo khuôn mới vào mục 6 của BẢN SAO trong repo mình
 
 ## 1. Vấn đề (đo 17/11/2026)
 
@@ -82,4 +82,10 @@ Tám kiểu đặt thẻ cùng tồn tại, khó so sánh/đối chiếu phiên 
 
 ## 6. Kết quả xử lý (mỗi repo điền vào bản sao của mình)
 
--
+- 21/11/2026 - tsucontact (phiên agent-contact): **Đã đọc + áp**. Chuỗi phiên bản và thẻ đã đúng khuôn từ trước
+  (`v26.11.1601`). Bản kế tiếp **v26.11.2101**: tệp `tsucontact_26.11.2101_windows-x64-setup.exe` (`RELEASE_BASENAME` =
+  `{slug}_{ver}_{os}-{arch}-setup`), tiêu đề Release `Tsu Contact 26.11.2101` (trước có hậu tố "- Windows x64"). App
+  KHÔNG có trình cập nhật (ngoại tuyến 100%) ⇒ mục 3.2 không có rủi ro. Đồng bộ cùng lúc: `packaging/package.json`,
+  website (`NEN_TANG` nhận cả khuôn cũ lẫn mới), README/SECURITY/trang Tải về/Hướng dẫn, Scoop `tsucontact`
+  (checkver/autoupdate, PR ở scoop-bucket). winget: PR #477388 (26.11.1601) còn chờ moderator - bản mới gửi sau khi gói
+  đầu được nhận.

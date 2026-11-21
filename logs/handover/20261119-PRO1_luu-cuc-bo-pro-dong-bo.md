@@ -3,8 +3,7 @@
 - **Mã phiếu**: 20261119-PRO1 (phiếu con)
 - **Từ**: agent-qulythuchi (phiên `qulythuchi-b2`), 19/11/2026, theo yêu cầu trực tiếp của chủ dự án
 - **Đến**: phiên kế tiếp của repo `tsucontact`
-- **Trạng thái**: MỞ - chưa viết mã trước khi tsudev-standards v3.9.0 (PRO-A) phát hành; phần nào cần máy chủ quyền lợi
-  thì chờ PRO-B
+- **Trạng thái**: ĐÓNG 21/11/2026 - không có Pro (ADR-0002), xem mục 4
 - **Phiếu gốc (ĐỌC TRƯỚC)**: `~/projects/logs/handover/20261119-PRO1_ke-hoach-luu-cuc-bo-pro-dong-bo-toan-he.md` - mục 1 (yêu cầu nguyên văn tóm tắt), 2 (nguyên tắc N1-N8), 3 (thông báo nhiều
   thiết bị, chu kỳ 30 ngày), 5 (khung việc mỗi repo), 7 (nghiệm thu), 8 (câu hỏi 👤). Phiếu này THAY hàng T7 của
   `~/projects/logs/handover/20261119-01_ke-hoach-toan-he-v3.8.0.md` cho repo này.
@@ -28,7 +27,10 @@ Xem phiếu gốc mục 8 (giá Pro, ân hạn, nơi đặt dịch vụ đồng 
 
 ## 4. Kết quả xử lý (phiên nhận điền)
 
--
+- 21/11/2026 - phiên agent-contact (tsucontact-5b): **ĐÓNG**. Kiểm kê + quyết định ở `docs/adr/0002-khong-co-pro-dong-bo.md`:
+  app và website không gửi dữ liệu người dùng nào ra khỏi máy (không mã mạng, QtNetwork bị loại khỏi gói, website tĩnh
+  không biểu mẫu/đo lường); **không có Pro, không đồng bộ**; N5/N6 không có bề mặt (không máy chủ); Ủng hộ giữ liên kết
+  `tsudev.com/ung-ho`. Không có việc 👤.
 
 ## 5. Đã chốt (19/11/2026, bổ sung sau khi mở phiếu)
 

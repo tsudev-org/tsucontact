@@ -3,7 +3,9 @@
 Mỗi bản phát hành 1 dòng, định dạng: `{version} - {DD/MM/YYYY} - nội dung thay đổi`.
 Quy ước đặt tên bản phát hành: `.standards/docs/VERSIONING.md` mục 2.
 
-## Chưa phát hành
+## 26.11.2101 - 21/11/2026
+
+- **Tên tệp phát hành theo khuôn thống nhất** (phiếu `20261117-V1`, VERSIONING.md mục 2.2): `tsucontact_26.11.2101_windows-x64-setup.exe`; tiêu đề Release `Tsu Contact 26.11.2101`. Bản cũ giữ tên cũ.
 
 - **Bản sắc riêng của Tsu Contact** (tsudev-standards v5.0.0, phiếu `logs/handover/20261121-STD50`): màu nhấn hồng san hô
   (`#F182BA` Tối / `#AD447C` Sáng) thay xanh dùng chung, bộ bo góc `tron` (nút viên thuốc), font tiêu đề Nunito tự host.

@@ -6,7 +6,7 @@ import { banMoiNhat, RELEASES_URL, REPO, REPO_URL } from '../lib/noi-dung';
 const ban = await banMoiNhat();
 const mb = (b: number) => `${(b / 1024 / 1024).toFixed(1).replace('.', ',')} MB`;
 const goi = ban?.goi ?? [];
-const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_x64-setup.exe';
+const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_windows-x64-setup.exe';
 ---
 <Trang tieuDe="Tải về" moTa="Tải Tsu Contact cho Windows 10/11: một tệp .exe chạy ngay không cần cài, kèm mã SHA-256, SBOM và cách kiểm chứng nguồn gốc bản build." duongDan="/tai-ve/">
   <div class="khung tai-lieu">
@@ -55,7 +55,7 @@ const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_x64-setup.exe';
           </section>
         </div>
       ) : (
-        <p>Bản dành cho <strong>Windows 10/11 64-bit</strong>: một tệp <code>tsucontact_&lt;phiên bản&gt;_x64-setup.exe</code> chạy ngay, không cần cài Python hay thư viện nào.</p>
+        <p>Bản dành cho <strong>Windows 10/11 64-bit</strong>: một tệp <code>tsucontact_&lt;phiên bản&gt;_windows-x64-setup.exe</code> chạy ngay, không cần cài Python hay thư viện nào.</p>
       )}
       <p>Mỗi bản phát hành còn kèm <code>SHA256SUMS.txt</code> (mã băm) và <code>.cdx.json</code> (SBOM: danh sách mọi thành phần đóng gói, chuẩn CycloneDX).</p>
 
