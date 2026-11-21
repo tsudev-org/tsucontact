@@ -3,6 +3,13 @@
 Mỗi bản phát hành 1 dòng, định dạng: `{version} - {DD/MM/YYYY} - nội dung thay đổi`.
 Quy ước đặt tên bản phát hành: `.standards/docs/VERSIONING.md` mục 2.
 
+## Chưa phát hành
+
+- **Bản sắc riêng của Tsu Contact** (tsudev-standards v5.0.0, phiếu `logs/handover/20261121-STD50`): màu nhấn hồng san hô
+  (`#F182BA` Tối / `#AD447C` Sáng) thay xanh dùng chung, bộ bo góc `tron` (nút viên thuốc), font tiêu đề Nunito tự host.
+  Website nạp thẳng `.standards/tokens/tokens.css` + `products.css` với `data-product="contact"`; app gộp
+  `.standards/tokens/products/contact.json` lúc chạy. Bỏ bảng màu tự khai (`palette.css`, `tokens/extensions.tsucontact.json`).
+
 ## 26.11.1601 - 16/11/2026
 
 Bản đầu tiên mang tên **Tsu Contact**.

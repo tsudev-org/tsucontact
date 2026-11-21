@@ -83,8 +83,14 @@ def test_ngon_ngu_theo_he_thong_muc_1_4(system, expected):
 
 
 def test_bang_mau_den_tim_dat_tuong_phan():
-    # Bảng màu §2 của phiếu 20261110-05 phải được áp, và các cặp chữ/nền đạt WCAG AA ở cả hai chế độ
-    from src.services.tokens import THEMES, loadTokens
+    # Lớp bản sắc products/contact.json (tsudev-standards v5.0.0) phải được áp lên lớp nền chung, và các cặp
+    # chữ/nền đạt WCAG AA ở cả hai chế độ
+    import json
+
+    from src.services.tokens import PRODUCT_FILE, THEMES, loadTokens
+
+    with open(PRODUCT_FILE, encoding='utf-8') as f:
+        product = json.load(f)
 
     def lum(hexColor):
         rgb = [int(hexColor[i:i + 2], 16) / 255 for i in (1, 3, 5)]
@@ -97,8 +103,13 @@ def test_bang_mau_den_tim_dat_tuong_phan():
 
     assert THEMES == ('light', 'dark')
     assert loadTokens('dark').color('bg-base') == '#0A0A0A'
-    assert loadTokens('dark').color('primary') == '#38BDF8'
-    assert loadTokens('light').color('primary') == '#0868C4'
+    assert loadTokens('dark').color('primary') == product['colors']['dark']['primary'] == '#F182BA'
+    assert loadTokens('light').color('primary') == product['colors']['light']['primary'] == '#AD447C'
+    # Bộ bo góc `tron`: nút viên thuốc, nhưng Qt chỉ nhận bán kính <= nửa chiều cao
+    t = loadTokens('dark')
+    assert (t.radius('sm'), t.radius('md'), t.radius('lg'), t.radius('control')) == (8, 14, 20, 999)
+    assert t.pill(36) == 18
+    assert t.displayFamilies()[0] == 'Nunito'
     for theme in THEMES:
         t = loadTokens(theme)
         for bg in ('bg-base', 'bg-surface', 'bg-subtle', 'bg-hover'):
