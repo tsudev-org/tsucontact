@@ -25,5 +25,6 @@ DONATE_URL = "https://tsudev.com/ung-ho"
 COPYRIGHT = "Copyright (c) 2026 TsuDEV"
 
 # Tên file phát hành (không phần mở rộng) - dùng cho PyInstaller và scripts/build-win.ps1.
-# Khuôn V1 (VERSIONING.md mục 2.2, từ 26.11.2101): {tên-gói}_{phiên bản}_{os}-{arch}-{loại}; bản <= 26.11.1601 là `_x64-setup`.
+# Khuôn V1 (VERSIONING.md mục 2.2, từ 26.11.2101): {tên-gói}_{phiên bản}_{os}-{arch}-{loại};
+# bản <= 26.11.1601 là `_x64-setup`.
 RELEASE_BASENAME = f"{APP_SLUG}_{APP_VERSION}_{APP_OS}-{APP_ARCH}-setup"
