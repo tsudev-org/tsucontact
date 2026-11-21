@@ -2,7 +2,7 @@
 
 - **Mã phiếu**: 20261121-STD50
 - **Từ**: phiên tsudev-standards, 21/11/2026 - **Đến**: phiên kế tiếp của `tsucontact`
-- **Trạng thái**: MỞ
+- **Trạng thái**: ĐÓNG 21/11/2026 (PR #39 + #40, deploy contact.tsudev.com, app phát hành 26.11.2101)
 - **Nguồn**: https://github.com/tsudev-org/tsudev-standards/releases/tag/v5.0.0 - `docs/DESIGN_SYSTEM.md` mục 1.2,
   CHANGELOG 5.0.0 "Hướng dẫn nâng cấp"
 - **Bối cảnh**: chủ dự án muốn mỗi sản phẩm có đặc trưng nổi bật riêng (màu, giao diện, bố cục). Trước v5.0.0, 9/11
@@ -46,4 +46,13 @@ kiểm chống trùng phải xanh. KHÔNG ghi đè tại repo này.
 
 ## Kết quả xử lý
 
-- 
+- 21/11/2026 - phiên agent-contact (tsucontact-5b):
+  - **PR 1 #39** (merge `ca5973c`): sync v5.0.0; web nạp `.standards/tokens/tokens.css` + `products.css`,
+    `data-product="contact"`; xoá `palette.css`, `src/styles/tokens.css`, `tokens/extensions.tsucontact.json`; bo góc
+    `--radius-*`, nút `--radius-control`; h1-h3 Nunito tự host (latin + vietnamese, 600/700). App: `src/services/tokens.py`
+    gộp `products/contact.json` (màu + bộ `tron` + `fontDisplay`), Qt kẹp bán kính viên thuốc ≤ nửa chiều cao
+    (`Tokens.pill`), Nunito đi kèm `.exe`. `warm` → `light` vẫn giữ (test sẵn có). Ảnh trước/sau: `docs/anh-chup/20261121-std50/`.
+  - **PR 2 #40** (merge `364165d`): trang chủ `cong-cu` (nút tải `.exe` + lệnh Scoop ngay màn đầu), hoạ tiết `the-xep`
+    ở hero + `og-image.png` (màu đọc từ `products/contact.json`); app có trang Bắt đầu (vùng kéo thả lớn căn giữa).
+  - Kiểm: pytest 97 passed, a11y 9 trang × 2 chế độ 0 lỗi, check-theme 0 lỗi, brand-assets khớp, CI 10/10 xanh.
+  - Deploy `contact.tsudev.com` sau mỗi PR (Worker `tsucontact`). App mang bản sắc mới từ bản 26.11.2101. 

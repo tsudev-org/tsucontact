@@ -26,13 +26,13 @@ scoop install tsudev/tsucontact
 
 Hoặc tải tay:
 [**Trang phát hành → Releases**](https://github.com/tsudev-org/tsucontact/releases/latest)
-→ tải `tsucontact_{version}_x64-setup.exe` trong mục *Assets*, bấm đúp để chạy.
+→ tải `tsucontact_{version}_windows-x64-setup.exe` trong mục *Assets*, bấm đúp để chạy.
 File chạy độc lập, **không cần cài Python**. Lần đầu SmartScreen có thể cảnh báo (chưa có chứng
 thư của CA - xem mục *Ký số bản .exe*): *More info → Run anyway*. Muốn chắc file không bị sửa,
 đối chiếu với `SHA256SUMS.txt` đính kèm cùng bản phát hành:
 
 ```powershell
-Get-FileHash tsucontact_26.8.2002_x64-setup.exe -Algorithm SHA256
+Get-FileHash tsucontact_26.11.2101_windows-x64-setup.exe -Algorithm SHA256
 ```
 
 
@@ -83,7 +83,7 @@ powershell -ExecutionPolicy Bypass -File scripts\build-win.ps1
 ```
 
 Script cài phụ thuộc theo hash, chạy test, gọi PyInstaller, sinh SBOM CycloneDX và đặt sản phẩm vào `release/` với tên
-theo `.standards/docs/VERSIONING.md` mục 2 (ví dụ `tsucontact_26.8.2002_x64-setup.exe`).
+theo `.standards/docs/VERSIONING.md` mục 2 (ví dụ `tsucontact_26.11.2101_windows-x64-setup.exe`).
 Tên file lấy từ `RELEASE_BASENAME` trong `src/app_info.py` - mỗi bản mới tăng 2 số cuối.
 
 ## Phát hành một bản mới

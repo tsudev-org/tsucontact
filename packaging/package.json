@@ -15,9 +15,9 @@
   },
   "assets": {
     "windows-x64": {
-      "file": "tsucontact_{version}_x64-setup.exe",
+      "file": "tsucontact_{version}_windows-x64-setup.exe",
       "kind": "portable",
-      "bin": "tsucontact_{version}_x64-setup.exe"
+      "bin": "tsucontact_{version}_windows-x64-setup.exe"
     }
   },
   "channels": ["scoop"],

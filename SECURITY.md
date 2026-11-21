@@ -18,5 +18,5 @@ sinh thái: [`.standards/SECURITY.md`](.standards/SECURITY.md).
 Mỗi bản phát hành kèm `SHA256SUMS.txt`, SBOM `*.cdx.json` và chứng thực nguồn gốc bản build:
 
 ```bash
-gh attestation verify tsucontact_<phiên-bản>_x64-setup.exe --repo tsudev-org/tsucontact
+gh attestation verify tsucontact_<phiên-bản>_windows-x64-setup.exe --repo tsudev-org/tsucontact
 ```
