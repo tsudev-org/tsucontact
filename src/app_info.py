@@ -6,7 +6,7 @@ APP_NAME = "Tsu Contact"
 APP_SLUG = "tsucontact"
 # Quy ước: docs/DESIGN_SYSTEM.md mục 6 - {YY}.{M}.{DD}{NN}
 # (26.8.2002 = bản phát hành thứ 02 ngày 20/08/2026). Bản trước quy ước: "5.2".
-APP_VERSION = "26.11.2101"
+APP_VERSION = "26.11.2201"
 APP_OS = "windows"
 APP_ARCH = "x64"
 # Nhận diện hệ sinh thái: .standards/docs/ECOSYSTEM_IDENTITY.md mục 2.3.
@@ -28,3 +28,6 @@ COPYRIGHT = "Copyright (c) 2026 TsuDEV"
 # Khuôn V1 (VERSIONING.md mục 2.2, từ 26.11.2101): {tên-gói}_{phiên bản}_{os}-{arch}-{loại};
 # bản <= 26.11.1601 là `_x64-setup`.
 RELEASE_BASENAME = f"{APP_SLUG}_{APP_VERSION}_{APP_OS}-{APP_ARCH}-setup"
+# Từ 26.11.2201: `-setup.exe` là BỘ CÀI Inno Setup (trước là PyInstaller một tệp); kèm gói zip chạy ngay không cần cài
+# (Scoop, winget dùng gói này).
+PORTABLE_BASENAME = f"{APP_SLUG}_{APP_VERSION}_{APP_OS}-{APP_ARCH}-portable"

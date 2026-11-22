@@ -6,9 +6,9 @@ import { banMoiNhat, RELEASES_URL, REPO, REPO_URL } from '../lib/noi-dung';
 const ban = await banMoiNhat();
 const mb = (b: number) => `${(b / 1024 / 1024).toFixed(1).replace('.', ',')} MB`;
 const goi = ban?.goi ?? [];
-const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_windows-x64-setup.exe';
+const vd = (goi.find((g) => g.ten.endsWith('.exe')) ?? goi[0])?.ten ?? 'tsucontact_<phiên bản>_windows-x64-setup.exe';
 ---
-<Trang tieuDe="Tải về" moTa="Tải Tsu Contact cho Windows 10/11: một tệp .exe chạy ngay không cần cài, kèm mã SHA-256, SBOM và cách kiểm chứng nguồn gốc bản build." duongDan="/tai-ve/">
+<Trang tieuDe="Tải về" moTa="Tải Tsu Contact cho Windows 10/11: bộ cài không cần quyền quản trị hoặc bản zip chạy ngay, kèm mã SHA-256, SBOM và cách kiểm chứng nguồn gốc bản build." duongDan="/tai-ve/">
   <div class="khung tai-lieu">
     <nav class="tai-lieu__menu" aria-label="Tải về">
       <p>Tải về</p>
@@ -55,7 +55,7 @@ const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_windows-x64-setup.exe';
           </section>
         </div>
       ) : (
-        <p>Bản dành cho <strong>Windows 10/11 64-bit</strong>: một tệp <code>tsucontact_&lt;phiên bản&gt;_windows-x64-setup.exe</code> chạy ngay, không cần cài Python hay thư viện nào.</p>
+        <p>Bản dành cho <strong>Windows 10/11 64-bit</strong>: bộ cài <code>tsucontact_&lt;phiên bản&gt;_windows-x64-setup.exe</code> hoặc bản chạy ngay <code>tsucontact_&lt;phiên bản&gt;_windows-x64-portable.zip</code>, không cần cài Python hay thư viện nào.</p>
       )}
       <p>Mỗi bản phát hành còn kèm <code>SHA256SUMS.txt</code> (mã băm) và <code>.cdx.json</code> (SBOM: danh sách mọi thành phần đóng gói, chuẩn CycloneDX).</p>
 
@@ -70,14 +70,13 @@ const vd = goi[0]?.ten ?? 'tsucontact_<phiên bản>_windows-x64-setup.exe';
 
       <h2 id="chay">Chạy lần đầu</h2>
       <ol>
-        <li>Bấm đúp tệp <code>.exe</code>. Lần mở đầu mất vài giây để giải nén vào thư mục tạm.</li>
+        <li>Bộ cài: bấm đúp tệp <code>-setup.exe</code>. Cài cho riêng tài khoản đang dùng, không cần quyền quản trị; có lối tắt trong Start Menu. Bản zip: giải nén vào một thư mục cố định rồi mở <code>tsucontact.exe</code>.</li>
         <li>Ứng dụng chưa có chứng thư ký số thương mại nên Windows SmartScreen có thể cảnh báo: chọn <em>Thông tin thêm</em>, rồi <em>Vẫn chạy</em> sau khi đã kiểm tra tệp như trên.</li>
-        <li>Đặt tệp vào một thư mục cố định (ví dụ <code>Tài liệu\Ứng dụng</code>) và ghim lên thanh tác vụ nếu dùng thường xuyên.</li>
       </ol>
 
       <h2 id="cap-nhat">Cập nhật, gỡ bỏ</h2>
-      <p>Ứng dụng không tự kết nối mạng nên không tự cập nhật. Cài qua Scoop thì <code>scoop update *</code> lấy bản mới; tải tay thì tải lại từ trang này rồi thay tệp cũ. Theo dõi repo trên GitHub (<em>Watch</em>, chọn <em>Releases</em>) để được báo khi có bản mới.</p>
-      <p>Gỡ bỏ: xóa tệp <code>.exe</code> và thư mục <code>%LOCALAPPDATA%\tsucontact</code> (chỉ chứa lựa chọn giao diện). Ứng dụng không ghi gì vào Registry.</p>
+      <p>Ứng dụng không tự kết nối mạng nên không tự cập nhật. Cài qua Scoop thì <code>scoop update *</code> lấy bản mới; tải tay thì chạy bộ cài bản mới (tự thay bản cũ) hoặc giải nén bản zip mới đè lên thư mục cũ. Theo dõi repo trên GitHub (<em>Watch</em>, chọn <em>Releases</em>) để được báo khi có bản mới.</p>
+      <p>Gỡ bỏ: bản cài thì vào <em>Cài đặt → Ứng dụng</em>, chọn Tsu Contact, <em>Gỡ cài đặt</em>; bản zip thì xóa thư mục đã giải nén. Lựa chọn giao diện nằm ở <code>%LOCALAPPDATA%\tsucontact</code>, xóa thư mục này nếu muốn sạch hẳn. Ứng dụng không ghi gì vào Registry; bộ cài chỉ ghi mục gỡ cài đặt chuẩn của Windows.</p>
     </article>
   </div>
 </Trang>

@@ -21,8 +21,9 @@ scoop bucket add tsudev https://github.com/tsudev-org/scoop-bucket
 scoop install tsudev/tsucontact
 ```
 
-Or download `tsucontact_<version>_windows-x64-setup.exe` from the [latest release](https://github.com/tsudev-org/tsucontact/releases/latest).
-It is a single portable executable; no Python needed. Verify it before running:
+Or download the installer `tsucontact_<version>_windows-x64-setup.exe` (per-user, no admin rights, Start Menu shortcut,
+standard uninstall) or the portable `tsucontact_<version>_windows-x64-portable.zip` from the
+[latest release](https://github.com/tsudev-org/tsucontact/releases/latest); no Python needed. Verify it before running:
 
 ```powershell
 Get-FileHash .\tsucontact_<version>_windows-x64-setup.exe -Algorithm SHA256   # compare with SHA256SUMS.txt

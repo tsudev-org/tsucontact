@@ -3,7 +3,9 @@
 # theo bảng mã ANSI, làm hỏng chữ tiếng Việt và gây lỗi cú pháp khi chạy.
 # Chạy từ thư mục gốc repo:  powershell -ExecutionPolicy Bypass -File scripts\build-win.ps1
 # Tên file xuất ra do src/app_info.py quyết định (.standards/docs/VERSIONING.md mục 2).
-# Sản phẩm trong release/: <ten>.exe, <ten>.cdx.json (SBOM), SHA256SUMS.txt.
+# Sản phẩm trong release/: <ten>-setup.exe (bộ cài Inno), <ten>-portable.zip, <ten>.cdx.json (SBOM), SHA256SUMS.txt.
+# Cần Inno Setup 6. Bootloader PyInstaller tự dựng (ít báo nhầm hơn): cài pyinstaller với PYINSTALLER_COMPILE_BOOTLOADER=1
+# (cần MSVC) - workflow phát hành làm bước này.
 
 [CmdletBinding()]
 param(
@@ -20,7 +22,9 @@ param(
     [string]$Thumbprint,
     [switch]$SelfSigned,
     # Trình Python dùng để build (mặc định 'python' trong PATH hoặc venv đang bật).
-    [string]$Python = 'python'
+    [string]$Python = 'python',
+    # Trình biên dịch Inno Setup 6 (có sẵn trên runner windows-latest).
+    [string]$Iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
 )
 
 $ErrorActionPreference = 'Stop'
@@ -58,30 +62,40 @@ if (-not $SkipTests) {
     Invoke-Checked 'Kiểm thử'
 }
 
-# --- 5. Đóng gói ---
-Write-Step 'PyInstaller'
+# --- 5. Đóng gói thư mục (onedir) - KHÔNG dùng onefile: bị antivirus học máy báo nhầm (ISS-20261121-2340-3857) ---
+Write-Step 'PyInstaller (onedir)'
 & $Python -m PyInstaller --noconfirm --clean tsucontact.spec
 Invoke-Checked 'PyInstaller'
-
-# --- 6. Chuyển sản phẩm sang release/ ---
-$built = Join-Path $repoRoot "dist\$releaseName.exe"
-if (-not (Test-Path $built)) { throw "Không thấy sản phẩm build tại $built" }
+$appDir = Join-Path $repoRoot 'dist\tsucontact'
+if (-not (Test-Path (Join-Path $appDir 'tsucontact.exe'))) { throw "Không thấy sản phẩm build tại $appDir" }
 $releaseDir = Join-Path $repoRoot 'release'
 New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
 Get-ChildItem $releaseDir -File | Remove-Item -Force
-$final = Join-Path $releaseDir "$releaseName.exe"
-Move-Item -Force $built $final
-if (-not $KeepBuild) { Remove-Item -Recurse -Force (Join-Path $repoRoot 'build') -ErrorAction SilentlyContinue }
+if (-not (Test-Path $Iscc)) { throw "Không thấy Inno Setup tại $Iscc (cài Inno Setup 6 hoặc truyền -Iscc)." }
 
-# --- 7. Ký số (tùy chọn) - phải ký TRƯỚC khi tính mã băm ---
-if ($Sign -or $PfxPath -or $Thumbprint -or $SelfSigned) {
-    Write-Step 'Ký số bản .exe'
-    $signArgs = @{ Path = $final }
+$doSign = $Sign -or $PfxPath -or $Thumbprint -or $SelfSigned
+function Invoke-Sign([string]$file) {
+    $signArgs = @{ Path = $file }
     if ($PfxPath)    { $signArgs['PfxPath'] = $PfxPath }
     if ($Thumbprint) { $signArgs['Thumbprint'] = $Thumbprint }
     if ($SelfSigned) { $signArgs['SelfSigned'] = $true }
     & (Join-Path $PSScriptRoot 'sign-win.ps1') @signArgs
 }
+
+# --- 6. Ký exe của app TRƯỚC khi đóng gói (tùy chọn) ---
+if ($doSign) { Write-Step 'Ký số tsucontact.exe'; Invoke-Sign (Join-Path $appDir 'tsucontact.exe') }
+
+# --- 7. Bộ cài Inno Setup + gói zip portable ---
+$appVersion = (& $Python -c "from src.app_info import APP_VERSION; print(APP_VERSION)").Trim()
+$portableName = (& $Python -c "from src.app_info import PORTABLE_BASENAME; print(PORTABLE_BASENAME)").Trim()
+Write-Step "Bộ cài: $releaseName.exe"
+& $Iscc /Qp "/DAppVersion=$appVersion" "/DSourceDir=$appDir" "/DOutputBase=$releaseName" "/O$releaseDir" (Join-Path $repoRoot 'packaging\inno\tsucontact.iss')
+Invoke-Checked 'Inno Setup'
+$final = Join-Path $releaseDir "$releaseName.exe"
+if ($doSign) { Write-Step 'Ký số bộ cài'; Invoke-Sign $final }
+Write-Step "Gói portable: $portableName.zip"
+Compress-Archive -Path (Join-Path $appDir '*') -DestinationPath (Join-Path $releaseDir "$portableName.zip") -CompressionLevel Optimal
+if (-not $KeepBuild) { Remove-Item -Recurse -Force (Join-Path $repoRoot 'build') -ErrorAction SilentlyContinue }
 
 # --- 8. SBOM CycloneDX của các thành phần đóng gói (SECURITY_BASELINE mục 5) ---
 Write-Step 'Sinh SBOM (CycloneDX)'

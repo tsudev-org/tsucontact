@@ -111,13 +111,21 @@ export function changelogMoiNhat(soMuc: number): string {
 export interface GoiTai { nenTang: string; ten: string; url: string; sha256: string; kichThuoc: number; loai: string }
 export interface BanPhatHanh { tag: string; phienBan: string; ngay: string; url: string; goi: GoiTai[]; tepSums: { ten: string; url: string }[] }
 
-/** Nền tảng theo hậu tố tên tệp (build/build-installer.ps1, build/build-portable.ps1). Thứ tự = thứ tự hiển thị. */
+/** Nền tảng theo hậu tố tên tệp (scripts/build-win.ps1). Thứ tự = thứ tự hiển thị. */
 export const NEN_TANG: { ma: string; ten: string; mau: RegExp }[] = [
-  { ma: 'win-x64', ten: 'Windows 10/11 (x64)', mau: /_(windows-)?x64-setup\.exe$/ },
+  { ma: 'win-x64', ten: 'Windows 10/11 (x64)', mau: /_(windows-)?x64-(setup\.exe|portable\.zip)$/ },
 ];
 
+/** Từ 26.11.2201 `-setup.exe` là bộ cài; bản <= 26.11.2101 là ứng dụng một tệp. */
 function loaiGoi(ten: string): string {
-  return ten.endsWith('.exe') ? 'Ứng dụng một tệp (không cần cài)' : 'Tệp';
+  if (ten.endsWith('-portable.zip')) return 'Bản chạy ngay (giải nén, không cần cài)';
+  if (ten.endsWith('.exe')) return soPhienBan(ten) >= 26112201 ? 'Bộ cài (khuyên dùng)' : 'Ứng dụng một tệp (không cần cài)';
+  return 'Tệp';
+}
+
+function soPhienBan(ten: string): number {
+  const m = ten.match(/_(\d{2})\.(\d{1,2})\.(\d{4})_/);
+  return m ? Number(m[1]) * 1e6 + Number(m[2]) * 1e4 + Number(m[3]) : 0;
 }
 
 let boNho: Promise<BanPhatHanh | null> | undefined;
@@ -147,7 +155,9 @@ export function banMoiNhat(): Promise<BanPhatHanh | null> {
     }
     const goi: GoiTai[] = [];
     for (const nt of NEN_TANG) {
-      for (const a of r.assets.filter((x) => nt.mau.test(x.name))) {
+      // Bộ cài .exe trước, zip portable sau.
+      const hop = r.assets.filter((x) => nt.mau.test(x.name)).sort((x, y) => Number(y.name.endsWith('.exe')) - Number(x.name.endsWith('.exe')));
+      for (const a of hop) {
         goi.push({ nenTang: nt.ma, ten: a.name, url: a.browser_download_url, sha256: bang.get(a.name) ?? '', kichThuoc: a.size, loai: loaiGoi(a.name) });
       }
     }

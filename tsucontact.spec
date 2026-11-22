@@ -1,5 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
-# Đóng gói Tsu Contact (PySide6) thành MỘT file .exe.
+# Đóng gói Tsu Contact (PySide6) dạng THƯ MỤC (onedir): dist/tsucontact/ gồm tsucontact.exe + _internal/.
+# Thư mục này được bộ cài Inno Setup (packaging/inno/tsucontact.iss) và gói zip portable đóng gói - scripts/build-win.ps1.
 # Tên file theo .standards/docs/VERSIONING.md mục 2 - lấy từ src/app_info.py (nguồn duy nhất).
 import sys
 
@@ -7,8 +8,12 @@ sys.path.insert(0, SPECPATH)
 from PyInstaller.utils.win32.versioninfo import (FixedFileInfo, StringFileInfo, StringStruct,
                                                  StringTable, VarFileInfo, VarStruct, VSVersionInfo)
 
-from src.app_info import (APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, PUBLISHER_DISPLAY,
-                          RELEASE_BASENAME)
+from src.app_info import APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, PUBLISHER_DISPLAY
+
+# Không dùng onefile: bản onefile 26.11.2101 bị VirusTotal 3/74 (Bkav, Microsoft Wacatac.B!ml, APEX); đo 22/11/2026 bản
+# onedir + bootloader dựng từ nguồn + bộ cài Inno lzma2 không solid = 0/74 (DISTRIBUTION_TRUST mục 3,
+# ISS-20261121-2340-3857). Bootloader tự dựng do workflow phát hành cài (PYINSTALLER_COMPILE_BOOTLOADER=1).
+EXE_NAME = APP_SLUG
 
 # Siêu dữ liệu bản cài - .standards/docs/ECOSYSTEM_IDENTITY.md mục 2.3.
 _parts = tuple(int(p) for p in APP_VERSION.split('.')) + (0,)
@@ -21,7 +26,7 @@ VERSION_INFO = VSVersionInfo(
             StringStruct('FileVersion', APP_VERSION),
             StringStruct('InternalName', APP_SLUG),
             StringStruct('LegalCopyright', COPYRIGHT),
-            StringStruct('OriginalFilename', f'{RELEASE_BASENAME}.exe'),
+            StringStruct('OriginalFilename', f'{EXE_NAME}.exe'),
             StringStruct('ProductName', APP_SLUG),
             StringStruct('ProductVersion', APP_VERSION),
             StringStruct('Comments', ECOSYSTEM_URL),
@@ -85,18 +90,12 @@ a.datas = [d for d in a.datas if '/translations/' not in d[0].replace('\\', '/')
 
 pyz = PYZ(a.pure)
 
-exe = EXE(
-    pyz,
-    a.scripts,
-    a.binaries,
-    a.datas,
-    [],
-    name=RELEASE_BASENAME,
+_EXE_OPTS = dict(
+    name=EXE_NAME,
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=False,  # UPX làm phần mềm diệt virus báo nhầm nhiều hơn và hỏng chữ ký số
-    runtime_tmpdir=None,
     console=False,
     disable_windowed_traceback=True,
     argv_emulation=False,
@@ -106,3 +105,6 @@ exe = EXE(
     icon=['assets/icons/app.ico'],
     version=VERSION_INFO,
 )
+
+exe = EXE(pyz, a.scripts, [], exclude_binaries=True, **_EXE_OPTS)
+coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name=APP_SLUG)
