@@ -9,6 +9,12 @@
 #ifndef SourceDir
   #error Thiếu /DSourceDir
 #endif
+#ifndef Compression
+  #define Compression "lzma2/max"
+#endif
+#ifndef Solid
+  #define Solid "yes"
+#endif
 #ifndef OutputBase
   #error Thiếu /DOutputBase
 #endif
@@ -41,8 +47,8 @@ SetupIconFile=..\..\assets\icons\app.ico
 UninstallDisplayIcon={app}\tsucontact.exe
 UninstallDisplayName=Tsu Contact
 OutputBaseFilename={#OutputBase}
-Compression=lzma2/max
-SolidCompression=yes
+Compression={#Compression}
+SolidCompression={#Solid}
 WizardStyle=modern
 CloseApplications=yes
 

@@ -116,14 +116,6 @@ jobs:
           python-version: '3.11'
       - name: Cài phụ thuộc đã khóa
         run: python -m pip install --disable-pip-version-check --require-hashes --no-deps -r requirements.txt -r requirements-dev.txt
-      - name: B0 - onedir + Inno (bootloader dựng sẵn)
-        shell: pwsh
-        run: |
-          $env:TSU_ONEDIR = '1'
-          python -m PyInstaller --noconfirm --clean --distpath out\b0 tsucontact.spec
-          if ($LASTEXITCODE) { throw 'pyinstaller' }
-          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /Qp /DAppVersion=26.11.2101 /DSourceDir=$PWD\out\b0\tsucontact /DOutputBase=b0-onedir-inno /O$PWD\av packaging\inno\tsucontact.iss
-          if ($LASTEXITCODE) { throw 'iscc' }
       - name: Dựng bootloader PyInstaller từ nguồn
         shell: pwsh
         run: |
@@ -131,21 +123,19 @@ jobs:
           $env:PYINSTALLER_COMPILE_BOOTLOADER = '1'
           python -m pip install --disable-pip-version-check --require-hashes --no-deps --force-reinstall --no-binary pyinstaller -r pyi.txt
           if ($LASTEXITCODE) { throw 'pip' }
-      - name: A - onefile (bootloader tự dựng)
-        shell: pwsh
-        run: |
-          python -m PyInstaller --noconfirm --clean --distpath out\a tsucontact.spec
-          if ($LASTEXITCODE) { throw 'pyinstaller' }
-          Copy-Item out\a\*.exe av\a-onefile-src.exe
-      - name: B - onedir + Inno (bootloader tự dựng)
+      - name: B - onedir (bootloader tự dựng) - các kiểu bộ cài + zip
         shell: pwsh
         run: |
           $env:TSU_ONEDIR = '1'
           python -m PyInstaller --noconfirm --clean --distpath out\b tsucontact.spec
           if ($LASTEXITCODE) { throw 'pyinstaller' }
-          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /Qp /DAppVersion=26.11.2101 /DSourceDir=$PWD\out\b\tsucontact /DOutputBase=b-onedir-inno-src /O$PWD\av packaging\inno\tsucontact.iss
-          if ($LASTEXITCODE) { throw 'iscc' }
-          Copy-Item out\b\tsucontact\tsucontact.exe av\b-app-exe-src.exe
+          New-Item -ItemType Directory -Force av | Out-Null
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          foreach ($v in @(@('c-lzma2-nonsolid','lzma2/max','no'), @('d-zip','zip','no'), @('e-none','none','no'), @('f-lzma-solid','lzma/normal','yes'))) {
+            & $iscc /Qp /DAppVersion=26.11.2101 /DSourceDir=$PWD\out\b\tsucontact /DOutputBase=$($v[0]) /DCompression=$($v[1]) /DSolid=$($v[2]) /O$PWD\av packaging\inno\tsucontact.iss
+            if ($LASTEXITCODE) { throw 'iscc' }
+          }
+          Compress-Archive -Path out\b\tsucontact\* -DestinationPath av\g-portable.zip
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: thu-nghiem-av
