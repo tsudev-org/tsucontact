@@ -101,3 +101,52 @@ jobs:
       patterns: "tsucontact_*.exe"
     secrets:
       VT_API_KEY: ${{ secrets.VT_API_KEY }}
+
+  # THỬ NGHIỆM (chỉ chạy tay): dựng các biến thể để đo báo nhầm trên VirusTotal. Xoá sau khi chốt phương án.
+  thu-nghiem-av:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.11'
+      - name: Cài phụ thuộc đã khóa
+        run: python -m pip install --disable-pip-version-check --require-hashes --no-deps -r requirements.txt -r requirements-dev.txt
+      - name: B0 - onedir + Inno (bootloader dựng sẵn)
+        shell: pwsh
+        run: |
+          $env:TSU_ONEDIR = '1'
+          python -m PyInstaller --noconfirm --clean --distpath out\b0 tsucontact.spec
+          if ($LASTEXITCODE) { throw 'pyinstaller' }
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /Qp /DAppVersion=26.11.2101 /DSourceDir=$PWD\out\b0\tsucontact /DOutputBase=b0-onedir-inno /O$PWD\av packaging\inno\tsucontact.iss
+          if ($LASTEXITCODE) { throw 'iscc' }
+      - name: Dựng bootloader PyInstaller từ nguồn
+        shell: pwsh
+        run: |
+          python -c "import re;s=open('requirements-dev.txt').read();m=re.search(r'^pyinstaller==.*?(?=^\S)',s,re.S|re.M);open('pyi.txt','w').write(m.group(0))"
+          $env:PYINSTALLER_COMPILE_BOOTLOADER = '1'
+          python -m pip install --disable-pip-version-check --require-hashes --no-deps --force-reinstall --no-binary pyinstaller -r pyi.txt
+          if ($LASTEXITCODE) { throw 'pip' }
+      - name: A - onefile (bootloader tự dựng)
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --distpath out\a tsucontact.spec
+          if ($LASTEXITCODE) { throw 'pyinstaller' }
+          Copy-Item out\a\*.exe av\a-onefile-src.exe
+      - name: B - onedir + Inno (bootloader tự dựng)
+        shell: pwsh
+        run: |
+          $env:TSU_ONEDIR = '1'
+          python -m PyInstaller --noconfirm --clean --distpath out\b tsucontact.spec
+          if ($LASTEXITCODE) { throw 'pyinstaller' }
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" /Qp /DAppVersion=26.11.2101 /DSourceDir=$PWD\out\b\tsucontact /DOutputBase=b-onedir-inno-src /O$PWD\av packaging\inno\tsucontact.iss
+          if ($LASTEXITCODE) { throw 'iscc' }
+          Copy-Item out\b\tsucontact\tsucontact.exe av\b-app-exe-src.exe
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: thu-nghiem-av
+          path: av/*

@@ -1,6 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 # Đóng gói Tsu Contact (PySide6) thành MỘT file .exe.
 # Tên file theo .standards/docs/VERSIONING.md mục 2 - lấy từ src/app_info.py (nguồn duy nhất).
+import os
 import sys
 
 sys.path.insert(0, SPECPATH)
@@ -9,6 +10,11 @@ from PyInstaller.utils.win32.versioninfo import (FixedFileInfo, StringFileInfo, 
 
 from src.app_info import (APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, PUBLISHER_DISPLAY,
                           RELEASE_BASENAME)
+
+# TSU_ONEDIR=1 ⇒ gói thư mục (exe nhỏ + _internal/) để bộ cài Inno Setup đóng gói; không giải nén vào %TEMP% lúc chạy
+# nên ít bị phần mềm diệt virus học máy báo nhầm hơn onefile (DISTRIBUTION_TRUST mục 3, ISS-20261121-2340-3857).
+ONEDIR = os.environ.get('TSU_ONEDIR') == '1'
+EXE_NAME = APP_SLUG if ONEDIR else RELEASE_BASENAME
 
 # Siêu dữ liệu bản cài - .standards/docs/ECOSYSTEM_IDENTITY.md mục 2.3.
 _parts = tuple(int(p) for p in APP_VERSION.split('.')) + (0,)
@@ -21,7 +27,7 @@ VERSION_INFO = VSVersionInfo(
             StringStruct('FileVersion', APP_VERSION),
             StringStruct('InternalName', APP_SLUG),
             StringStruct('LegalCopyright', COPYRIGHT),
-            StringStruct('OriginalFilename', f'{RELEASE_BASENAME}.exe'),
+            StringStruct('OriginalFilename', f'{EXE_NAME}.exe'),
             StringStruct('ProductName', APP_SLUG),
             StringStruct('ProductVersion', APP_VERSION),
             StringStruct('Comments', ECOSYSTEM_URL),
@@ -85,18 +91,12 @@ a.datas = [d for d in a.datas if '/translations/' not in d[0].replace('\\', '/')
 
 pyz = PYZ(a.pure)
 
-exe = EXE(
-    pyz,
-    a.scripts,
-    a.binaries,
-    a.datas,
-    [],
-    name=RELEASE_BASENAME,
+_EXE_OPTS = dict(
+    name=EXE_NAME,
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=False,  # UPX làm phần mềm diệt virus báo nhầm nhiều hơn và hỏng chữ ký số
-    runtime_tmpdir=None,
     console=False,
     disable_windowed_traceback=True,
     argv_emulation=False,
@@ -106,3 +106,9 @@ exe = EXE(
     icon=['assets/icons/app.ico'],
     version=VERSION_INFO,
 )
+
+if ONEDIR:
+    exe = EXE(pyz, a.scripts, [], exclude_binaries=True, **_EXE_OPTS)
+    coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name=APP_SLUG)
+else:
+    exe = EXE(pyz, a.scripts, a.binaries, a.datas, [], runtime_tmpdir=None, **_EXE_OPTS)
