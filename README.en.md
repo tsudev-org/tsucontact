@@ -33,6 +33,13 @@ gh attestation verify .\SHA256SUMS.txt --repo tsudev-org/tsucontact    # SHA256S
 
 The executable is not yet Authenticode-signed, so Windows SmartScreen may warn on first run.
 
+## Code signing policy
+
+What is signed, team roles, multi-factor authentication and privacy: [docs/CODE_SIGNING_POLICY.md](docs/CODE_SIGNING_POLICY.md)
+(web: https://contact.tsudev.com/code-signing-policy/). The project intends to apply for free code signing by the SignPath
+Foundation; once accepted: "Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by
+[SignPath Foundation](https://signpath.org)".
+
 ## Features
 
 - Drag and drop a CSV file; encoding (UTF-8, UTF-16, Windows-1258) and delimiter are detected automatically.

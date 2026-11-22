@@ -1,0 +1,18 @@
+{
+  "_ghi_chu": "Nội dung đơn SignPath Foundation (https://signpath.org/apply) - phần CÔNG KHAI. Họ tên/email người nộp ở ~/.config/tsudev/signpath-applicant.json (ngoài repo). {{...}} được tools/signpath/nop-don.mjs thay bằng số đo thật lúc chạy. Chỉ nộp khi đạt >= 4/6 ngưỡng (phiếu toàn hệ 20261113-02 mục 5).",
+  "name": "Tsu Contact",
+  "repository_url": "https://github.com/tsudev-org/tsucontact",
+  "homepage_url": "https://contact.tsudev.com",
+  "download_url": "https://contact.tsudev.com/tai-ve/",
+  "privacy_policy_url": "https://tsudev.com/privacy",
+  "wikipedia_url": "",
+  "tagline": "Offline Windows tool that converts CSV contact lists into vCard (.vcf) files ready to import into phones.",
+  "category": "Productivity",
+  "description": "Tsu Contact is a desktop app (Python + Qt for Python/PySide6, Apache-2.0) that turns a CSV export from Excel, Google Contacts or a phone book into vCard 3.0 files. It auto-maps columns, detects encodings (UTF-8, UTF-16, Windows-1258) and delimiters, normalizes Vietnamese phone numbers (+84, leading zeros lost by Excel, several numbers per cell), flags duplicates and invalid rows, and shows a searchable preview before export. It runs fully offline: the Qt network module is excluded from the build, there is no telemetry or update check, and contact data stays in memory. Windows releases are built only by GitHub Actions from version tags: a per-user Inno Setup installer (no admin rights, standard uninstall) and a portable zip. Every release ships a CycloneDX SBOM, a Sigstore-signed SHA256SUMS, SLSA build provenance (gh attestation verify) and VirusTotal reports. Code signing policy: https://contact.tsudev.com/code-signing-policy/",
+  "reputation": "Public since August 2026, {{so_ban}} releases (latest {{ban_moi}}), {{luot_tai}} release downloads, {{sao}} GitHub stars. Distributed via Scoop (tsudev bucket: scoop install tsudev/tsucontact){{winget}}. OpenSSF Best Practices passing: https://www.bestpractices.dev/projects/16836 . OpenSSF Scorecard {{scorecard}}: https://securityscorecards.dev/viewer/?uri=github.com/tsudev-org/tsucontact . All changes go through pull requests with required CI (lint, tests on Linux and Windows, secret scanning, CodeQL). Part of the TsuDEV open-source ecosystem: https://tsudev.com",
+  "maintainer": "Individual maintainer(s)",
+  "build_system": "GitHub Actions",
+  "discovery_channel": "Developer platforms (e.g. GitHub)",
+  "discovery_source": "",
+  "dong_y": { "code_of_conduct": true, "marketing": false, "processing": true }
+}

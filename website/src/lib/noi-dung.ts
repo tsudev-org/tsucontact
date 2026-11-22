@@ -17,6 +17,7 @@ export const TRANG_MD: Record<string, string> = {
   'README.md': '/',
   'SECURITY.md': '/bao-mat/',
   'docs/ARCHITECTURE.md': '/bao-mat/kien-truc/',
+  'docs/CODE_SIGNING_POLICY.md': '/code-signing-policy/',
   'CHANGELOG.md': '/nhat-ky/',
   'THIRD-PARTY-NOTICES.md': '/ban-quyen/#thanh-phan-ben-thu-ba',
   'LICENSE': '/ban-quyen/',
