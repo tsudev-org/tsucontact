@@ -1,7 +1,7 @@
 # PHIẾU BÀN GIAO - Bản sắc v5.0.0, bố cục cong-cu, phát hành 26.11.2101 (đang NHÁP vì VirusTotal)
 
 - **Từ**: phiên agent-contact (tsucontact-5b), 21/11/2026 - **Đến**: phiên kế tiếp của `tsucontact`
-- **Trạng thái**: MỞ - còn việc ở mục 2
+- **Trạng thái**: ĐÓNG 22/11/2026 - 26.11.2101 bỏ, thay bằng 26.11.2201 (phiếu `20261122-01`)
 
 ## 1. Đã xong (đều đã đo)
 
