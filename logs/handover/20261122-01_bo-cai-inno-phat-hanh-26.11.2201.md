@@ -16,14 +16,18 @@
 | Scoop | scoop-bucket#27 (merge): `tsucontact` 26.11.2201 dùng zip, checkver `^v(\d{2}\.\d{1,2}\.\d{4})$`, CI cài thật xanh |
 | winget | PR cũ #477388 bị bot đóng (nhánh rỗng); gửi mới **#486443** (inno, user scope), `winget validate` đạt |
 
-## 2. Việc còn lại
+## 2. Việc còn lại (cập nhật lượt 2, 22/11/2026 - chủ dự án uỷ quyền làm tiếp)
 
-1. winget #486443: chờ moderator; bot báo lỗi thì sửa trên nhánh `tsudev-tsudev/winget-pkgs:tsudev.TsuContact-26.11.2201`
-   (qua API contents). Merge xong: thêm kênh winget ở tsudev `packages/ui/src/lib/ecosystem.ts` (phiếu cho repo tsudev).
-2. 👤 SignPath Foundation (ký Authenticode miễn phí) - agent soạn hồ sơ khi chủ dự án đồng ý.
-3. 👤 Nên xoay khoá trong `~/.config/tsudev/winget.env`: phiên này lỡ in khoá ra nhật ký phiên cục bộ (không gửi đi đâu).
-   Khoá đó thuộc tài khoản cá nhân, KHÔNG phải `tsudev-tsudev`; gửi PR winget dùng gh mặc định.
-4. Release nháp `v26.11.2101` để nguyên (không công bố, không xoá - xoá là việc 👤 quyết).
+1. winget #486443: bước 1-7 của pipeline kiểm định ĐẠT (manifest, URL, quét bộ cài, CLA); bước 8 cài thử đang chạy lúc
+   kết phiên; sau đó chờ moderator. Bot báo lỗi ⇒ sửa trên nhánh `tsudev-tsudev/winget-pkgs:tsudev.TsuContact-26.11.2201`
+   (API contents, gh mặc định). Merge xong: kênh winget ở tsudev `packages/ui/src/lib/ecosystem.ts` (phiếu cho repo tsudev).
+2. SignPath: **HOÃN** theo lựa chọn của chủ dự án (1/6 ngưỡng; lotus-share bị từ chối 12/11 vì thiếu uy tín công khai).
+   Đã sẵn sàng (PR #46, deploy): trang https://contact.tsudev.com/code-signing-policy/, đơn `tools/signpath/don.json`,
+   công cụ `nop-don.mjs` (điền thử đã chạy, ảnh đúng mọi ô). Người nộp: `~/.config/tsudev/signpath-applicant.json`.
+   Chỉ gửi (`--submit`) khi đạt >= 4/6 VÀ toàn hệ chọn tsucontact là dự án nộp (mỗi lần một dự án).
+3. 👤 Xoay khoá `~/.config/tsudev/winget.env` (lỡ in ra nhật ký phiên cục bộ ở lượt 1).
+4. ✅ Release nháp `v26.11.2101` ĐÃ XOÁ (gồm tệp `.exe` bị gắn cờ); GIỮ thẻ git `v26.11.2101` (CHANGELOG + hồ sơ antivirus
+   trỏ tới, không viết lại lịch sử thẻ đã đẩy).
 
 ## 3. Lưu ý kỹ thuật
 
