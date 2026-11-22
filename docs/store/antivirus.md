@@ -2,7 +2,33 @@
 
 Theo `.standards/docs/DISTRIBUTION_TRUST.md` mục 3-3.1. Agent soạn; chủ dự án (👤) nộp ở cổng cần tài khoản/email.
 
-## Bản 26.11.2101 (phát hiện 21/11/2026, hạn nộp nội bộ 23/11/2026)
+## Bản 26.11.2201 (22/11/2026) - SẠCH, đã công bố
+
+Bộ cài `tsucontact_26.11.2201_windows-x64-setup.exe` **0/74**
+([báo cáo](https://www.virustotal.com/gui/file/60bb7d1d6c5033361917df9619c45e6d09d4204f5fa0e55f968bcc6bea791823)),
+gói `tsucontact_26.11.2201_windows-x64-portable.zip` **0/74**
+([báo cáo](https://www.virustotal.com/gui/file/be44286a4e4e2f70d9ee86beee5dd098e7cd311c9c311a00e7f72e7c5798678d)).
+Thay đổi: PyInstaller dạng thư mục (onedir) + bootloader dựng từ nguồn trên runner + bộ cài Inno Setup lzma2/max không
+solid (PR #44). Không cần nộp báo nhầm.
+
+### Số đo các cách đóng gói (CI 22/11/2026, lượt quét đầu của tệp mới)
+
+| Cách đóng gói | VirusTotal |
+| --- | --- |
+| onefile, bootloader dựng sẵn (bản 26.11.2101) | 2/71 ngày 21/11, **3/74** ngày 22/11 (thêm Microsoft `Trojan:Win32/Wacatac.B!ml`) |
+| onefile, bootloader tự dựng | 2/74 (Bkav, APEX) - đổi bootloader thôi KHÔNG đủ |
+| onedir + Inno lzma2 solid, bootloader dựng sẵn | 2/74 (DeepInstinct, Cylance) |
+| onedir + Inno lzma2 solid, bootloader tự dựng | 1/74 (Cylance) |
+| onedir + Inno zip / lzma solid | 1/74 (Cylance / DeepInstinct) |
+| onedir + Inno lzma2/max KHÔNG solid, bootloader tự dựng | 0/74 lượt thử; bản dựng thử trên nhánh 1/74 (DeepInstinct); bản tag 0/74 |
+| zip portable (onedir) | 0/74 cả 3 lần |
+
+Cờ học máy của DeepInstinct/Cylance với bộ cài Inno lúc có lúc không giữa các lần dựng cùng cấu hình: nếu một bản
+sau bị gắn cờ, chạy lại job dựng (tệp mới) trước khi nộp báo nhầm; gói zip luôn sạch là phương án dự phòng cho Scoop.
+
+## Bản 26.11.2101 (phát hiện 21/11/2026) - KHÔNG CÔNG BỐ, thay bằng 26.11.2201
+
+Release `v26.11.2101` giữ nháp vĩnh viễn (không còn cần nộp Bkav/APEX/Microsoft vì tệp không được phát hành).
 
 | Trường | Giá trị |
 | --- | --- |
@@ -26,7 +52,10 @@ Theo `.standards/docs/DISTRIBUTION_TRUST.md` mục 3-3.1. Agent soạn; chủ d�
 3. Sau khi gỡ: chạy lại job `virustotal` (Actions → Build & Release → Re-run failed jobs) - xanh thì Release tự giữ
    nguyên ghi chú, bỏ nháp bằng tay: `gh release edit v26.11.2101 --draft=false -R tsudev-org/tsucontact`.
 
-### Phòng lâu dài (việc agent, phiên sau)
+### Phòng lâu dài
+
+ĐÃ LÀM ở 26.11.2201 (xem trên). Còn lại: ký Authenticode miễn phí qua SignPath Foundation.
+
 
 PyInstaller `--onefile` là mẫu hay bị engine học máy gắn cờ (chuẩn khuyến nghị tránh). Hướng: dựng bootloader
 PyInstaller từ nguồn trên runner (`PYINSTALLER_COMPILE_BOOTLOADER=1`, sdist có hash trong `requirements-dev.txt`) hoặc
