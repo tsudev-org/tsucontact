@@ -64,6 +64,7 @@ const vd = (goi.find((g) => g.ten.endsWith('.exe')) ?? goi[0])?.ten ?? 'tsuconta
       <pre tabindex="0"><code>Get-FileHash .\{vd} -Algorithm SHA256</code></pre>
       <p>Kiểm chứng tệp đúng là do GitHub Actions build từ repo <code>{REPO}</code> (chứng thực nguồn gốc SLSA, cần <a href="https://cli.github.com" target="_blank" rel="noopener noreferrer">GitHub CLI</a>):</p>
       <pre tabindex="0"><code>gh attestation verify .\{vd} --repo {REPO}</code></pre>
+      <p>Cách bản phát hành được dựng, ký và duyệt: <a href="/code-signing-policy/" lang="en">Code signing policy</a>.</p>
       <div class="chu-y">
         <p><strong>Chỉ tải từ trang này hoặc từ <a href={`${REPO_URL}/releases`} target="_blank" rel="noopener noreferrer">github.com/{REPO}</a>.</strong> Mọi nơi khác tự xưng "bản chính thức" đều không liên quan tới tsudev.</p>
       </div>

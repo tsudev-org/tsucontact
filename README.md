@@ -37,6 +37,13 @@ Get-FileHash tsucontact_26.11.2201_windows-x64-setup.exe -Algorithm SHA256
 ```
 
 
+## Code signing policy
+
+Tệp nào được ký, vai trò nhóm (tác giả, người duyệt, người phê duyệt ký), xác thực đa yếu tố và quyền riêng tư:
+[docs/CODE_SIGNING_POLICY.md](docs/CODE_SIGNING_POLICY.md) - bản web: https://contact.tsudev.com/code-signing-policy/.
+Dự án sẽ xin ký Authenticode miễn phí qua SignPath Foundation; khi được duyệt, mỗi bản phát hành ghi:
+"Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by [SignPath Foundation](https://signpath.org)".
+
 ## Tính năng
 
 - **Kéo-thả tệp CSV**, tự nhận bảng mã (UTF-8, UTF-16, Windows-1258) và dấu phân cách (`,` `;` tab `|`).

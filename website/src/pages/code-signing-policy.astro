@@ -1,0 +1,11 @@
+---
+// Chính sách ký mã (điều kiện của SignPath Foundation: trang chủ + trang tải về phải có liên kết "Code signing policy").
+// Nguồn duy nhất: docs/CODE_SIGNING_POLICY.md (tiếng Anh, cho người duyệt SignPath).
+import TaiLieu from '../components/TaiLieu.astro';
+import { renderMd } from '../lib/noi-dung';
+const trang = renderMd('docs/CODE_SIGNING_POLICY.md');
+---
+<TaiLieu tieuDe="Code signing policy" moTa="Code signing policy of Tsu Contact: what is signed, team roles, multi-factor authentication, privacy and how to verify a download." duongDan="/code-signing-policy/" nguon="docs/CODE_SIGNING_POLICY.md">
+  <p class="goi__ten">Chính sách ký mã của Tsu Contact (bản tiếng Anh, dành cho nhà cấp chứng thư ký số): tệp nào được ký, ai duyệt, quyền riêng tư và cách kiểm tra tệp tải về.</p>
+  <div lang="en"><Fragment set:html={trang.html} /></div>
+</TaiLieu>
