@@ -1,4 +1,4 @@
-# Đẩy tag `v<APP_VERSION>` -> build .exe trên Windows, sinh SBOM, ký chứng thực nguồn gốc bản build
+# Đẩy tag `v<APP_VERSION>` -> build bộ cài .exe + zip portable trên Windows, sinh SBOM, ký chứng thực nguồn gốc bản build
 # (SLSA build provenance, miễn phí với repo public), đính .exe + SBOM + SHA256SUMS vào Release.
 # Người tải kiểm: gh attestation verify <file>.exe --repo tsudev-org/tsucontact
 # SHA256SUMS.txt cũng được ký (Sigstore), bundle đính kèm: SHA256SUMS.txt.sigstore.json
@@ -32,6 +32,18 @@ jobs:
       - name: Cài phụ thuộc đã khóa (--require-hashes)
         run: python -m pip install --disable-pip-version-check --require-hashes --no-deps -r requirements.txt -r requirements-dev.txt
 
+      # Bootloader PyInstaller dựng từ nguồn (sdist đã khoá hash trong requirements-dev.txt) bằng MSVC của runner:
+      # bootloader dựng sẵn bị nhiều phần mềm diệt virus học máy nhận diện (đo 22/11/2026, ISS-20261121-2340-3857).
+      - name: Dựng bootloader PyInstaller từ nguồn
+        shell: pwsh
+        env:
+          PYINSTALLER_COMPILE_BOOTLOADER: '1'
+        run: |
+          python -c "import re;s=open('requirements-dev.txt').read();m=re.search(r'^pyinstaller==.*?(?=^\S)',s,re.S|re.M);open('pyi.txt','w').write(m.group(0))"
+          python -m pip install --disable-pip-version-check --require-hashes --no-deps --force-reinstall --no-binary pyinstaller -r pyi.txt
+          if ($LASTEXITCODE) { throw 'Dựng bootloader thất bại' }
+          Remove-Item pyi.txt
+
       - name: Chạy test (lõi + giao diện)
         env:
           QT_QPA_PLATFORM: offscreen
@@ -50,7 +62,7 @@ jobs:
             throw "Tag '$tagVersion' khác APP_VERSION '$appVersion' - sửa src/app_info.py hoặc đặt lại tag."
           }
 
-      - name: Đóng gói (exe + SBOM + SHA256SUMS)
+      - name: Đóng gói (bộ cài + zip portable + SBOM + SHA256SUMS)
         shell: pwsh
         run: .\scripts\build-win.ps1 -SkipDeps -SkipTests
 
@@ -62,6 +74,7 @@ jobs:
         with:
           subject-path: |
             release/*.exe
+            release/*.zip
             release/*.cdx.json
             release/SHA256SUMS.txt
 
@@ -98,45 +111,7 @@ jobs:
     uses: tsudev-org/.github/.github/workflows/virustotal.yml@8a393ebd89349300637c8c57e89c12492b174e4d
     with:
       tag: ${{ github.ref_name }}
-      patterns: "tsucontact_*.exe"
+      patterns: "tsucontact_*.exe tsucontact_*.zip"
     secrets:
       VT_API_KEY: ${{ secrets.VT_API_KEY }}
 
-  # THỬ NGHIỆM (chỉ chạy tay): dựng các biến thể để đo báo nhầm trên VirusTotal. Xoá sau khi chốt phương án.
-  thu-nghiem-av:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: windows-latest
-    timeout-minutes: 40
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
-        with:
-          python-version: '3.11'
-      - name: Cài phụ thuộc đã khóa
-        run: python -m pip install --disable-pip-version-check --require-hashes --no-deps -r requirements.txt -r requirements-dev.txt
-      - name: Dựng bootloader PyInstaller từ nguồn
-        shell: pwsh
-        run: |
-          python -c "import re;s=open('requirements-dev.txt').read();m=re.search(r'^pyinstaller==.*?(?=^\S)',s,re.S|re.M);open('pyi.txt','w').write(m.group(0))"
-          $env:PYINSTALLER_COMPILE_BOOTLOADER = '1'
-          python -m pip install --disable-pip-version-check --require-hashes --no-deps --force-reinstall --no-binary pyinstaller -r pyi.txt
-          if ($LASTEXITCODE) { throw 'pip' }
-      - name: B - onedir (bootloader tự dựng) - các kiểu bộ cài + zip
-        shell: pwsh
-        run: |
-          $env:TSU_ONEDIR = '1'
-          python -m PyInstaller --noconfirm --clean --distpath out\b tsucontact.spec
-          if ($LASTEXITCODE) { throw 'pyinstaller' }
-          New-Item -ItemType Directory -Force av | Out-Null
-          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
-          foreach ($v in @(@('c-lzma2-nonsolid','lzma2/max','no'), @('d-zip','zip','no'), @('e-none','none','no'), @('f-lzma-solid','lzma/normal','yes'))) {
-            & $iscc /Qp /DAppVersion=26.11.2101 /DSourceDir=$PWD\out\b\tsucontact /DOutputBase=$($v[0]) /DCompression=$($v[1]) /DSolid=$($v[2]) /O$PWD\av packaging\inno\tsucontact.iss
-            if ($LASTEXITCODE) { throw 'iscc' }
-          }
-          Compress-Archive -Path out\b\tsucontact\* -DestinationPath av\g-portable.zip
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: thu-nghiem-av
-          path: av/*

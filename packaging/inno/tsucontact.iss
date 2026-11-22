@@ -1,6 +1,6 @@
 ; Bộ cài Windows của Tsu Contact (Inno Setup 6) - đóng gói thư mục PyInstaller onedir (TSU_ONEDIR=1).
 ; Lý do có bộ cài: PyInstaller onefile bị phần mềm diệt virus học máy báo nhầm (DISTRIBUTION_TRUST mục 3,
-; ISS-20261121-2340-3857). Cài theo người dùng, KHÔNG cần quyền quản trị; có lối tắt Start Menu và trình gỡ cài đặt.
+; ISS-20261121-2340-3857). Đo VirusTotal 22/11/2026: lzma2/max KHÔNG solid = 0/74; solid = 1/74; zip = 1/74 - giữ mặc định. Cài theo người dùng, KHÔNG cần quyền quản trị; có lối tắt Start Menu và trình gỡ cài đặt.
 ; Dựng: iscc /DAppVersion=<v> /DSourceDir=<dist\tsucontact> /DOutputBase=<tên tệp không đuôi> /O<thư mục ra> tsucontact.iss
 
 #ifndef AppVersion
@@ -13,7 +13,7 @@
   #define Compression "lzma2/max"
 #endif
 #ifndef Solid
-  #define Solid "yes"
+  #define Solid "no"
 #endif
 #ifndef OutputBase
   #error Thiếu /DOutputBase

@@ -5,7 +5,7 @@ import { banMoiNhat, kenhCai, REPO_URL } from '../lib/noi-dung';
 // Bố cục chữ ký `cong-cu` (tsudev-standards v5.0.0 DESIGN_SYSTEM mục 1.2.2): vùng thao tác chính - tải tệp .exe hoặc
 // chép lệnh cài - nằm ngay màn đầu, căn giữa; ảnh, các bước và giới thiệu xếp phía dưới.
 const ban = await banMoiNhat();
-const tep = ban?.goi[0];
+const tep = ban?.goi.find((g) => g.ten.endsWith('.exe')) ?? ban?.goi[0];
 const mb = (b: number) => `${(b / 1024 / 1024).toFixed(1).replace('.', ',')} MB`;
 const lenhCai = (await kenhCai()).find((n) => n.heDieuHanh === 'Windows')?.lenh[0];
 const luong = ['Tệp CSV', 'Ghép cột', 'Kiểm tra từng dòng', 'vCard (.vcf)'];
@@ -71,7 +71,7 @@ const baoMat = [
           </div>
         )}
         <p class="thao-tac__ghi-chu">
-          Windows 10/11 x64 · một tệp, không cần cài · miễn phí ·
+          Windows 10/11 x64 · cài không cần quyền quản trị · miễn phí ·
           <a href="/tai-ve/">kiểm tra SHA-256 và cách cài khác</a>
         </p>
         <p class="an-di" role="status" aria-live="polite" id="chep-trang-thai"></p>

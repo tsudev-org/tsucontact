@@ -3,7 +3,18 @@
 Mỗi bản phát hành 1 dòng, định dạng: `{version} - {DD/MM/YYYY} - nội dung thay đổi`.
 Quy ước đặt tên bản phát hành: `.standards/docs/VERSIONING.md` mục 2.
 
-## 26.11.2101 - 21/11/2026
+## 26.11.2201 - 22/11/2026
+
+- **Bộ cài Windows thay ứng dụng một tệp**: `tsucontact_26.11.2201_windows-x64-setup.exe` giờ là bộ cài Inno Setup - cài
+  cho riêng tài khoản đang dùng, không cần quyền quản trị, có lối tắt Start Menu và gỡ cài đặt trong *Cài đặt → Ứng
+  dụng*. Thêm `tsucontact_26.11.2201_windows-x64-portable.zip` chạy ngay không cần cài. Ứng dụng mở nhanh hơn vì không
+  còn giải nén vào thư mục tạm mỗi lần chạy.
+- **Hết báo nhầm virus**: bản 26.11.2101 (PyInstaller một tệp) bị 3/74 phần mềm diệt virus học máy trên VirusTotal gắn
+  cờ nhầm (Bkav, Microsoft `Wacatac.B!ml`, APEX) nên không được công bố. Bản này đóng gói dạng thư mục, bootloader
+  PyInstaller dựng từ mã nguồn trên GitHub Actions; đo trước khi phát hành: bộ cài và gói zip đều 0/74.
+- Gồm mọi thay đổi của 26.11.2101 bên dưới (bản đó chưa từng được công bố).
+
+## 26.11.2101 - 21/11/2026 (không công bố - thay bằng 26.11.2201)
 
 - **Tên tệp phát hành theo khuôn thống nhất** (phiếu `20261117-V1`, VERSIONING.md mục 2.2): `tsucontact_26.11.2101_windows-x64-setup.exe`; tiêu đề Release `Tsu Contact 26.11.2101`. Bản cũ giữ tên cũ.
 

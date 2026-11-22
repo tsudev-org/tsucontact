@@ -1,20 +1,19 @@
 # -*- mode: python ; coding: utf-8 -*-
-# Đóng gói Tsu Contact (PySide6) thành MỘT file .exe.
+# Đóng gói Tsu Contact (PySide6) dạng THƯ MỤC (onedir): dist/tsucontact/ gồm tsucontact.exe + _internal/.
+# Thư mục này được bộ cài Inno Setup (packaging/inno/tsucontact.iss) và gói zip portable đóng gói - scripts/build-win.ps1.
 # Tên file theo .standards/docs/VERSIONING.md mục 2 - lấy từ src/app_info.py (nguồn duy nhất).
-import os
 import sys
 
 sys.path.insert(0, SPECPATH)
 from PyInstaller.utils.win32.versioninfo import (FixedFileInfo, StringFileInfo, StringStruct,
                                                  StringTable, VarFileInfo, VarStruct, VSVersionInfo)
 
-from src.app_info import (APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, PUBLISHER_DISPLAY,
-                          RELEASE_BASENAME)
+from src.app_info import APP_SLUG, APP_VERSION, COPYRIGHT, ECOSYSTEM_URL, PUBLISHER_DISPLAY
 
-# TSU_ONEDIR=1 ⇒ gói thư mục (exe nhỏ + _internal/) để bộ cài Inno Setup đóng gói; không giải nén vào %TEMP% lúc chạy
-# nên ít bị phần mềm diệt virus học máy báo nhầm hơn onefile (DISTRIBUTION_TRUST mục 3, ISS-20261121-2340-3857).
-ONEDIR = os.environ.get('TSU_ONEDIR') == '1'
-EXE_NAME = APP_SLUG if ONEDIR else RELEASE_BASENAME
+# Không dùng onefile: bản onefile 26.11.2101 bị VirusTotal 3/74 (Bkav, Microsoft Wacatac.B!ml, APEX); đo 22/11/2026 bản
+# onedir + bootloader dựng từ nguồn + bộ cài Inno lzma2 không solid = 0/74 (DISTRIBUTION_TRUST mục 3,
+# ISS-20261121-2340-3857). Bootloader tự dựng do workflow phát hành cài (PYINSTALLER_COMPILE_BOOTLOADER=1).
+EXE_NAME = APP_SLUG
 
 # Siêu dữ liệu bản cài - .standards/docs/ECOSYSTEM_IDENTITY.md mục 2.3.
 _parts = tuple(int(p) for p in APP_VERSION.split('.')) + (0,)
@@ -107,8 +106,5 @@ _EXE_OPTS = dict(
     version=VERSION_INFO,
 )
 
-if ONEDIR:
-    exe = EXE(pyz, a.scripts, [], exclude_binaries=True, **_EXE_OPTS)
-    coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name=APP_SLUG)
-else:
-    exe = EXE(pyz, a.scripts, a.binaries, a.datas, [], runtime_tmpdir=None, **_EXE_OPTS)
+exe = EXE(pyz, a.scripts, [], exclude_binaries=True, **_EXE_OPTS)
+coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name=APP_SLUG)
